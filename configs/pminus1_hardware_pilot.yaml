@@ -1,0 +1,50 @@
+pilot_id: pminus1_hardware_open_01
+status: exploratory
+purpose: >-
+  Hardware-identifiability pilot for calibration-aging / power-scale drift on
+  RTL-SDR Blog V4. Open-input run only; not a publication-grade terminated-null run.
+
+hardware:
+  device: RTL-SDR Blog V4
+  tuner: Rafael Micro R828D
+  serial: "00000001"
+  capture_host: debian-12-aml-s905x-cc
+
+software:
+  rtl_sdr_path: /usr/local/bin/rtl_sdr
+  rtl_sdr_git_commit: 797f8143266d983c56d8f35d2d442527529dd8a5
+
+capture:
+  input_condition: open
+  center_frequency_hz: 300000000
+  sample_rate_hz: 2048000
+  gain_db: 28.0
+  agc: false
+  capture_seconds: 2.0
+  cadence_seconds: 60.0
+  duration_minutes: 45.0
+  samples_per_capture: 4096000
+  expected_bytes_per_capture: 8192000
+  expected_capture_count: 46
+
+controls:
+  antenna_disconnected: true
+  no_receiver_reconfiguration_during_run: true
+  raw_iq_not_committed_to_git: true
+  hash_each_capture: sha256
+  record_host_thermal_zones: true
+
+limitations:
+  - Open RF input is not a 50-ohm termination and can still couple ambient RF/EMI.
+  - Host thermal sensors are not dongle temperature unless independently verified.
+  - This pilot can establish measurability/repeatability only, not publication novelty.
+
+pass_gate: >-
+  Continue only if a structured time/hardware-state effect is repeatable and large
+  relative to within-run sampling variation, stale calibration measurably distorts
+  false-alarm behavior, and basic confound checks do not explain the effect.
+
+kill_gate: >-
+  Stop this direction if drift is negligible/non-repeatable, stale calibration does
+  not materially alter false-alarm behavior, or ordinary contemporaneous local
+  normalization absorbs the effect for the intended detector.
