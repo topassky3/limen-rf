@@ -78,3 +78,31 @@ CONTINUE only if robust power becomes materially nonzero, increases with signal 
 NO-GO if robust crossing remains essentially zero for gamma_true 4 and 8 even after the adaptive mixture. That would make bettor mismatch an implausible explanation and point toward a composite-null identifiability barrier.
 
 No hardware is involved.
+
+
+## Audit correction — 2026-09-18
+
+During preparation of Kill-Test 10, the fixed Beta-rank component implementation was audited against the analytic identity
+
+P(J=j)=C(n,j) gamma B(j+gamma,n-j+1).
+
+After cancellation,
+
+log P(J=j)
+=
+lgamma(n+1)-lgamma(j+1)+log(gamma)+lgamma(j+gamma)-lgamma(n+gamma+1).
+
+The first Kill-Test 09 implementation accidentally retained an extra
+`-lgamma(n-j+1)` term after the Beta/binomial cancellation. The resulting
+numbers still formed a normalized, strictly positive categorical betting
+distribution, so the e-process validity argument was not broken. However,
+those fixed components were **not** the claimed Beta(gamma,1)-induced rank
+laws.
+
+The implementation has been corrected and now includes a regression check:
+gamma=1 must produce the exact uniform rank law 1/(n+1).
+
+Because power can change after this correction, the previous Kill-Test 09
+power table is provisional until the corrected script is rerun with the
+original frozen seed and scenarios. No Kill-Test 10 comparison should be run
+before that replication.
