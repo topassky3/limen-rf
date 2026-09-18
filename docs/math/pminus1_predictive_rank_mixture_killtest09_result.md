@@ -1,6 +1,6 @@
 # P−1 Kill-Test 09 Result — adaptive-mixture predictive ranks
 
-Status: **PASS power gate / candidate survives this kill-test**
+Status: **PROVISIONAL — rerun required after Beta-rank implementation audit**
 
 Date: 2026-09-18
 
@@ -114,3 +114,18 @@ Primary endpoints:
 A fair comparison must not claim that the simple DKW+M/K half-width is itself the complete CCTM detector; the baseline must implement the corresponding valid betting construction rather than compare only confidence-band widths.
 
 No additional hardware work is justified yet.
+
+
+## Reproducibility audit correction — 2026-09-18
+
+The original Kill-Test 09 fixed Beta-rank component contained an algebraic
+implementation error: an uncancelled `-lgamma(n-j+1)` term. The output
+distribution was still normalized and positive, so it remained a legitimate
+betting distribution and did not invalidate the type-I/e-process argument.
+It was, however, not the Beta(gamma,1)-induced rank distribution stated in the
+experiment specification.
+
+Therefore the numerical power conclusions above are now marked
+**provisional**. The corrected script must be rerun using the same frozen
+seed, horizons, mixture family, hedge and number of repetitions. Only that
+corrected output will determine whether Kill-Test 09 remains a PASS.
