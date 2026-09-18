@@ -1,6 +1,6 @@
 # P−1 Kill-Test 11 — non-vacuous confidence-band comparison
 
-Status: **frozen comparison gate**
+Status: **completed, but non-vacuity premise was too weak for the chosen high-contaminant geometry**
 
 Date: 2026-09-18
 
@@ -180,3 +180,75 @@ results/pminus1_killtest11_nonvacuous.csv
 \`\`\`
 
 No hardware work is involved.
+
+
+## Post-run audit correction
+
+The original non-vacuity check used only the nominal radii and assumed the observed rank could reach q=K.
+
+That is false for the frozen diagnostic geometry because the two contaminants are fixed above the support of the clean stream. Therefore, for every test sample X_t in [0,1],
+
+q_t <= K-M = n.
+
+This changes the actual best-case betting geometry.
+
+### Exact-count lower-band baseline
+
+At q_max=n,
+
+L_max
+=
+(n-M)/n - epsilon_clean
+=
+1 - M/n - epsilon_clean.
+
+For K=16, M=2, n=14:
+
+L_max ≈ 0.46154 < 0.5,
+
+so the exact-count lower-band baseline is still completely vacuous for a one-sided right-shift bet.
+
+For K=20, M=2, n=18:
+
+L_max ≈ 0.54000,
+
+so the baseline is technically non-vacuous, but only by about 0.04 above 0.5. With the matched threshold 39, this is an extremely weak betting regime.
+
+### CCTM-style baseline
+
+For the contaminated empirical CDF,
+
+u_max = n/K = 1-M/K.
+
+A positive one-sided CCTM bet requires approximately
+
+u_max - 0.5 > epsilon_sym.
+
+For K=16:
+
+u_max - 0.5 - epsilon_sym
+=
+0.875 - 0.5 - 0.471152
+≈ -0.09615.
+
+For K=20:
+
+u_max - 0.5 - epsilon_sym
+=
+0.9 - 0.5 - 0.413999
+≈ -0.01400.
+
+Thus the CCTM-style baseline is still vacuous in both frozen K=16 and K=20 scenarios.
+
+### Consequence
+
+Kill-Test 11 does **not** yet provide the intended non-vacuous comparison against both confidence-band baselines.
+
+The static-coupling results remain valid and strong, but the comparison claim must be downgraded.
+
+A corrected gate must use larger K. For M=2 and delta=0.025:
+- K=21 is approximately the first size where the CCTM-style one-sided margin becomes positive;
+- K=24 gives a small positive margin;
+- K=32 gives a materially positive margin.
+
+The recommended corrected comparison is K in {24,32}, M=2.
