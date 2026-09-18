@@ -517,7 +517,7 @@ def main() -> int:
             )
 
     print(f"CSV: {output}")
-    print("KILLTEST11: COMPLETE")
+    print("KILLTEST12: COMPLETE")
     return 0
 
 
