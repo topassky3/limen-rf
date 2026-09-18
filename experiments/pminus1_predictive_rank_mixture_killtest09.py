@@ -46,7 +46,6 @@ def beta_rank_probs(n: int, gamma: float) -> tuple[float, ...]:
         logp = (
             math.lgamma(n + 1)
             - math.lgamma(j + 1)
-            - math.lgamma(n - j + 1)
             + math.log(gamma)
             + math.lgamma(j + gamma)
             - math.lgamma(n + gamma + 1)
@@ -62,6 +61,18 @@ class Component:
     name: str
     kind: Literal["fixed", "dirichlet"]
     params: tuple[float, ...]
+
+
+def validate_beta_rank_probs() -> None:
+    """Regression guard: gamma=1 must induce a uniform rank law."""
+    n = N
+    probs = beta_rank_probs(n, 1.0)
+    target = 1.0 / (n + 1)
+    err = max(abs(p - target) for p in probs)
+    if err > 1e-12:
+        raise AssertionError(
+            f"beta_rank_probs regression failed: max error={err:.3e}"
+        )
 
 
 def build_components(n: int) -> tuple[Component, ...]:
@@ -326,6 +337,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
+    validate_beta_rank_probs()
     args = parse_args()
     if args.reps <= 0:
         raise SystemExit("--reps must be positive")
