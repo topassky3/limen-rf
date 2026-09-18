@@ -13,12 +13,24 @@ METHODS = ("static", "oracle", "band_mix", "band_ons", "cctm")
 
 
 def key(row: dict[str, str]) -> tuple[float, float, float]:
-    delay = float(row["median_delay_detected"]) if row["median_delay_detected"] else float("inf")
+    delay = (
+        float(row["median_delay_detected"])
+        if row["median_delay_detected"]
+        else float("inf")
+    )
     return (
         float(row["cross_rate"]),
         -delay,
         float(row["median_loge"]),
     )
+
+
+def gamma_matches(row: dict[str, str], gamma: float) -> bool:
+    """Return False for null rows, whose true_gamma field is intentionally empty."""
+    value = row.get("true_gamma", "").strip()
+    if not value:
+        return False
+    return float(value) == gamma
 
 
 def main() -> int:
@@ -35,11 +47,18 @@ def main() -> int:
 
     for k, gamma in TARGETS:
         subset = [
-            r for r in rows
+            r
+            for r in rows
             if int(r["K"]) == k
-            and float(r["true_gamma"]) == gamma
+            and gamma_matches(r, gamma)
             and int(r["horizon"]) == 200
         ]
+
+        if not subset:
+            raise RuntimeError(
+                f"No rows found for K={k}, gamma={gamma:g}, T=200 in {path}"
+            )
+
         print(f"K={k} gamma={gamma:g} T=200")
         for method in METHODS:
             candidates = [r for r in subset if r["method"] == method]
