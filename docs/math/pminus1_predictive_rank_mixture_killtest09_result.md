@@ -17,75 +17,100 @@ Date: 2026-09-18
 - horizons T in {40, 100, 200}
 - alternatives Beta(gamma,1) with gamma in {2,4,8}
 
-## Results
+## Exact CSV results
 
-### Null
+| condition | T | robust cross | oracle cross | med max logE robust | med max logE oracle | med final logE robust | med final logE oracle | modal worst C | frequency |
+|---|---:|---:|---:|---:|---:|---:|---:|---|---:|
+| null | 40 | 0.000 | 0.020 | -0.455406 | 0.302691 | -1.975034 | -1.515860 | (1,7) | 0.255 |
+| null | 100 | 0.010 | 0.035 | -0.524667 | 0.087181 | -1.951021 | -1.672660 | (1,7) | 0.260 |
+| null | 200 | 0.000 | 0.025 | -0.455406 | 0.165265 | -1.961053 | -1.753041 | (7,8) | 0.400 |
+| beta_2 | 40 | 0.025 | 0.220 | -0.039038 | 1.238158 | -1.503191 | -0.179366 | (1,2) | 0.320 |
+| beta_2 | 100 | 0.060 | 0.230 | -0.039038 | 1.395121 | -1.482974 | -0.212577 | (1,7) | 0.515 |
+| beta_2 | 200 | 0.040 | 0.255 | -0.039038 | 1.411503 | -1.327162 | -0.115373 | (1,7) | 0.600 |
+| beta_4 | 40 | 0.230 | 0.590 | 0.741542 | 4.041483 | 0.019301 | 3.055960 | (1,2) | 0.755 |
+| beta_4 | 100 | 0.370 | 0.720 | 1.944488 | 4.914229 | 0.924419 | 4.099961 | (1,2) | 0.640 |
+| beta_4 | 200 | 0.455 | 0.800 | 2.646468 | 5.975928 | 1.597985 | 4.631208 | (1,2) | 0.540 |
+| beta_8 | 40 | 0.580 | 0.930 | 3.562315 | 7.345986 | 3.059658 | 6.810920 | (1,2) | 0.950 |
+| beta_8 | 100 | 0.715 | 0.955 | 5.269478 | 8.877438 | 4.840796 | 8.031209 | (1,2) | 0.960 |
+| beta_8 | 200 | 0.800 | 0.960 | 6.508636 | 10.539881 | 5.715863 | 9.714326 | (1,2) | 0.890 |
 
-| T | robust crossing | oracle crossing | median max logE robust | median max logE oracle |
-|---:|---:|---:|---:|---:|
-| 40 | 0.000 | 0.020 | -0.4554 | 0.3027 |
-| 100 | 0.010 | 0.035 | -0.5247 | 0.0872 |
-| 200 | 0.000 | 0.025 | -0.4554 | 0.1653 |
+## Interpretation
 
-Maximum robust null crossing observed: 0.01, below nominal alpha=0.05 in this finite simulation.
+### Null sanity check
 
-### Alternative gamma=2
+The robust crossing frequencies were 0, 0.01 and 0 for T=40,100,200.
 
-| T | robust crossing | oracle crossing | median max logE robust | median max logE oracle |
-|---:|---:|---:|---:|---:|
-| 40 | 0.025 | 0.220 | -0.0390 | 1.2382 |
-| 100 | 0.060 | 0.230 | -0.0390 | 1.3951 |
-| 200 | 0.040 | 0.255 | -0.0390 | 1.4115 |
+These Monte Carlo frequencies are compatible with conservative behavior, but 200 repetitions are not enough to empirically certify an alpha=0.05 guarantee. The validity claim must come from the pathwise domination theorem, not from these frequencies.
 
-Weak shift remains difficult for the robust procedure.
+For example, 2/200 crossings at T=100 has a 95% Wilson interval of approximately 0.0027 to 0.0357.
 
-### Alternative gamma=4
+### Weak alternative gamma=2
 
-| T | robust crossing | oracle crossing | median max logE robust | median max logE oracle |
-|---:|---:|---:|---:|---:|
-| 40 | 0.230 | 0.590 | 0.7415 | 4.0415 |
-| 100 | 0.370 | 0.720 | 1.9445 | 4.9142 |
-| 200 | 0.455 | 0.800 | 2.6465 | 5.9759 |
+The robust detector remains weak:
+- best crossing rate = 0.06;
+- median maximum log evidence stays at about -0.039;
+- median final robust log evidence remains negative.
 
-Robust power increases clearly with horizon.
+This is a real power limitation and should not be hidden.
 
-### Alternative gamma=8
+### Moderate alternative gamma=4
 
-| T | robust crossing | oracle crossing | median max logE robust | median max logE oracle |
-|---:|---:|---:|---:|---:|
-| 40 | 0.580 | 0.930 | 3.5623 | 7.3460 |
-| 100 | 0.715 | 0.955 | 5.2695 | 8.8774 |
-| 200 | 0.800 | 0.960 | 6.5086 | 10.5399 |
+Power becomes meaningful and increases with horizon:
+- 0.23 at T=40;
+- 0.37 at T=100;
+- 0.455 at T=200.
 
-Robust power is strong and increases with horizon.
+Median final robust log evidence changes from approximately 0.019 to 0.924 to 1.598, showing sustained rather than merely transient growth as T increases.
+
+The robust/oracle crossing ratio improves from approximately 0.39 at T=40 to 0.57 at T=200.
+
+### Strong alternative gamma=8
+
+The robust detector is strong:
+- 0.58 at T=40;
+- 0.715 at T=100;
+- 0.80 at T=200.
+
+The robust/oracle crossing ratio improves from approximately 0.62 to 0.83 across the same horizons.
+
+Median final robust log evidence reaches 5.716 at T=200, corresponding to median final evidence of exp(5.716) ≈ 304.
+
+### Worst-candidate structure
+
+Under strong alternatives the pessimistic contamination interpretation is overwhelmingly C=(1,2), despite the true contaminated positions being C*=(7,8):
+- frequency 0.755 / 0.640 / 0.540 for gamma=4;
+- frequency 0.950 / 0.960 / 0.890 for gamma=8.
+
+This is scientifically important. The robust cost is not primarily caused by failure to identify the true contaminated cells. It is caused by the requirement that evidence survive an alternative admissible explanation in which the two lowest reference positions are contaminated.
+
+As horizon increases for gamma=4, the modal frequency of C=(1,2) falls from 0.755 to 0.540 while robust power rises. This suggests that accumulating rank history can partially reduce the damage of the pessimistic contamination interpretation.
 
 ## Decision
 
 **Kill-Test 09 survives.**
 
-The failure in Kill-Test 08 was not a fundamental impossibility result. A broader valid adaptive mixture restores substantial robust power while keeping the simulated null crossing rate low.
+The failure in Kill-Test 08 was not a fundamental impossibility result. A broader valid adaptive mixture restores substantial robust power while retaining the pathwise anytime-valid argument under the static/exogenous contamination model.
 
-This specifically supports the “bettor mismatch” explanation for Kill-Test 08.
+This supports the bettor-mismatch explanation for Kill-Test 08.
 
-The candidate should now advance to the next gate, but novelty is still not established.
-
-## Key scientific observation
-
-The robust/oracle gap remains substantial, especially at moderate signal strength, but the robust detector is no longer powerless:
-
-- gamma=4 reaches 45.5% robust crossing at T=200;
-- gamma=8 reaches 80.0% robust crossing at T=200.
-
-The worst contamination candidate is frequently (1,2) under strong alternatives, not the true contamination set (7,8). This shows that the robust minimum is driven by a pessimistic but fixed alternative contamination interpretation. The method nevertheless accumulates usable evidence once bettor mismatch is mitigated.
+However, novelty is still not established.
 
 ## Next gate
 
-Before claiming a new method, compare this exact static-coupling construction against the strongest generic baseline:
+The next experiment must test whether the exact static-coupling construction contributes anything beyond a generic robust fixed-reference method.
 
-1. CCTM / confidence-band robustification;
-2. the DP/static-coupling method with the adaptive mixture;
-3. oracle clean-subset predictive-rank martingale.
+Compare, at matched anytime-valid type-I control:
 
-The next experiment should compare power/delay at matched anytime-valid type-I control across K, M, and signal strength.
+1. generic CDF-confidence-band / CCTM-style robustification;
+2. static-coupling robust predictive-rank mixture;
+3. oracle clean-subset predictive-rank mixture.
+
+Primary endpoints:
+- crossing probability by fixed horizon;
+- stopping-time distribution / median detection delay among detected runs;
+- robust/oracle efficiency gap;
+- behavior across K, M and shift strength.
+
+A fair comparison must not claim that the simple DKW+M/K half-width is itself the complete CCTM detector; the baseline must implement the corresponding valid betting construction rather than compare only confidence-band widths.
 
 No additional hardware work is justified yet.
