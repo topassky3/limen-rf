@@ -1,6 +1,6 @@
 # P−1 Kill-Test 09 Result — adaptive-mixture predictive ranks
 
-Status: **PROVISIONAL — rerun required after Beta-rank implementation audit**
+Status: **PASS power gate — corrected rerun confirmed**
 
 Date: 2026-09-18
 
@@ -129,3 +129,56 @@ Therefore the numerical power conclusions above are now marked
 **provisional**. The corrected script must be rerun using the same frozen
 seed, horizons, mixture family, hedge and number of repetitions. Only that
 corrected output will determine whether Kill-Test 09 remains a PASS.
+
+
+## Corrected rerun confirmation — 2026-09-18
+
+After fixing the Beta-rank probability implementation and adding the gamma=1
+uniform-rank regression guard, the frozen Kill-Test 09 experiment was rerun
+with the same seed, scenarios, hedge, mixture family, alpha and 200
+repetitions per scenario.
+
+### Corrected headline results
+
+| condition | T | robust crossing | oracle crossing | median max logE robust | median max logE oracle |
+|---|---:|---:|---:|---:|---:|
+| null | 40 | 0.000 | 0.005 | -0.3630 | 0.3587 |
+| null | 100 | 0.010 | 0.035 | -0.4459 | 0.3587 |
+| null | 200 | 0.000 | 0.035 | -0.3986 | 0.3587 |
+| beta_2 | 40 | 0.025 | 0.200 | 0.0348 | 1.2673 |
+| beta_2 | 100 | 0.060 | 0.250 | -0.0098 | 1.3572 |
+| beta_2 | 200 | 0.040 | 0.270 | 0.0348 | 1.5627 |
+| beta_4 | 40 | 0.230 | 0.605 | 0.7431 | 3.6903 |
+| beta_4 | 100 | 0.370 | 0.730 | 1.9445 | 4.7550 |
+| beta_4 | 200 | 0.455 | 0.785 | 2.6465 | 6.0060 |
+| beta_8 | 40 | 0.580 | 0.925 | 3.5623 | 6.6228 |
+| beta_8 | 100 | 0.715 | 0.950 | 5.2695 | 8.5229 |
+| beta_8 | 200 | 0.800 | 0.960 | 6.5086 | 10.2192 |
+
+### Decision after correction
+
+**PASS confirmed.**
+
+The robust crossing rates for every scenario are unchanged from the original
+run at the displayed precision:
+- best gamma=2 robust crossing: 0.06;
+- gamma=4 at T=200: 0.455;
+- gamma=8 at T=200: 0.80;
+- maximum robust null crossing: 0.01.
+
+The oracle numbers moved modestly, as expected after correcting the fixed
+Beta-rank components, but the scientific conclusion is unchanged.
+
+This is an important reproducibility result: the observed recovery of robust
+power is not an artifact of the Beta-rank implementation error.
+
+The fact that the robust numbers are essentially invariant while some oracle
+values move suggests that the robust minimum may often be controlled by
+components/candidates other than the corrected fixed-Beta component. That is
+a hypothesis for later component-ablation analysis, not yet a proved fact.
+
+Kill-Test 09 is now closed as a **confirmed PASS**.
+
+Proceed to Kill-Test 10: matched comparison against a properly implemented
+generic fixed-reference confidence-band/CCTM-style baseline and the oracle
+predictive-rank method.
