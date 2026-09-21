@@ -1,2 +1,33 @@
 \section{Conclusion}
-% Source: docs/manuscript/sections_6_8_discussion_limitations_conclusion_v0_1.md
+
+We studied anytime-valid sequential detection when a finite fixed reference bank is already contaminated before monitoring begins. The defining feature is persistence: the same unknown contamination identities are reused at every future comparison.
+
+Building on the clean fixed-reference predictive-rank martingale of Kuang and Xia \cite{KuangXia2026}, each candidate contamination set induces a reconstructed rank sequence. For the true candidate,
+\[
+  R_t^{(C^\star)}=R_t^{\mathrm{clean}},
+\]
+so its candidate wealth is a valid clean PRM. The lower envelope
+\[
+  \underline E_t=\min_C E_t^{(C)}
+\]
+satisfies the pathwise inequality
+\[
+  \underline E_t\le E_t^{(C^\star)},
+\]
+which yields
+\[
+  \Pr_{H_0}\!\left(
+    \sup_t\underline E_t\ge\frac1\alpha
+  \right)\le\alpha.
+\]
+The lower envelope itself need not be an e-process; its guarantee follows from domination by the true-candidate process.
+
+Static contamination also induces a contiguous-partition representation of observed-rank bins. For a fixed categorical bettor, this structure leads to an additive objective and an approximately \(O(Km^2)\) dynamic program.
+
+In the frozen simulation study, persistent-identity coupling retains substantially more finite-reference power than the tested confidence-band robustifications. At
+\[
+  K=32,\qquad m=2,\qquad T=200,\qquad X_t\sim\mathrm{Beta}(4,1),
+\]
+the observed crossing probabilities are \(0.935\) for static coupling, \(0.170\) for the strongest ex-post tuned confidence-band baseline, and \(0.995\) for the oracle, with median detected delays 13, 78.5, and 8.
+
+The conclusion is deliberately narrow: when contamination is static, preserving persistent identity structure can provide finite-reference information that is lost when uncertainty is represented only through a generic CDF band. The result is not a claim of universal robustness or superiority; it applies to the stated static/exogenous model and inherits the marginal fixed-reference interpretation of predictive-rank martingales.
