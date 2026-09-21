@@ -1,3 +1,63 @@
 \section{Introduction}
-% Source prose: docs/manuscript/abstract_introduction_v0_1.md
-% Next pass: convert frozen Introduction and replace citation placeholders with BibTeX keys.
+
+Many sequential detection systems compare incoming observations against a finite bank of nominal reference data. This pattern appears in radar constant-false-alarm-rate (CFAR) detection, statistical process monitoring, anomaly detection, conformal monitoring, and distribution-shift detection. In practice, a small number of reference observations may already be corrupted before online monitoring begins. In radar, interfering targets or heterogeneous clutter can occupy reference cells; in calibration and monitoring systems, historical data can contain mislabeled, anomalous, or otherwise nonrepresentative observations. When the same finite bank is reused over time, the contamination is not merely uncertainty in an empirical CDF: the identities of the contaminated observations form a persistent latent object shared by all future decisions.
+
+Robust handling of contaminated reference cells is classical in radar. Order-statistic CFAR was introduced precisely to improve behavior in multiple-target and clutter-edge environments \cite{Rohling1983}. This literature establishes that contaminated reference cells are neither a new problem nor a new motivation. Classical CFAR procedures, however, are typically one-shot or local-window thresholding rules under specified clutter models. They do not model the exact dependence induced by repeatedly comparing a stream against the same finite contaminated bank, nor are they designed to produce optional-stopping-valid sequential evidence.
+
+A separate literature develops online distribution-free inference using conformal martingales and e-processes \cite{Vovk2021,VovkEtAl2021,RamdasEtAl2022}. Of particular relevance, Kuang and Xia \cite{KuangXia2026} derive the exact predictive law of ranks obtained by repeatedly reusing a \emph{clean} fixed reference sample. If \(R_t\in\{0,\ldots,n\}\) is the rank of the \(t\)-th online observation relative to \(n\) clean references, then under the iid continuous null
+\begin{equation}
+  \Pr(R_t=j\mid R_{1:t-1})
+  =
+  \frac{N_{j,t-1}+1}{n+t},
+  \label{eq:intro-prm-law}
+\end{equation}
+where \(N_{j,t-1}\) is the number of earlier online ranks equal to \(j\). Kuang and Xia further show that predictable normalized betting distributions yield nonnegative predictive-rank martingales (PRMs) and hence finite-sample anytime marginal type-I control. We use this clean-reference result as an imported building block and do not claim the predictive law or the generic PRM construction as new.
+
+Fixed-reference uncertainty is also studied by conditional conformal test martingales (CCTMs) \cite{ShaerEtAl2026}. CCTM keeps a clean iid null reference set fixed and accounts for finite-reference CDF estimation error through simultaneous confidence bands. Its use of the word \emph{contamination} addresses post-change observations entering a growing reference set in earlier conformal test martingales; its theoretical reference set itself is clean. Accordingly, the contaminated-reference confidence-band procedures used later in this paper are our comparison adaptations, not methods attributed to CCTM.
+
+Contaminated calibration data have been studied directly in conformal inference. Clarkson et al.\ \cite{ClarksonEtAl2024} analyze split conformal prediction when calibration scores are contaminated, while Bashari, Sesia, and Romano \cite{BashariEtAl2025} study conformal outlier detection with contaminated reference data and the associated power loss. These works reinforce the importance of the contaminated-reference problem but do not construct a repeatedly reused fixed-reference PRM indexed by persistent unknown contamination identities.
+
+Robust anytime-valid inference under contamination also exists at a more general level. Saha and Ramdas \cite{SahaRamdas2024} develop e-value and likelihood-ratio procedures for Huber-type contamination under composite hypotheses. That framework allows strong contamination of the sequential observations themselves. Our nuisance structure is different: a finite bank contains a small unknown set of bad cells whose identities persist while the bank is repeatedly reused. General e-process theory also makes clear that pathwise domination by a valid process is not itself a new probability principle \cite{RamdasEtAl2022}. The contribution here is the particular persistent-reference construction that makes such domination useful.
+
+We consider \(K\) observed reference values containing exactly \(m\) arbitrary static/exogenous replacements and \(n=K-m\) clean iid observations from an unknown continuous null distribution \(F\). After sorting the observed bank, let \(C^\star\) be the unknown set of contaminated sorted positions. If \(Q_t\) is the observable rank of \(X_t\) against all \(K\) references, each candidate set \(C\) induces
+\begin{equation}
+  R_t^{(C)}
+  =
+  Q_t-\#\{c\in C:c\le Q_t\}.
+  \label{eq:intro-candidate-rank}
+\end{equation}
+For the true candidate \(C^\star\), this reconstructed rank equals the rank against the latent clean reference sample. Thus the true candidate inherits the clean PRM.
+
+Let \(E_t^{(C)}\) denote the candidate wealth and define
+\begin{equation}
+  \underline E_t
+  =
+  \min_{C:|C|=m}E_t^{(C)}.
+  \label{eq:intro-envelope}
+\end{equation}
+Although this pointwise minimum need not be a martingale or an e-process, it satisfies
+\[
+  \underline E_t\le E_t^{(C^\star)}
+  \qquad\text{for every }t
+\]
+on every sample path. Since \(E_t^{(C^\star)}\) is a valid clean PRM, Ville's inequality yields
+\[
+  \Pr_{H_0}\!\left(
+    \sup_{t\ge0}\underline E_t\ge\frac1\alpha
+  \right)\le\alpha.
+\]
+The same static candidate is reused for the full sequence, so the construction preserves information that a generic confidence band discards.
+
+The static contamination positions also induce a combinatorial structure. Deleting one sorted reference merges two adjacent observed-rank bins. Therefore a candidate set corresponds to a contiguous partition of the \(K+1\) observed-rank bins into \(K-m+1\) candidate clean-rank bins. For one fixed categorical bettor, the candidate log wealth is additive across these segments and admits an \(O(Km^2)\)-type dynamic program. The frozen empirical method uses a convex portfolio of bettors, so we restrict the polynomial-time claim to the fixed-categorical case.
+
+The contributions are:
+\begin{enumerate}[leftmargin=*]
+  \item a static-contamination extension of clean fixed-reference predictive-rank monitoring, based on pathwise reconstruction of the clean rank process for the true candidate;
+  \item an anytime-valid robust crossing construction obtained by a lower envelope over candidate PRM wealths and pathwise domination by the true candidate;
+  \item a persistent contiguous-partition representation of contamination positions and a dynamic-programming reduction for fixed categorical bettors; and
+  \item a frozen finite-reference evaluation against an oracle and contamination-widened confidence-band baselines.
+\end{enumerate}
+
+The empirical comparison is deliberately scoped. At the primary frozen setting \(K=32\), \(m=2\), \(T=200\), and \(X_t\sim\mathrm{Beta}(4,1)\), the proposed method crosses by the horizon on \(93.5\%\) of runs, compared with \(17.0\%\) for the strongest ex-post tuned confidence-band benchmark and \(99.5\%\) for the oracle. These results do not imply universal superiority over CCTM, conformal methods, or robust e-processes.
+
+The remainder of the paper formalizes the model and imported clean PRM result, proves the robust crossing theorem, describes the structural partition result and experimental protocol, reports finite-reference results, and discusses scope and limitations.
