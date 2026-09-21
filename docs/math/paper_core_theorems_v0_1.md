@@ -95,7 +95,11 @@ This identity is pathwise.
 
 ---
 
-## 3. Theorem 1 — exact clean predictive-rank law
+## 3. Known Result A — exact clean predictive-rank law (Kuang–Xia, 2026)
+
+### Attribution
+
+This result is Kuang and Xia (2026), Theorem 2.1, translated from their rank indexing \(1,\ldots,n+1\) to our indexing \(0,\ldots,n\). It is background, not a LIMEN-RF novelty claim.
 
 ### Statement
 
@@ -203,7 +207,11 @@ The martingale filtration used below is therefore the predictive-rank filtration
 
 ---
 
-## 4. Theorem 2 — candidate-wise predictive-rank martingale
+## 4. Known Result B — clean predictive-rank martingale (Kuang–Xia, 2026)
+
+### Attribution
+
+This generic predictable-\(q_t\) martingale is already part of Kuang and Xia (2026), Theorem 2.1. LIMEN-RF imports it as the clean-reference engine used by the true contamination candidate.
 
 ### Statement
 
@@ -255,7 +263,7 @@ Then \((E_t)_{t\ge0}\) is a nonnegative martingale under the null, and hence an 
 
 ### Proof
 
-By Theorem 1,
+By Known Result A,
 
 \[
 \Pr(R_t=j\mid\mathcal G_{t-1})=p_{t,j}.
@@ -289,7 +297,9 @@ QED.
 
 ---
 
-## 5. Corollary 2.1 — convex wealth mixtures remain valid
+## 5. Known corollary — convex wealth mixtures remain valid
+
+Kuang and Xia also use convex PRM portfolios; this is additionally a standard martingale fact. It is not a LIMEN-RF novelty claim.
 
 Suppose \(E_t^{(h)}\), \(h=1,\ldots,H\), are candidate-wise nonnegative martingales constructed as in Theorem 2, and let
 
@@ -319,7 +329,7 @@ No special property of those particular alternatives is required for validity be
 
 ---
 
-## 6. Theorem 3 — robust anytime crossing control under static contamination
+## 6. LIMEN-RF Theorem 1 — robust anytime crossing control under static contamination
 
 ### Statement
 
@@ -371,7 +381,7 @@ R_t^{(C^\star)}
 \#\{i\in G:Y_i\le X_t\}.
 \]
 
-Thus \(E_t^{(C^\star)}\) is exactly the clean predictive-rank martingale from Theorem 2 (or Corollary 2.1 for the frozen mixture).
+Thus \(E_t^{(C^\star)}\) is exactly the clean predictive-rank martingale supplied by Known Result B (or its convex-mixture corollary for the frozen mixture).
 
 By definition of the lower envelope,
 
@@ -430,7 +440,7 @@ The manuscript should call it an **anytime-valid robust evidence lower envelope*
 
 The physical contaminated cell identities may be fixed before sampling while their locations after sorting are random.
 
-This causes no random-selection problem in Theorem 3.
+This causes no random-selection problem in LIMEN-RF Theorem 1.
 
 For whichever sorted position set \(C^\star\) is realized,
 
@@ -639,13 +649,16 @@ The manuscript should frame the current contribution as **finite-reference anyti
 
 ## 13. Current theorem status
 
-### Essentially complete modulo exposition / primary-source attribution
+### Imported background now primary-source verified
 
-- Theorem 1: exact clean predictive-rank law.
-- Theorem 2: candidate-wise martingale for predictable normalized betting distributions.
-- Corollary 2.1: convex wealth mixtures.
-- Theorem 3: robust anytime crossing control by pathwise domination.
-- Proposition 4: contamination positions as contiguous partitions.
+- Known Result A: clean predictive-rank law — Kuang–Xia (2026), Theorem 2.1.
+- Known Result B: predictable normalized rank betting gives a nonnegative martingale — Kuang–Xia (2026), Theorem 2.1.
+- Convex PRM portfolios/wealth mixtures — Kuang–Xia Section 2.6 plus standard martingale closure.
+
+### LIMEN-RF paper-core contributions to formalize
+
+- LIMEN-RF Theorem 1: robust anytime crossing control by true-candidate pathwise domination.
+- Proposition 4: static contamination positions as persistent contiguous partitions.
 - Proposition 5: fixed-categorical closed form and DP scope.
 
 ### Still requiring deliberate proof work
@@ -653,27 +666,27 @@ The manuscript should frame the current contribution as **finite-reference anyti
 - rigorous upper-bound-only \(m\le M\) corollary, if desired;
 - any polynomial-time optimization theorem for the full frozen mixture;
 - finite-reference power/asymptotic characterization;
-- manuscript-level primary-source attribution for predictive-rank martingales and CCTM comparisons.
+- broader prior-art verification that no earlier robust rank/e-process result already subsumes the static contaminated-reference lower-envelope construction.
 
 ---
 
 ## 14. Paper-core theorem stack
 
-The manuscript should be organized around the following logical chain:
+The manuscript should explicitly separate imported prior art from the LIMEN-RF extension. The logical chain is:
 
 \[
 \boxed{
 \text{iid clean reference}
-\Longrightarrow
-\text{Dirichlet predictive ranks}
+\xRightarrow{\text{Kuang--Xia}}
+\text{predictive-rank law}
 }
 \]
 
 \[
 \boxed{
 \text{predictable normalized betting}
-\Longrightarrow
-\text{candidate-wise martingale}
+\xRightarrow{\text{Kuang--Xia}}
+\text{clean PRM martingale}
 }
 \]
 
