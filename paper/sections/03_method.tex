@@ -2,15 +2,17 @@
 
 \subsection{Candidate-wise evidence}
 
-For each \(C\in\mathcal C_m\), apply the clean predictive-rank construction to the reconstructed sequence \(R_1^{(C)},R_2^{(C)},\ldots\), producing a candidate wealth process \(E_t^{(C)}\).
-
-For \(C\neq C^\star\), the reconstructed sequence need not obey the clean predictive law, so \(E_t^{(C)}\) is not claimed to be a martingale. For the true candidate, Lemma~1 gives
+For each \(C\in\mathcal C_m\), apply the same pre-specified clean predictive-rank betting functional to the reconstructed sequence
 \[
-  R_t^{(C^\star)}
-  =
-  \#\{i\in G:Y_i\le X_t\},
+  R_1^{(C)},R_2^{(C)},\ldots,
 \]
-hence \(E_t^{(C^\star)}\) is exactly a valid clean PRM.
+producing candidate wealth \(E_t^{(C)}\).
+
+For \(C\neq C^\star\), the reconstructed sequence need not obey the clean predictive law, so \(E_t^{(C)}\) is not claimed to be a martingale. For the true candidate, Lemma~1 and \eqref{eq:canonical-clean-rank} give
+\[
+  R_t^{(C^\star)}=R_t^\star.
+\]
+Because the betting rule is a deterministic predictable functional of the candidate rank history, the true-candidate bet \(q_t^{(C^\star)}\) is \(\mathcal G_{t-1}^\star\)-measurable. Therefore \(E_t^{(C^\star)}\) is exactly the clean PRM with respect to the canonical clean-rank filtration \((\mathcal G_t^\star)\).
 
 Define the robust evidence lower envelope
 \begin{equation}
@@ -29,8 +31,22 @@ Since \(C^\star\in\mathcal C_m\),
 \end{equation}
 pathwise.
 
-\begin{theorem}[Anytime-valid robust crossing under static contamination]
-Assume the model of Section~2 with exactly \(m\) static/exogenous contaminated references. Let \(E_t^{(C)}\) be the candidate predictive-rank wealth obtained by applying the same pre-specified valid clean-reference betting construction to each reconstructed candidate sequence. Then, for every \(\alpha\in(0,1)\),
+\begin{lemma}[Random sorted positions do not create post-selection]
+Let \(\Phi_t\) denote the deterministic wealth functional induced by the pre-specified betting strategy on a clean rank history of length \(t\). Then
+\[
+  E_t^{(C^\star)}
+  =
+  \Phi_t(R_1^\star,\ldots,R_t^\star)
+\]
+pathwise, even though the sorted position set \(C^\star\) is random.
+\end{lemma}
+
+\begin{proof}
+For every realized reference bank, deleting the realized contaminated positions \(C^\star\) gives the canonical clean ranks by Lemma~1. The candidate algorithm then applies the same deterministic betting functional \(\Phi_t\) to those ranks. Thus the process indexed by the random representation \(C^\star\) is identically the single canonical clean-rank wealth process; it is not chosen from unrelated martingales after observing online evidence.
+\end{proof}
+
+\begin{theorem}[Anytime-valid robust crossing under exactly \(m\) static contaminants]
+Assume the model of Section~2 with exactly \(m\) static/exogenous contaminated references. Let \(E_t^{(C)}\) be the candidate wealth obtained by applying the same pre-specified valid clean-reference betting functional to each reconstructed candidate sequence. Then, for every \(\alpha\in(0,1)\),
 \begin{equation}
   \Pr_{H_0}\!\left(
     \sup_{t\ge0}\underline E_t\ge\frac1\alpha
@@ -41,30 +57,104 @@ Assume the model of Section~2 with exactly \(m\) static/exogenous contaminated r
 \end{theorem}
 
 \begin{proof}
-By Lemma~1, \(E_t^{(C^\star)}\) is a clean predictive-rank martingale. By \eqref{eq:pathwise-domination},
+The preceding lemma identifies \(E_t^{(C^\star)}\) with the canonical clean PRM
+\[
+  \Phi_t(R_1^\star,\ldots,R_t^\star).
+\]
+Hence \(E_t^{(C^\star)}\) is a nonnegative martingale with respect to \((\mathcal G_t^\star)\). By \eqref{eq:pathwise-domination},
 \[
   \left\{\sup_t\underline E_t\ge1/\alpha\right\}
   \subseteq
   \left\{\sup_tE_t^{(C^\star)}\ge1/\alpha\right\}.
 \]
-Applying Ville's inequality to \(E_t^{(C^\star)}\) yields \eqref{eq:main-theorem}.
+Ville's inequality for the canonical true-candidate martingale yields \eqref{eq:main-theorem}.
 \end{proof}
 
 The theorem establishes anytime-valid \emph{threshold-crossing control} for \(\underline E_t\). It does not claim that \((\underline E_t)\) itself is a martingale, supermartingale, or e-process.
 
-\subsection{Why random sorted contamination positions are harmless}
+\subsection{Unknown contamination count bounded by \(M\)}
 
-The physical contaminated-cell identities are fixed before monitoring, but their positions after sorting can be random. This causes no post-selection problem. For whichever sorted set \(C^\star\) is realized, \(R_t^{(C^\star)}\) is simply the canonical rank against the latent clean sample. Thus the true-candidate process is not selected from unrelated martingales after observing online evidence; it is one representation of the same clean PRM.
+The exact value of the contamination count is not needed for validity if a deterministic upper bound is available.
+
+For each
+\[
+  r\in\{0,\ldots,M\},
+\]
+let
+\[
+  \mathcal C_r
+  =
+  \{C\subseteq\{1,\ldots,K\}:|C|=r\},
+  \qquad
+  n_r=K-r.
+\]
+For \(C\in\mathcal C_r\), reconstruct ranks by
+\[
+  R_t^{(r,C)}
+  =
+  Q_t-\#\{c\in C:c\le Q_t\},
+\]
+and compute a valid clean-reference predictive-rank wealth \(E_t^{(r,C)}\) using the null law corresponding to \(n_r\) clean references.
+
+Define
+\begin{equation}
+  \underline E_t^{(\le M)}
+  =
+  \min_{0\le r\le M}
+  \min_{C\in\mathcal C_r}
+  E_t^{(r,C)}.
+  \label{eq:upper-bound-envelope}
+\end{equation}
+
+\begin{corollary}[Anytime validity with only an upper bound]
+Suppose the true number of static/exogenous contaminated references is \(m^\star\le M\). Then, for every \(\alpha\in(0,1)\),
+\begin{equation}
+  \Pr_{H_0}\!\left(
+    \sup_{t\ge0}
+    \underline E_t^{(\le M)}
+    \ge\frac1\alpha
+  \right)
+  \le\alpha.
+  \label{eq:upper-bound-validity}
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The candidate family in \eqref{eq:upper-bound-envelope} contains the true pair \((m^\star,C^\star)\). For that pair, \(n_{m^\star}=K-m^\star\), the reconstructed ranks equal the canonical clean ranks, and \(E_t^{(m^\star,C^\star)}\) is a valid clean PRM. Therefore
+\[
+  \underline E_t^{(\le M)}
+  \le
+  E_t^{(m^\star,C^\star)}
+\]
+pathwise for all \(t\). Ville's inequality gives \eqref{eq:upper-bound-validity}.
+\end{proof}
+
+This corollary is a theoretical extension of the validity result. The frozen experiments still use the exact count \(m=2\); no empirical claim for the unknown-count procedure is made here.
 
 \subsection{Persistent partition structure}
 
-The observable rank \(Q_t\) takes values in \(\{0,\ldots,K\}\), defining \(K+1\) adjacent observed-rank bins. Deleting one sorted reference at position \(c\) merges the two adjacent bins \(c-1\) and \(c\). Therefore each candidate \(C\) of size \(m\) corresponds to deleting \(m\) boundaries and hence to a contiguous partition of the \(K+1\) observed-rank bins into
+The observable rank \(Q_t\) takes values in \(\{0,\ldots,K\}\), defining \(K+1\) adjacent observed-rank bins. A sorted reference position \(c\in\{1,\ldots,K\}\) is precisely the boundary between observed-rank bins \(c-1\) and \(c\).
+
+\begin{proposition}[Bijection between candidates and contiguous partitions]
+For fixed \(m\), candidate sets
+\[
+  C\subseteq\{1,\ldots,K\},
+  \qquad |C|=m,
+\]
+are in one-to-one correspondence with contiguous partitions of the \(K+1\) ordered observed-rank bins into
 \[
   K-m+1=n+1
 \]
-candidate clean-rank groups.
+nonempty blocks.
+\end{proposition}
 
-This same partition is reused for all \(t\), which is the combinatorial expression of persistent contamination identities.
+\begin{proof}
+Deleting a candidate reference at position \(c\) removes exactly the boundary between bins \(c-1\) and \(c\), merging the two connected components adjacent to that boundary. Deleting \(m\) distinct boundaries from the path of \(K+1\) ordered bins leaves exactly \(K+1-m=n+1\) connected components, each a nonempty contiguous block.
+
+Conversely, any partition of the \(K+1\) ordered bins into \(n+1\) nonempty contiguous blocks has exactly \(m\) missing internal boundaries. Taking those missing boundary indices as \(C\) recovers a unique candidate set. The two maps are inverses.
+\end{proof}
+
+The same partition is reused for all \(t\), which is the combinatorial expression of persistent contamination identities.
 
 \subsection{Fixed-categorical closed form}
 
@@ -76,7 +166,8 @@ Consider a fixed categorical betting distribution
 \]
 Let
 \[
-  H_q(t)=\sum_{s=1}^t\mathbf 1\{Q_s=q\}
+  H_q(t)=\sum_{s=1}^t\mathbf 1\{Q_s=q\},
+  \qquad q=0,\ldots,K,
 \]
 be the observed full-reference rank histogram and let \(N_j^{(C)}(t)\) be the histogram after the candidate merges. Then
 \begin{align}
@@ -92,45 +183,194 @@ be the observed full-reference rank histogram and let \(N_j^{(C)}(t)\) be the hi
   \right].
   \label{eq:fixed-categorical-closed}
 \end{align}
-Thus the candidate objective depends on the online history through the observed-rank histogram and the contiguous merges induced by \(C\).
+Thus the candidate objective depends on the online history through the observed-rank histogram and the contiguous partition induced by \(C\).
 
-\begin{proposition}[Dynamic program for a fixed categorical bettor]
-For a fixed categorical bettor, the candidate minimization in \eqref{eq:lower-envelope} can be computed in approximately \(O(Km^2)\) time and \(O(Km)\) memory.
-\end{proposition}
+\begin{theorem}[Exact dynamic program for a fixed categorical bettor]
+After \(O(K)\) prefix-sum preprocessing of the observed-rank histogram, the minimum of \eqref{eq:fixed-categorical-closed} over all \(C\in\mathcal C_m\) can be computed in
+\[
+  O(Km^2)
+\]
+time and
+\[
+  O(Km)
+\]
+memory.
+\end{theorem}
 
-\begin{proof}[Sketch]
-If an observed-rank segment \([b,b+\ell-1]\) is merged into one candidate rank group, let
+\begin{proof}
+Let the ordered observed-rank bins be indexed \(0,\ldots,K\), and define prefix sums so that the total histogram count in any segment \([b,b+\ell-1]\) is available in \(O(1)\) time:
 \[
-  N=\sum_{q=b}^{b+\ell-1}H_q(t).
+  N(b,\ell)
+  =
+  \sum_{q=b}^{b+\ell-1}H_q(t).
 \]
-If the segment is assigned to candidate clean-rank index \(j\), its additive contribution, ignoring terms independent of the partition, is
+If this segment is the next contiguous block and is assigned to clean-rank index \(j\), its additive contribution to \eqref{eq:fixed-categorical-closed}, excluding constants independent of the partition, is
 \[
-  c(j,b,\ell)=N\log a_j-\log\Gamma(N+1).
+  c(j,b,\ell)
+  =
+  N(b,\ell)\log a_j
+  -
+  \log\Gamma(N(b,\ell)+1).
 \]
-Let \(DP[b,d]\) be the minimum additive cost after consuming the first \(b\) observed-rank bins while deleting \(d\) boundaries. Since \(b-d\) groups have then been formed, the next group index is \(j=b-d\). A segment of length \(\ell\) consumes \(\ell-1\) additional boundaries, giving
+
+Define \(DP[b,d]\) as the minimum additive cost among all valid contiguous partitions of the first \(b\) observed-rank bins that have deleted exactly \(d\) internal boundaries. Such a partial partition contains exactly \(b-d\) completed blocks, so the next block receives clean-rank index
 \[
+  j=b-d.
+\]
+Choosing its length \(\ell\ge1\) deletes exactly \(\ell-1\) additional boundaries, and therefore gives the recurrence
+\begin{equation}
   DP[b+\ell,d+\ell-1]
   =
   \min\!\left\{
     DP[b+\ell,d+\ell-1],
     DP[b,d]+c(b-d,b,\ell)
   \right\}.
+  \label{eq:dp-recurrence}
+\end{equation}
+Only transitions satisfying
+\[
+  d+\ell-1\le m
 \]
-Since \(1\le\ell\le m-d+1\), the stated complexity follows.
+and \(b+\ell\le K+1\) are allowed.
+
+By the preceding bijection, every candidate set corresponds to exactly one sequence of contiguous blocks and hence to exactly one path from \(DP[0,0]\) to \(DP[K+1,m]\). Conversely, every feasible path in the recurrence specifies a unique contiguous partition and therefore a unique candidate. Induction on \(b\) shows that each state stores the minimum cost over all and only feasible partial partitions represented by that state. Thus \(DP[K+1,m]\) is the exact candidate minimum.
+
+There are \(O(Km)\) states. From each state, at most \(m+1\) segment lengths can be feasible because \(\ell-1\le m-d\). Segment costs are \(O(1)\) after prefix-sum preprocessing. Hence the total running time is \(O(Km^2)\). Storing the table and optional predecessors requires \(O(Km)\) memory.
 \end{proof}
 
-The frozen empirical method uses a convex portfolio of wealth processes. The logarithm of that mixture contains a log-sum-exp across components, so the additive structure above does not directly establish the same polynomial-time result for the complete frozen portfolio. We therefore restrict the computational proposition to the fixed-categorical case.
+The frozen empirical method uses a convex portfolio of wealth processes. The logarithm of that mixture contains a log-sum-exp across components, so the additive structure above does not directly establish the same polynomial-time result for the complete frozen portfolio. We therefore restrict the computational theorem to the fixed-categorical case.
 
-\subsection{Scope}
+\subsection{Finite-reference asymptotics of the frozen betting families}
 
-The paper assumes that the exact contamination count \(m\) is known. If only an upper bound \(m\le M\) were known, a lower envelope over all candidate sizes is a natural extension, but each size changes the clean-reference count and predictive null law. We leave that extension for future work.
+The finite-reference information ceiling can be made explicit for the two betting families used in the frozen portfolio. The following proposition is an asymptotic characterization of these components, not a claim of a new general Bayes-factor principle.
 
-The theory also excludes value-adaptive replacement after observing an originally clean reference sample. In that stronger model the surviving clean observations can be selection-biased.
-
-Finally, for fixed \(n\), the repeated-rank process admits the de Finetti representation
+Let
 \[
-  P\sim\mathrm{Dirichlet}(1,\ldots,1),
+  k=n+1,
   \qquad
-  R_t\mid P\overset{\mathrm{iid}}{\sim}\mathrm{Categorical}(P).
+  \widehat\pi_{j,t}
+  =
+  \frac{N_j(t)}{t},
 \]
-Thus a long future stream learns the realized finite-reference spacing vector rather than eliminating finite-reference randomness. We therefore make no universal asymptotic-consistency claim for fixed \(n\).
+and suppose
+\begin{equation}
+  \widehat\pi_{j,t}\longrightarrow\pi_j>0,
+  \qquad j=0,\ldots,n.
+  \label{eq:interior-rank-frequencies}
+\end{equation}
+
+\begin{proposition}[Finite-reference asymptotics]
+Under \eqref{eq:interior-rank-frequencies}:
+
+\begin{enumerate}[label=(\alph*),leftmargin=*]
+\item For a fixed categorical bettor \(a=(a_0,\ldots,a_n)\) with all \(a_j>0\),
+\begin{equation}
+  \frac1t\log E_t^{(a)}
+  \longrightarrow
+  -D_{\mathrm{KL}}(\pi\Vert a).
+  \label{eq:fixed-cat-asymptotic}
+\end{equation}
+
+\item For a Dirichlet predictive bettor with parameters
+\[
+  \boldsymbol\alpha=(\alpha_0,\ldots,\alpha_n),
+  \qquad
+  \alpha_j>0,
+  \qquad
+  A=\sum_{j=0}^n\alpha_j,
+\]
+whose predictive probabilities are
+\[
+  q_{t,j}^{(\boldsymbol\alpha)}
+  =
+  \frac{N_{j,t-1}+\alpha_j}{t-1+A},
+\]
+the wealth has the exact form
+\begin{equation}
+  E_t^{(\boldsymbol\alpha)}
+  =
+  \frac{\Gamma(A)\Gamma(k+t)}
+       {\Gamma(A+t)\Gamma(k)}
+  \prod_{j=0}^n
+  \frac{\Gamma(N_j(t)+\alpha_j)}
+       {\Gamma(\alpha_j)\Gamma(N_j(t)+1)},
+  \label{eq:dirichlet-wealth-exact}
+\end{equation}
+and converges to the finite positive limit
+\begin{equation}
+  E_t^{(\boldsymbol\alpha)}
+  \longrightarrow
+  \frac{\Gamma(A)}
+       {\Gamma(k)\prod_{j=0}^n\Gamma(\alpha_j)}
+  \prod_{j=0}^n
+  \pi_j^{\alpha_j-1}.
+  \label{eq:dirichlet-wealth-limit}
+\end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For part (a), the fixed-categorical closed form gives
+\[
+  \frac1t\log E_t^{(a)}
+  =
+  \frac{\log\Gamma(t+k)}{t}
+  -
+  \frac1t\sum_{j=0}^n\log\Gamma(N_j(t)+1)
+  +
+  \sum_{j=0}^n\widehat\pi_{j,t}\log a_j
+  +o(1).
+\]
+Stirling's formula and \(\widehat\pi_{j,t}\to\pi_j>0\) imply
+\[
+  \frac{\log\Gamma(t+k)
+  -\sum_j\log\Gamma(N_j(t)+1)}{t}
+  \longrightarrow
+  -\sum_{j=0}^n\pi_j\log\pi_j.
+\]
+Adding \(\sum_j\pi_j\log a_j\) yields
+\[
+  -\sum_j\pi_j\log\frac{\pi_j}{a_j}
+  =
+  -D_{\mathrm{KL}}(\pi\Vert a).
+\]
+
+For part (b), multiplying the Dirichlet predictive factors telescopes into the ratio of two Dirichlet--multinomial sequence probabilities, yielding \eqref{eq:dirichlet-wealth-exact}. The gamma-ratio asymptotic
+\[
+  \frac{\Gamma(x+\alpha)}{\Gamma(x+\beta)}
+  \sim x^{\alpha-\beta}
+\]
+gives
+\[
+  \frac{\Gamma(k+t)}{\Gamma(A+t)}
+  \sim t^{k-A}
+\]
+and, for each \(j\),
+\[
+  \frac{\Gamma(N_j(t)+\alpha_j)}
+       {\Gamma(N_j(t)+1)}
+  \sim
+  N_j(t)^{\alpha_j-1}
+  \sim
+  t^{\alpha_j-1}\pi_j^{\alpha_j-1}.
+\]
+Since
+\[
+  \sum_{j=0}^n(\alpha_j-1)=A-k,
+\]
+the powers of \(t\) cancel, leaving \eqref{eq:dirichlet-wealth-limit}.
+\end{proof}
+
+A direct consequence is that if the limiting interior rank-frequency vector \(\pi\) differs from every fixed categorical vector in a finite betting portfolio, then every fixed categorical component decays exponentially by \eqref{eq:fixed-cat-asymptotic}, while every Dirichlet predictive component converges to a finite constant by \eqref{eq:dirichlet-wealth-limit}. Adding a constant-one hedge therefore yields a finite limiting true-candidate portfolio wealth. Since
+\[
+  \underline E_t\le E_t^{(C^\star)},
+\]
+the robust lower envelope cannot diverge to \(+\infty\) in such a case.
+
+This provides a formal explanation for the finite-reference information ceiling: with \(n\) fixed, the frozen portfolio is not expected to deliver universal asymptotic wealth divergence across all persistent rank-frequency alternatives. The paper therefore focuses on finite-horizon anytime validity and finite-reference power.
+
+\subsection{Scope boundary}
+
+The theory still excludes value-adaptive replacement after observing an originally clean reference sample. In that stronger model the surviving clean observations can be selection-biased and the canonical clean-rank PRM need not apply.
+
+The upper-bound corollary extends validity from known \(m\) to known \(M\), but the current experimental study remains frozen at exact \(m=2\). Likewise, the asymptotic proposition explains the frozen bettor family but does not imply an optimality statement for other betting strategies.
