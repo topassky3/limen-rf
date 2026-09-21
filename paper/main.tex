@@ -1,0 +1,42 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{siunitx}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\title{Anytime-Valid Predictive-Rank Detection with a Statically Contaminated Reference Set}
+\author{Juan Felipe Orozco Cort\'es}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Sequential distribution-shift detection often relies on a fixed reference sample that represents the nominal distribution. Recent predictive-rank martingales provide exact anytime-valid monitoring when that reference is clean, but in radar, monitoring, and calibration systems the reference bank itself may contain a small number of persistent interferers or outliers. We study a finite fixed reference containing an unknown set of static, exogenous replacements whose identities remain unchanged throughout online monitoring. For every candidate set of contaminated sorted positions, we reconstruct the corresponding clean-reference rank sequence and apply a valid predictive-rank martingale. The true candidate recovers the clean rank process exactly; therefore, the pointwise lower envelope of the candidate wealth processes is pathwise dominated by a valid clean predictive-rank martingale, yielding finite-sample anytime threshold-crossing control without estimating the unknown null distribution. The static contamination pattern also induces a contiguous-partition structure on observed-rank bins; for a fixed categorical bettor, this yields an additive objective and a dynamic-programming reduction. In frozen finite-reference simulations, the proposed static-coupling construction substantially outperforms conservative confidence-band baselines adapted to contaminated references while remaining close to an oracle that knows the contaminated positions. For example, with \(K=32\), two contaminated references, horizon \(T=200\), and a moderate \(\mathrm{Beta}(4,1)\) shift, the crossing probability is \(0.935\) for the proposed method, \(0.170\) for the strongest tuned confidence-band baseline, and \(0.995\) for the oracle; median detected delays are 13, 78.5, and 8, respectively.
+\end{abstract}
+
+\noindent\textbf{Keywords:} anytime-valid inference; predictive ranks; martingales; e-values; contaminated reference data; CFAR; sequential change detection; robust statistics.
+
+\input{sections/01_introduction}
+\input{sections/02_problem_background}
+\input{sections/03_method}
+\input{sections/04_experimental_design}
+\input{sections/05_results}
+\input{sections/06_discussion}
+\input{sections/07_limitations}
+\input{sections/08_conclusion}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
