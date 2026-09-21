@@ -1,7 +1,7 @@
 \section{Limitations and Future Work}
 
-\paragraph{Exact contamination count.}
-The theory and frozen experiments assume that the exact number \(m\) of contaminated references is known. A lower envelope over candidate sizes \(0\le r\le M\) is a natural extension when only an upper bound is available, but each size changes the clean-reference count and predictive null law.
+\paragraph{Unknown contamination count.}
+The main theorem is stated first for an exact count \(m\), but Corollary~1 extends anytime validity to the practically weaker assumption \(m^\star\le M\) by taking a lower envelope across candidate sizes and using the size-specific predictive null law. The frozen experiments nevertheless use the exact count \(m=2\). The empirical power and computational cost of the upper-bound-only procedure remain to be studied.
 
 \paragraph{Static/exogenous contamination.}
 The theorem requires that deleting the true contaminated cells leaves an iid clean reference sample. It does not cover value-adaptive replacement chosen after inspecting clean realized values. Such selection can bias the surviving clean subset.
@@ -14,6 +14,9 @@ Clean references and future null observations are iid from the same unknown \(F\
 
 \paragraph{Frozen contaminant geometry.}
 The primary simulations place two contaminants at value 2, outside the support of the clean null and alternatives. Publication validation should also include in-support, mixed-tail, and random static contaminants without changing the frozen detector.
+
+\paragraph{Finite-reference asymptotics.}
+The asymptotic proposition shows that the frozen finite portfolio is not universally wealth-divergent for fixed reference size: unmatched fixed categorical components decay exponentially, while Dirichlet predictive components converge to finite prior-density ratios under interior limiting rank frequencies. This characterizes the present bettor family rather than all possible predictable betting strategies.
 
 \paragraph{Monte Carlo precision.}
 The final development audit uses 200 replications per condition. This is adequate for the large exploratory gate but modest for publication-quality uncertainty estimates. A post-freeze validation pass should use substantially more replications and report uncertainty intervals while keeping every method and tuning parameter unchanged.
