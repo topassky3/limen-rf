@@ -1,2 +1,136 @@
 \section{Robust Anytime-Valid Detection under Static Reference Contamination}
-% Source: docs/manuscript/sections_2_3_v0_1.md
+
+\subsection{Candidate-wise evidence}
+
+For each \(C\in\mathcal C_m\), apply the clean predictive-rank construction to the reconstructed sequence \(R_1^{(C)},R_2^{(C)},\ldots\), producing a candidate wealth process \(E_t^{(C)}\).
+
+For \(C\neq C^\star\), the reconstructed sequence need not obey the clean predictive law, so \(E_t^{(C)}\) is not claimed to be a martingale. For the true candidate, Lemma~1 gives
+\[
+  R_t^{(C^\star)}
+  =
+  \#\{i\in G:Y_i\le X_t\},
+\]
+hence \(E_t^{(C^\star)}\) is exactly a valid clean PRM.
+
+Define the robust evidence lower envelope
+\begin{equation}
+  \underline E_t
+  =
+  \min_{C\in\mathcal C_m}E_t^{(C)}.
+  \label{eq:lower-envelope}
+\end{equation}
+Since \(C^\star\in\mathcal C_m\),
+\begin{equation}
+  \underline E_t
+  \le
+  E_t^{(C^\star)}
+  \qquad\text{for every }t
+  \label{eq:pathwise-domination}
+\end{equation}
+pathwise.
+
+\begin{theorem}[Anytime-valid robust crossing under static contamination]
+Assume the model of Section~2 with exactly \(m\) static/exogenous contaminated references. Let \(E_t^{(C)}\) be the candidate predictive-rank wealth obtained by applying the same pre-specified valid clean-reference betting construction to each reconstructed candidate sequence. Then, for every \(\alpha\in(0,1)\),
+\begin{equation}
+  \Pr_{H_0}\!\left(
+    \sup_{t\ge0}\underline E_t\ge\frac1\alpha
+  \right)
+  \le \alpha.
+  \label{eq:main-theorem}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+By Lemma~1, \(E_t^{(C^\star)}\) is a clean predictive-rank martingale. By \eqref{eq:pathwise-domination},
+\[
+  \left\{\sup_t\underline E_t\ge1/\alpha\right\}
+  \subseteq
+  \left\{\sup_tE_t^{(C^\star)}\ge1/\alpha\right\}.
+\]
+Applying Ville's inequality to \(E_t^{(C^\star)}\) yields \eqref{eq:main-theorem}.
+\end{proof}
+
+The theorem establishes anytime-valid \emph{threshold-crossing control} for \(\underline E_t\). It does not claim that \((\underline E_t)\) itself is a martingale, supermartingale, or e-process.
+
+\subsection{Why random sorted contamination positions are harmless}
+
+The physical contaminated-cell identities are fixed before monitoring, but their positions after sorting can be random. This causes no post-selection problem. For whichever sorted set \(C^\star\) is realized, \(R_t^{(C^\star)}\) is simply the canonical rank against the latent clean sample. Thus the true-candidate process is not selected from unrelated martingales after observing online evidence; it is one representation of the same clean PRM.
+
+\subsection{Persistent partition structure}
+
+The observable rank \(Q_t\) takes values in \(\{0,\ldots,K\}\), defining \(K+1\) adjacent observed-rank bins. Deleting one sorted reference at position \(c\) merges the two adjacent bins \(c-1\) and \(c\). Therefore each candidate \(C\) of size \(m\) corresponds to deleting \(m\) boundaries and hence to a contiguous partition of the \(K+1\) observed-rank bins into
+\[
+  K-m+1=n+1
+\]
+candidate clean-rank groups.
+
+This same partition is reused for all \(t\), which is the combinatorial expression of persistent contamination identities.
+
+\subsection{Fixed-categorical closed form}
+
+Consider a fixed categorical betting distribution
+\[
+  a=(a_0,\ldots,a_n),
+  \qquad
+  a_j>0,\qquad \sum_{j=0}^n a_j=1.
+\]
+Let
+\[
+  H_q(t)=\sum_{s=1}^t\mathbf 1\{Q_s=q\}
+\]
+be the observed full-reference rank histogram and let \(N_j^{(C)}(t)\) be the histogram after the candidate merges. Then
+\begin{align}
+  \log E_t^{(C)}
+  &=
+  \log\Gamma(n+t+1)-\log\Gamma(n+1) \nonumber\\
+  &\quad+
+  \sum_{j=0}^n
+  \left[
+    N_j^{(C)}(t)\log a_j
+    -
+    \log\Gamma(N_j^{(C)}(t)+1)
+  \right].
+  \label{eq:fixed-categorical-closed}
+\end{align}
+Thus the candidate objective depends on the online history through the observed-rank histogram and the contiguous merges induced by \(C\).
+
+\begin{proposition}[Dynamic program for a fixed categorical bettor]
+For a fixed categorical bettor, the candidate minimization in \eqref{eq:lower-envelope} can be computed in approximately \(O(Km^2)\) time and \(O(Km)\) memory.
+\end{proposition}
+
+\begin{proof}[Sketch]
+If an observed-rank segment \([b,b+\ell-1]\) is merged into one candidate rank group, let
+\[
+  N=\sum_{q=b}^{b+\ell-1}H_q(t).
+\]
+If the segment is assigned to candidate clean-rank index \(j\), its additive contribution, ignoring terms independent of the partition, is
+\[
+  c(j,b,\ell)=N\log a_j-\log\Gamma(N+1).
+\]
+Let \(DP[b,d]\) be the minimum additive cost after consuming the first \(b\) observed-rank bins while deleting \(d\) boundaries. Since \(b-d\) groups have then been formed, the next group index is \(j=b-d\). A segment of length \(\ell\) consumes \(\ell-1\) additional boundaries, giving
+\[
+  DP[b+\ell,d+\ell-1]
+  =
+  \min\!\left\{
+    DP[b+\ell,d+\ell-1],
+    DP[b,d]+c(b-d,b,\ell)
+  \right\}.
+\]
+Since \(1\le\ell\le m-d+1\), the stated complexity follows.
+\end{proof}
+
+The frozen empirical method uses a convex portfolio of wealth processes. The logarithm of that mixture contains a log-sum-exp across components, so the additive structure above does not directly establish the same polynomial-time result for the complete frozen portfolio. We therefore restrict the computational proposition to the fixed-categorical case.
+
+\subsection{Scope}
+
+The paper assumes that the exact contamination count \(m\) is known. If only an upper bound \(m\le M\) were known, a lower envelope over all candidate sizes is a natural extension, but each size changes the clean-reference count and predictive null law. We leave that extension for future work.
+
+The theory also excludes value-adaptive replacement after observing an originally clean reference sample. In that stronger model the surviving clean observations can be selection-biased.
+
+Finally, for fixed \(n\), the repeated-rank process admits the de Finetti representation
+\[
+  P\sim\mathrm{Dirichlet}(1,\ldots,1),
+  \qquad
+  R_t\mid P\overset{\mathrm{iid}}{\sim}\mathrm{Categorical}(P).
+\]
+Thus a long future stream learns the realized finite-reference spacing vector rather than eliminating finite-reference randomness. We therefore make no universal asymptotic-consistency claim for fixed \(n\).
