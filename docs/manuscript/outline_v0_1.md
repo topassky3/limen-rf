@@ -20,12 +20,12 @@ For a fixed reference bank containing an unknown set of static/exogenous contami
 
 ## Claims allowed in v0.1
 
-1. Exact distribution-free predictive-rank null law for a clean fixed reference bank.
-2. Candidate-wise nonnegative martingales from predictable normalized rank betting distributions.
-3. Anytime-valid robust threshold crossing under known static contamination count by pathwise domination through the true candidate.
-4. Candidate contamination sets correspond to contiguous partitions of observed-rank bins.
+1. Use the exact clean fixed-reference predictive-rank law and generic PRM martingale of Kuang–Xia (2026) as attributed background.
+2. Extend that clean PRM engine to a fixed reference bank containing an unknown set of static/exogenous arbitrary replacements.
+3. Anytime-valid robust threshold crossing under known static contamination count by candidate reconstruction and pathwise domination through the true candidate.
+4. Candidate contamination sets correspond to persistent contiguous partitions of observed-rank bins.
 5. For a fixed categorical bettor, the candidate minimization has an additive closed form and an \(O(Km^2)\)-type dynamic program.
-6. In the frozen simulation family, the robust static-coupling construction retains substantially more finite-reference power and shorter detection delay than the tested generic confidence-band baselines.
+6. In the frozen simulation family, the robust static-coupling construction retains substantially more finite-reference power and shorter detection delay than the tested contamination-widened confidence-band baselines.
 
 ## Claims explicitly forbidden in v0.1
 
@@ -61,10 +61,10 @@ Four blocks:
 
 1. classical CA/OS/reference CFAR and contaminated-reference handling;
 2. predictive ranks / rank martingales / distribution-free sequential detection;
-3. conformal test martingales and fixed-reference CDF uncertainty;
+3. CCTM for a clean iid fixed reference and finite-reference CDF uncertainty;
 4. robust/composite-null e-processes and contamination models.
 
-This section requires a fresh primary-source citation pass before prose is finalized.
+Primary-source positioning against Kuang–Xia and Shaer et al. is recorded in `docs/literature/primary_source_positioning_kuang_xia_cctm.md`. Broader prior-art verification remains required before the novelty sentence is frozen.
 
 ### 3. Problem formulation
 
@@ -81,9 +81,9 @@ Define:
 
 Clearly contrast this with value-adaptive replacement after observing the clean reference sample.
 
-### 4. Clean predictive ranks
+### 4. Clean predictive ranks — attributed background
 
-State and prove Theorem 1 using PIT + uniform spacings + Dirichlet conjugacy:
+State the Kuang–Xia Theorem 2.1 result in our notation (and optionally give a short self-contained derivation using PIT + uniform spacings + Dirichlet conjugacy):
 
 \[
 \Pr(R_t=j\mid R_{1:t-1})
@@ -93,9 +93,9 @@ State and prove Theorem 1 using PIT + uniform spacings + Dirichlet conjugacy:
 
 Explain that the guarantee is marginal over the random fixed reference, not conditional on its realized numerical values.
 
-### 5. Candidate-wise sequential evidence
+### 5. Clean PRM engine — attributed background
 
-State Theorem 2:
+State the second part of Kuang–Xia Theorem 2.1:
 
 \[
 e_t
@@ -105,11 +105,11 @@ e_t
 E_t=\prod_{s\le t}e_s.
 \]
 
-For any predictable normalized \(q_t\), \(E_t\) is a nonnegative martingale.
+For any predictable normalized \(q_t\), \(E_t\) is a nonnegative martingale. Attribute this directly to Kuang–Xia rather than presenting it as our theorem.
 
-Then state the convex wealth-mixture corollary covering the frozen mixture family.
+Then note their convex PRM portfolio construction / standard martingale closure before specializing to the frozen LIMEN-RF mixture.
 
-### 6. Robust static-contamination construction
+### 6. LIMEN-RF contribution: robust static-contamination construction
 
 Define
 
@@ -119,7 +119,7 @@ Define
 \min_{|C|=m}E_t^{(C)}.
 \]
 
-State Theorem 3:
+State LIMEN-RF Theorem 1:
 
 \[
 \Pr_{H_0}
@@ -212,8 +212,9 @@ Suggested core conclusion:
 
 ## Immediate next tasks
 
-1. primary-source verification of the predictive-rank theorem attribution and exact relationship to Kuang-Xia;
-2. primary-source verification of the CCTM guarantee and correct way to describe our contamination-widened adaptation;
-3. convert theorem draft into manuscript notation;
-4. generate the first Results tables/figures directly from frozen CSV outputs;
-5. draft Abstract + Introduction only after the novelty wording is verified.
+1. Primary-source Kuang–Xia/CCTM positioning: **DONE**.
+2. Use the label **contamination-widened CCTM-style baseline (ours)** for our comparator; never attribute the contaminated-reference extension to Shaer et al.
+3. Run the broader novelty search specifically for static contaminated fixed references + rank/e-process lower envelopes.
+4. Convert the attributed theorem stack into manuscript notation.
+5. Generate the first Results tables/figures directly from frozen CSV outputs.
+6. Draft Abstract + Introduction only after the broader novelty search confirms the remaining gap.
