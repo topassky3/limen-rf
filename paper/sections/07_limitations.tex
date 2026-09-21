@@ -1,2 +1,31 @@
 \section{Limitations and Future Work}
-% Source: docs/manuscript/sections_6_8_discussion_limitations_conclusion_v0_1.md
+
+\paragraph{Exact contamination count.}
+The theory and frozen experiments assume that the exact number \(m\) of contaminated references is known. A lower envelope over candidate sizes \(0\le r\le M\) is a natural extension when only an upper bound is available, but each size changes the clean-reference count and predictive null law.
+
+\paragraph{Static/exogenous contamination.}
+The theorem requires that deleting the true contaminated cells leaves an iid clean reference sample. It does not cover value-adaptive replacement chosen after inspecting clean realized values. Such selection can bias the surviving clean subset.
+
+\paragraph{Scalar continuous observations.}
+The theorem assumes scalar observations from a continuous null. Quantized, discrete, vector, complex-valued, and tied data require additional construction, such as randomized ranks or application-specific scalar scores.
+
+\paragraph{Independence and stationarity.}
+Clean references and future null observations are iid from the same unknown \(F\). Temporal dependence, drift, and reference/test mismatch are outside the current theorem and are particularly relevant in RF sensing.
+
+\paragraph{Frozen contaminant geometry.}
+The primary simulations place two contaminants at value 2, outside the support of the clean null and alternatives. Publication validation should also include in-support, mixed-tail, and random static contaminants without changing the frozen detector.
+
+\paragraph{Monte Carlo precision.}
+The final development audit uses 200 replications per condition. This is adequate for the large exploratory gate but modest for publication-quality uncertainty estimates. A post-freeze validation pass should use substantially more replications and report uncertainty intervals while keeping every method and tuning parameter unchanged.
+
+\paragraph{Baseline scope.}
+The contaminated-reference confidence-band comparators are our adaptations of clean-reference DKW/CCTM ideas. They are neither canonical nor optimal contaminated-CCTM procedures. The empirical claim is therefore limited to the tested valid adaptations.
+
+\paragraph{No optimality claim.}
+The lower envelope is valid, but no minimax or uniformly most powerful property is proved. Better betting families or candidate aggregation strategies may exist.
+
+\paragraph{Full-mixture optimization.}
+The polynomial dynamic program applies only to a fixed categorical bettor. The complete frozen portfolio is evaluated by enumeration. Scalable exact or certified approximate optimization is future work; any approximation used for testing must preserve a conservative lower bound compatible with Theorem~1.
+
+\paragraph{RF validation.}
+The mathematical theorem does not require hardware data. For an engineering audience, however, a semi-synthetic RTL-SDR experiment can provide external validation using real receiver IQ plus controlled offline contamination and signal injection. Such an experiment would test whether the qualitative finite-reference behavior survives quantization, front-end imperfections, and environmental RF. It would not constitute a proof of the theorem or a claim of universal field performance.
