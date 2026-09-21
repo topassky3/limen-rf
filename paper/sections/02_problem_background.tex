@@ -1,2 +1,124 @@
 \section{Problem Formulation and Predictive-Rank Background}
-% Source: docs/manuscript/sections_2_3_v0_1.md
+
+\subsection{Fixed reference with static contamination}
+
+Let the observed reference bank contain \(K\) scalar observations. Exactly \(m\) are contaminated and
+\[
+  n=K-m
+\]
+are clean. Let \(G\subseteq\{1,\ldots,K\}\), \(|G|=n\), denote the unknown set of clean physical reference-cell identities and \(B=G^c\), \(|B|=m\), the contaminated physical cells. For every \(i\in G\),
+\[
+  Y_i\overset{\mathrm{iid}}{\sim}F,
+\]
+where \(F\) is an unknown continuous distribution. The online null stream satisfies
+\[
+  X_1,X_2,\ldots\overset{\mathrm{iid}}{\sim}F
+\]
+independently of the clean reference observations.
+
+The contaminated values \(\{Y_i:i\in B\}\) may be arbitrary, but the contamination is \emph{static and exogenous}: the contaminated physical cells are fixed before monitoring begins, and the surviving clean sample is not selected adaptively after inspecting the realized clean values. The theory therefore does not cover the stronger model in which an adversary first observes \(K\) clean draws and then chooses which realized values to replace. Such selection can bias the surviving clean subset.
+
+Continuity of \(F\) implies that clean-reference and future-null ties occur with probability zero. Randomized tie-breaking independent of the data can be added if required by an implementation.
+
+\subsection{Sorted reference representation}
+
+Let
+\[
+  Z_{(1)}\le\cdots\le Z_{(K)}
+\]
+be the sorted observed reference values. The contaminated physical cells occupy an unknown realized set of sorted positions
+\[
+  C^\star\subseteq\{1,\ldots,K\},
+  \qquad |C^\star|=m.
+\]
+The set \(C^\star\) can be random because sorting depends on the realized clean and contaminated values. Deleting those realized positions nevertheless recovers the original iid clean sample.
+
+For an online observation \(X_t\), define the observable full-reference rank
+\[
+  Q_t
+  =
+  \#\{i:Z_{(i)}\le X_t\}
+  \in\{0,\ldots,K\}.
+\]
+
+\subsection{Candidate contamination sets}
+
+Let
+\[
+  \mathcal C_m
+  =
+  \{C\subseteq\{1,\ldots,K\}:|C|=m\}.
+\]
+For \(C\in\mathcal C_m\), define the reconstructed candidate rank
+\begin{equation}
+  R_t^{(C)}
+  =
+  Q_t-\#\{c\in C:c\le Q_t\}
+  \in\{0,\ldots,n\}.
+  \label{eq:candidate-rank}
+\end{equation}
+
+\begin{lemma}[True-candidate rank reconstruction]
+Under the static/exogenous contamination model,
+\begin{equation}
+  R_t^{(C^\star)}
+  =
+  \#\{i\in G:Y_i\le X_t\}
+  \qquad\text{for every }t.
+  \label{eq:true-reconstruction}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The full rank \(Q_t\) counts every observed reference not exceeding \(X_t\), including clean and contaminated values. Among those counted observations, exactly \(\#\{c\in C^\star:c\le Q_t\}\) occupy contaminated sorted positions. Subtracting them leaves precisely the number of clean references not exceeding \(X_t\).
+\end{proof}
+
+\subsection{Clean fixed-reference predictive ranks}
+
+We recall the clean predictive-rank result of Kuang and Xia \cite{KuangXia2026}. Let \(Y_1,\ldots,Y_n,X_1,X_2,\ldots\) be iid from continuous \(F\), and define
+\[
+  R_t=\#\{i:Y_i\le X_t\},
+  \qquad
+  N_{j,t-1}=\sum_{s<t}\mathbf 1\{R_s=j\}.
+\]
+With \(\mathcal G_t=\sigma(R_1,\ldots,R_t)\), the exact predictive null law is
+\begin{equation}
+  \Pr(R_t=j\mid\mathcal G_{t-1})
+  =
+  p_{t,j}
+  =
+  \frac{N_{j,t-1}+1}{n+t},
+  \qquad j=0,\ldots,n.
+  \label{eq:predictive-null}
+\end{equation}
+This result is distribution-free. A standard derivation maps the clean reference through the probability integral transform; the \(n+1\) uniform spacings have a \(\mathrm{Dirichlet}(1,\ldots,1)\) law, and Dirichlet--multinomial prediction yields \eqref{eq:predictive-null}.
+
+The guarantee is marginal over the random fixed reference sample. Conditional on the realized numerical reference values, the rank probabilities are the realized spacing probabilities and are not generally equal to \eqref{eq:predictive-null}.
+
+\subsection{Clean predictive-rank martingales}
+
+At time \(t\), let \(q_t=(q_{t,0},\ldots,q_{t,n})\) be a \(\mathcal G_{t-1}\)-measurable probability vector. Define
+\begin{equation}
+  e_t=\frac{q_{t,R_t}}{p_{t,R_t}},
+  \qquad
+  E_0=1,
+  \qquad
+  E_t=\prod_{s=1}^t e_s.
+  \label{eq:clean-prm}
+\end{equation}
+Kuang and Xia \cite{KuangXia2026} show that \((E_t)\) is a nonnegative martingale because
+\[
+  \mathbb E[e_t\mid\mathcal G_{t-1}]
+  =
+  \sum_{j=0}^n p_{t,j}\frac{q_{t,j}}{p_{t,j}}
+  =1.
+\]
+Consequently, Ville's inequality gives
+\begin{equation}
+  \Pr_{H_0}\!\left(
+    \sup_{t\ge0}E_t\ge\frac1\alpha
+  \right)\le\alpha.
+  \label{eq:ville-clean}
+\end{equation}
+
+The frozen empirical method uses a fixed convex portfolio of PRM wealth processes together with a \(5\%\) constant-one hedge. Convex PRM portfolios are prior art/standard martingale closure and are not claimed as novel here.
