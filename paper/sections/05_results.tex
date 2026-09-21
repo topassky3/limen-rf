@@ -1,2 +1,81 @@
 \section{Results}
-% Source: docs/manuscript/sections_4_5_experiments_results_v0_1.md
+
+\subsection{Null sanity check}
+
+At \(T=200\), observed null crossing probabilities for the proposed method are \(0.020\) for \(K=24\) and \(0.015\) for \(K=32\). Oracle null crossing probabilities are \(0.060\) and \(0.040\), respectively. These Monte Carlo estimates do not establish validity; they only provide an implementation sanity check against the nominal level \(\alpha=0.05\).
+
+\subsection{Crossing probabilities}
+
+Table~\ref{tab:crossing} summarizes the final frozen audit.
+
+\begin{table}[ht]
+\centering
+\caption{Crossing probability by \(T=200\). The confidence-band column reports the strongest tuned baseline configuration for each condition.}
+\label{tab:crossing}
+\begin{tabular}{llccc}
+\toprule
+\(K\) & Condition & Static & Best band & Oracle\\
+\midrule
+24 & null & 0.020 & 0.000 & 0.060\\
+24 & \(\mathrm{Beta}(2,1)\) & 0.225 & 0.000 & 0.495\\
+24 & \(\mathrm{Beta}(4,1)\) & 0.880 & 0.005 & 0.965\\
+24 & \(\mathrm{Beta}(8,1)\) & 1.000 & 0.340 & 1.000\\
+32 & null & 0.015 & 0.000 & 0.040\\
+32 & \(\mathrm{Beta}(2,1)\) & 0.195 & 0.000 & 0.425\\
+32 & \(\mathrm{Beta}(4,1)\) & 0.935 & 0.170 & 0.995\\
+32 & \(\mathrm{Beta}(8,1)\) & 1.000 & 0.840 & 1.000\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At the pre-specified primary point \(K=32,\gamma=4,T=200\),
+\[
+  \widehat P_{\mathrm{static}}=0.935,\qquad
+  \widehat P_{\mathrm{best\ band}}=0.170,\qquad
+  \widehat P_{\mathrm{oracle}}=0.995.
+\]
+The primary gap is therefore
+\[
+  0.935-0.170=0.765,
+\]
+well above the frozen strong-pass margin of 0.15. Relative to the oracle, the static method retains approximately \(0.935/0.995\approx0.94\) of the observed crossing probability in this scenario. This ratio is descriptive, not an efficiency theorem.
+
+For the strong \(\gamma=8\) alternative at \(K=32\), both static coupling and the oracle cross on every simulated path, while the strongest confidence-band comparator reaches \(0.840\). The smaller absolute gap is consistent with saturation under a strong signal.
+
+For the weak \(\gamma=2\) alternative, static crossing probability is only \(0.225\) at \(K=24\) and \(0.195\) at \(K=32\), while the oracle reaches \(0.495\) and \(0.425\). Unknown contamination identities therefore impose a substantial finite-reference penalty under weak shifts.
+
+\subsection{Detection delays}
+
+Table~\ref{tab:delays} reports median stopping times among paths that cross by \(T=200\).
+
+\begin{table}[ht]
+\centering
+\caption{Median detected delay at \(T=200\).}
+\label{tab:delays}
+\begin{tabular}{llcccc}
+\toprule
+\(K\) & Alternative & Static & Band mix/ONS & CCTM-style & Oracle\\
+\midrule
+24 & \(\mathrm{Beta}(4,1)\) & 25 & 123 / 131 & -- & 9\\
+24 & \(\mathrm{Beta}(8,1)\) & 8 & 90 / 73 & 149 & 5\\
+32 & \(\mathrm{Beta}(4,1)\) & 13 & 78.5 / 72 & 107 & 8\\
+32 & \(\mathrm{Beta}(8,1)\) & 7 & 55.5 / 48 & 84.5 & 5\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At the primary \(K=32,\gamma=4\) point, the proposed method detects with median delay 13, versus 78.5 for the strongest crossing-probability band mixture and 8 for the oracle. Because these medians condition on detection, they are interpreted together with crossing probabilities rather than as standalone speed metrics.
+
+\subsection{Evidence diagnostics and tuning}
+
+At \(K=32,\gamma=4,T=200\), median terminal log evidence is \(9.309764\) for static coupling and \(13.358775\) for the oracle, compared with \(-1.402095\) for the strongest band mixture, \(-1.601856\) for band ONS, and \(-2.160841\) for the CCTM-style comparator.
+
+At \(K=32,\gamma=8,T=200\), corresponding medians are \(27.937381\), \(33.873675\), \(18.750086\), \(19.274469\), and \(5.313818\). These values are diagnostic only because the confidence-band thresholds differ from 20.
+
+At \(K=32,\gamma=4,T=200\), the strongest band mixture uses \(\delta=0.040\), crossing probability \(0.170\), and threshold 96. Band ONS reaches \(0.160\) with \(\delta=0.045\) and threshold 191. The CCTM-style comparator reaches \(0.045\) at \(\delta=0.040,D=0.99\). At \(K=32,\gamma=8,T=200\), the strongest band mixture reaches \(0.840\) at \(\delta=0.045\).
+
+An earlier frozen comparison with \(\delta=0.025\) already showed non-vacuous confidence-band power: at \(K=32,T=200\), the exact-count band reaches \(0.120\) for \(\gamma=4\) and \(0.735\) for \(\gamma=8\), while the CCTM-style comparator reaches \(0.010\) and \(0.300\), respectively. Thus the final advantage is not merely an artifact of a mathematically vacuous band.
+
+\subsection{Interpretation}
+
+A confidence-band method asks which null CDFs remain compatible with the contaminated reference. Static coupling asks which \emph{single persistent set of contaminated identities} could explain the entire repeated rank history. The experiments suggest that preserving this persistent combinatorial constraint can retain substantially more usable finite-reference evidence, especially in the moderate-shift regime.
