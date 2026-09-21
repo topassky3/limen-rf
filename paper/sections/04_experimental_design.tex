@@ -1,2 +1,123 @@
 \section{Experimental Design}
-% Source: docs/manuscript/sections_4_5_experiments_results_v0_1.md
+
+\subsection{Goals and data-generating model}
+
+The experiments evaluate finite-reference power rather than establish validity, which follows from Theorem~1. The final frozen comparisons use
+\[
+  K\in\{24,32\},\qquad m=2,\qquad n=K-2,
+\]
+with clean reference values \(Y_i\sim\mathrm{Uniform}(0,1)\). The two contaminated references are fixed at value \(2\). Under the null,
+\[
+  X_t\sim\mathrm{Uniform}(0,1),
+\]
+and under alternatives
+\[
+  X_t\sim\mathrm{Beta}(\gamma,1),
+  \qquad \gamma\in\{2,4,8\}.
+\]
+The maximum horizon is \(T=200\), with intermediate reporting at \(T\in\{40,100,200\}\), and the nominal anytime level is \(\alpha=0.05\). All methods use identical simulated paths within each replication.
+
+\subsection{Static-coupling method and oracle}
+
+For each path, every candidate set \(C\subseteq\{1,\ldots,K\}\) with \(|C|=2\) is evaluated. Candidate ranks are given by \eqref{eq:candidate-rank}, the frozen predictive-rank portfolio is applied, and the robust statistic is \(\underline E_t\). A detection occurs when
+\[
+  \underline E_t\ge20.
+\]
+
+The oracle knows \(C^\star\) and applies the same betting portfolio directly to the true clean rank sequence. Its threshold is also 20. It quantifies the cost of unknown contamination identities.
+
+\subsection{Confidence-band baselines}
+
+The comparison baselines discard contamination identities and represent reference uncertainty through simultaneous CDF bounds. Let
+\[
+  q(x)=\#\{\text{all }K\text{ observed references}\le x\}.
+\]
+Because exactly \(m\) observations are arbitrary replacements,
+\[
+  \max\{0,q(x)-m\}
+  \le q_{\mathrm{clean}}(x)
+  \le \min\{n,q(x)\}.
+\]
+For DKW radius
+\[
+  \epsilon_n(\delta)
+  =
+  \sqrt{\frac{\log(2/\delta)}{2n}},
+\]
+the exact-count lower bound is
+\begin{equation}
+  L_\delta(x)
+  =
+  \max\left\{
+    0,
+    \frac{\max(0,q(x)-m)}{n}
+    -
+    \epsilon_n(\delta)
+  \right\}.
+  \label{eq:exact-count-band}
+\end{equation}
+
+A symmetric contaminated-reference radius follows from
+\[
+  \widetilde F_K
+  =
+  \frac nK\widehat F_{\mathrm{clean}}
+  +
+  \frac mK\widehat F_{\mathrm{bad}},
+\]
+giving
+\begin{equation}
+  \epsilon_{\mathrm{sym}}(\delta)
+  =
+  \frac nK\epsilon_n(\delta)
+  +
+  \frac mK.
+  \label{eq:sym-band}
+\end{equation}
+This radius is inserted into a one-sided CCTM-style betting geometry. These contaminated-reference constructions are ours for comparison; they are not algorithms claimed by Shaer et al.~\cite{ShaerEtAl2026}.
+
+\subsection{Baseline-strength audit}
+
+The final audit sweeps
+\[
+  \delta\in
+  \{0.005,0.010,0.015,0.020,0.025,0.030,0.035,0.040,0.045\}.
+\]
+For target marginal level \(\alpha=0.05\), each confidence-band configuration uses
+\[
+  a(\delta)
+  =
+  \frac{\alpha-\delta}{1-\delta}
+\]
+and threshold \(1/a(\delta)\), corresponding to the conservative marginal budget
+\[
+  a(1-\delta)+\delta\le\alpha.
+\]
+
+Three baseline families are evaluated:
+\begin{enumerate}[leftmargin=*]
+  \item a fixed mixture over \(\eta\in\{0.05,0.10,0.20,0.40,0.60,0.80,0.95\}\) using the signal \(h_t=2(L_\delta(X_t)-1/2)\), with a \(5\%\) constant-one hedge;
+  \item one-dimensional online Newton step (ONS) betting with predictable \(\eta_t\in[0,0.99]\) on the same exact-count lower-band signal; and
+  \item a one-sided CCTM-style ONS comparator using \eqref{eq:sym-band} with \(D\in\{0.50,0.90,0.99\}\).
+\end{enumerate}
+
+For each simulated condition we report the strongest configuration selected \emph{ex post} from this frozen grid. This envelope is not itself one precommitted level-\(\alpha\) test; it is an adversarial descriptive benchmark designed to favor the confidence-band family.
+
+\subsection{Monte Carlo protocol}
+
+The final baseline-strength audit uses 200 Monte Carlo paths per condition with seed \(20260918\). The principal metrics are crossing probability by horizon, median detection delay among detected paths, and median terminal log evidence as a diagnostic.
+
+Delay is conditional on detection and can be selection-biased for methods with very low crossing probability. Terminal log evidence is not directly comparable across methods because tuned confidence-band thresholds depend on \(\delta\), whereas the static and oracle thresholds equal 20.
+
+Before running the final audit, the primary stress point was fixed at
+\[
+  K=32,\qquad \gamma=4,\qquad T=200,
+\]
+and a strong empirical pass required
+\[
+  \widehat P_{\mathrm{static}}
+  -
+  \widehat P_{\mathrm{strongest\ tuned\ baseline}}
+  \ge0.15.
+\]
+No further bettor or detector tuning was permitted after this criterion was evaluated.
