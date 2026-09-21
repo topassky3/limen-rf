@@ -95,9 +95,20 @@ This result is distribution-free. A standard derivation maps the clean reference
 
 The guarantee is marginal over the random fixed reference sample. Conditional on the realized numerical reference values, the rank probabilities are the realized spacing probabilities and are not generally equal to \eqref{eq:predictive-null}.
 
-\subsection{Clean predictive-rank martingales}
+\subsection{Clean predictive-rank martingales and predictable betting rules}
 
-At time \(t\), let \(q_t=(q_{t,0},\ldots,q_{t,n})\) be a \(\mathcal G_{t-1}\)-measurable probability vector. Define
+At time \(t\), let \(q_t=(q_{t,0},\ldots,q_{t,n})\) be a \(\mathcal G_{t-1}\)-measurable probability vector. Equivalently, we may regard the betting strategy as a deterministic measurable map
+\[
+  \mathsf q_t:
+  \{0,\ldots,n\}^{t-1}
+  \longrightarrow
+  \Delta_n,
+\]
+where \(\Delta_n\) is the probability simplex on \(\{0,\ldots,n\}\), and set
+\[
+  q_t=\mathsf q_t(R_1,\ldots,R_{t-1}).
+\]
+This functional view will be useful under contamination: the same pre-specified map is applied to every candidate reconstructed rank history, and for the true candidate it is automatically predictable with respect to the canonical clean-rank filtration. Define
 \begin{equation}
   e_t=\frac{q_{t,R_t}}{p_{t,R_t}},
   \qquad
@@ -122,3 +133,40 @@ Consequently, Ville's inequality gives
 \end{equation}
 
 The frozen empirical method uses a fixed convex portfolio of PRM wealth processes together with a \(5\%\) constant-one hedge. Convex PRM portfolios are prior art/standard martingale closure and are not claimed as novel here.
+
+
+\subsection{Canonical clean-rank process}
+
+Under the contaminated-reference model, define the latent canonical clean rank
+\begin{equation}
+  R_t^\star
+  =
+  \#\{i\in G:Y_i\le X_t\},
+  \qquad
+  \mathcal G_t^\star
+  =
+  \sigma(R_1^\star,\ldots,R_t^\star).
+  \label{eq:canonical-clean-rank}
+\end{equation}
+By Lemma~1,
+\[
+  R_t^{(C^\star)}=R_t^\star
+\]
+pathwise for every \(t\).
+
+For a candidate \(C\in\mathcal C_m\), we apply the same deterministic betting maps to its reconstructed history:
+\[
+  q_t^{(C)}
+  =
+  \mathsf q_t
+  \!\left(
+    R_1^{(C)},\ldots,R_{t-1}^{(C)}
+  \right).
+\]
+Consequently,
+\[
+  q_t^{(C^\star)}
+  =
+  \mathsf q_t(R_1^\star,\ldots,R_{t-1}^\star)
+\]
+is \(\mathcal G_{t-1}^\star\)-measurable. Thus the true-candidate wealth is a martingale with respect to the canonical clean-rank filtration \((\mathcal G_t^\star)\); no filtration containing the numerical reference vector is required.
