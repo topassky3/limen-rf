@@ -464,3 +464,34 @@ The paper should center its claimed contribution on:
 \]
 
 —not on the clean predictive-rank law itself.
+
+
+---
+
+## 9. Broader contamination prior-art spot check
+
+A targeted search for contaminated calibration/reference sets surfaced two important neighboring works that should appear in Related Work, but neither currently subsumes the LIMEN-RF sequential construction.
+
+### Clarkson et al. (2024), Split Conformal Prediction under Data Contamination
+
+This work studies split conformal prediction when a fraction of calibration scores is drawn from a contaminating distribution. The focus is offline conformal coverage/efficiency and a contamination-robust classification adjustment.
+
+It does not, in the checked source, construct a fixed-reference predictive-rank martingale, a persistent contamination-position candidate process, or an anytime lower-envelope crossing theorem.
+
+### Bashari, Sesia & Romano (2025), Robust Conformal Outlier Detection under Contaminated Reference Data
+
+This work directly studies contaminated reference data for conformal outlier detection. Its contaminated calibration model has fixed numbers of inliers/outliers, with inliers iid from \(P_0\) and outliers iid from another distribution \(P_1\). It emphasizes realistic **non-adversarial** contamination and develops active labeling / trimming to recover power.
+
+This is highly relevant motivation and must be cited because it confirms that contaminated reference sets are a recognized statistical problem.
+
+However, the checked paper is an offline/new-point conformal outlier-detection framework, not an anytime sequential test based on repeated fixed-reference predictive ranks. It does not use our arbitrary static replacement model, candidate sorted-position reconstruction, or pathwise lower-envelope domination construction.
+
+### Consequence for novelty wording
+
+The paper must **not** claim that contaminated reference data itself is new.
+
+The remaining candidate novelty is narrower:
+
+> anytime-valid sequential inference that exploits the persistence of unknown static contamination identities in a repeatedly reused fixed reference bank, via candidate-reconstructed predictive ranks and pathwise lower-envelope domination.
+
+This is the novelty target that future prior-art checks must attempt to kill.
