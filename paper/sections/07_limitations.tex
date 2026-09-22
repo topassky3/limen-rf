@@ -18,8 +18,8 @@ The primary simulations place two contaminants at value 2, outside the support o
 \paragraph{Finite-reference asymptotics.}
 The asymptotic proposition shows that the frozen finite portfolio is not universally wealth-divergent for fixed reference size: unmatched fixed categorical components decay exponentially, while Dirichlet predictive components converge to finite prior-density ratios under interior limiting rank frequencies. This characterizes the present bettor family rather than all possible predictable betting strategies.
 
-\paragraph{Monte Carlo precision.}
-The final development audit uses 200 replications per condition. This is adequate for the large exploratory gate but modest for publication-quality uncertainty estimates. A post-freeze validation pass should use substantially more replications and report uncertainty intervals while keeping every method and tuning parameter unchanged.
+\paragraph{Monte Carlo scope.}
+The publication-scale validation uses 5,000 replications per condition and reports Wilson or bootstrap 95\% intervals. This substantially improves precision over the 200-rep development audit, but it remains a finite simulation study under a deliberately narrow data-generating family. The intervals quantify Monte Carlo uncertainty under that family, not uncertainty over alternative physical environments.
 
 \paragraph{Baseline scope.}
 The contaminated-reference confidence-band comparators are our adaptations of clean-reference DKW/CCTM ideas. They are neither canonical nor optimal contaminated-CCTM procedures. The empirical claim is therefore limited to the tested valid adaptations.
@@ -31,4 +31,4 @@ The lower envelope is valid, but no minimax or uniformly most powerful property 
 The polynomial dynamic program applies only to a fixed categorical bettor. The complete frozen portfolio is evaluated by enumeration. Scalable exact or certified approximate optimization is future work; any approximation used for testing must preserve a conservative lower bound compatible with Theorem~1.
 
 \paragraph{RF validation.}
-The mathematical theorem does not require hardware data. For an engineering audience, however, a semi-synthetic RTL-SDR experiment can provide external validation using real receiver IQ plus controlled offline contamination and signal injection. Such an experiment would test whether the qualitative finite-reference behavior survives quantization, front-end imperfections, and environmental RF. It would not constitute a proof of the theorem or a claim of universal field performance.
+The mathematical theorem does not require hardware data. For an engineering audience, however, the next external-validation stage uses real RTL-SDR IQ plus controlled offline contamination and signal injection. This semi-synthetic design is intended to preserve receiver quantization, front-end imperfections, and environmental RF while retaining known ground truth. Even a successful hardware experiment would not prove the theorem or establish universal field performance; it would test whether the qualitative finite-reference behavior survives a physical receiver chain.
