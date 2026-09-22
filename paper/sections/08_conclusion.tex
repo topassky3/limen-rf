@@ -22,12 +22,12 @@ which yields
 \]
 The lower envelope itself need not be an e-process; its guarantee follows from domination by the true-candidate process.
 
-Static contamination also induces a contiguous-partition representation of observed-rank bins. For a fixed categorical bettor, this structure leads to an additive objective and an approximately \(O(Km^2)\) dynamic program.
+Static contamination also induces a contiguous-partition representation of observed-rank bins. For a fixed categorical bettor, this structure leads to an exact \(O(Km^2)\)-time, \(O(Km)\)-memory dynamic program. A corollary extends validity to an unknown contamination count bounded by \(M\), and the finite-reference asymptotic analysis explains why the frozen finite portfolio need not accumulate unbounded evidence for every persistent alternative when the reference size is fixed.
 
 In the frozen simulation study, persistent-identity coupling retains substantially more finite-reference power than the tested confidence-band robustifications. At
 \[
   K=32,\qquad m=2,\qquad T=200,\qquad X_t\sim\mathrm{Beta}(4,1),
 \]
-the observed crossing probabilities are \(0.935\) for static coupling, \(0.170\) for the strongest ex-post tuned confidence-band baseline, and \(0.995\) for the oracle, with median detected delays 13, 78.5, and 8.
+the observed crossing probabilities in 5,000 post-freeze replications are \(0.9144\) for static coupling, \(0.1152\) for the strongest ex-post frozen-grid confidence-band benchmark, and \(0.9810\) for the oracle. The paired static-minus-baseline gap is \(0.7992\) with 95\% bootstrap interval \([0.7880,0.8104]\), while median detected stopping times are 15, 97, and 8.
 
-The conclusion is deliberately narrow: when contamination is static, preserving persistent identity structure can provide finite-reference information that is lost when uncertainty is represented only through a generic CDF band. The result is not a claim of universal robustness or superiority; it applies to the stated static/exogenous model and inherits the marginal fixed-reference interpretation of predictive-rank martingales.
+The conclusion is deliberately narrow: when contamination is static, preserving persistent identity structure can provide finite-reference information that is lost when uncertainty is represented only through a generic CDF band. The result is not a claim of universal robustness or superiority; it applies to the stated static/exogenous model and inherits the marginal fixed-reference interpretation of predictive-rank martingales. Semi-synthetic RTL-SDR validation is the next step toward establishing whether the same qualitative behavior survives a physical receiver chain.
