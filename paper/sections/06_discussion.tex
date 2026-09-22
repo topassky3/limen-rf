@@ -22,7 +22,7 @@ The oracle separates finite-reference uncertainty from uncertainty about contami
 \[
   K=32,\qquad m=2,\qquad \gamma=4,\qquad T=200,
 \]
-the oracle crossing probability is \(0.995\), while static coupling reaches \(0.935\). Most of the observed oracle crossing probability is therefore retained in this scenario. For \(\gamma=2\), the gap is much larger, indicating that uncertainty over candidate identities is especially costly under weak shifts.
+the oracle crossing probability is \(0.9810\), while static coupling reaches \(0.9144\). The paired oracle-minus-static gap is \(0.0666\) with 95\% bootstrap interval \([0.0598,0.0736]\). Most of the observed oracle crossing probability is therefore retained in this scenario, although a measurable finite-reference penalty remains. For \(\gamma=2\), the gap is much larger, indicating that uncertainty over candidate identities is especially costly under weak shifts.
 
 We do not derive an analytical efficiency bound for this gap. Characterizing its dependence on \(K\), \(m\), horizon, and alternative strength is an open problem.
 
@@ -40,7 +40,7 @@ Theorem~1 inherits the marginal fixed-reference interpretation of predictive-ran
 
 The radar motivation is direct but limited. Classical CFAR uses neighboring reference cells to set a threshold for a cell under test, with order-statistic and censored variants addressing nonhomogeneous windows and multiple interferers \cite{Rohling1983}. Our setting instead reuses one finite reference bank repeatedly, permits persistent contaminated cells, and requires optional-stopping-safe sequential evidence.
 
-The method is therefore CFAR-style in its use of reference data and ranks, but it is not a drop-in replacement for sliding-window OS-CFAR. A physical RF implementation must first map IQ or power measurements into a scalar score whose behavior is reasonably aligned with the statistical model.
+The method is therefore CFAR-style in its use of reference data and ranks, but it is not a drop-in replacement for sliding-window OS-CFAR. A physical RF implementation must first map IQ or power measurements into a scalar score whose behavior is reasonably aligned with the statistical model. This motivates the separate semi-synthetic SDR validation rather than treating simulation as a substitute for receiver data.
 
 \subsection{Structural versus distributional robustness}
 
@@ -52,7 +52,7 @@ Exact enumeration requires
 \[
   \binom{K}{m}
 \]
-candidate processes. This is practical for the frozen experiments with \(m=2\), but does not scale well when both \(K\) and \(m\) increase. The contiguous-partition dynamic program solves the fixed-categorical case in approximately \(O(Km^2)\) time. The full frozen convex portfolio lacks the same additive structure, so no polynomial-time exact algorithm is claimed for it.
+candidate processes. This is practical for the frozen experiments with \(m=2\), but does not scale well when both \(K\) and \(m\) increase. The contiguous-partition dynamic program solves the fixed-categorical case in \(O(Km^2)\) time and \(O(Km)\) memory. The full frozen convex portfolio lacks the same additive structure, so no polynomial-time exact algorithm is claimed for it.
 
 \subsection{Finite-reference information ceiling}
 
