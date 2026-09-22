@@ -76,7 +76,7 @@ giving
 \end{equation}
 This radius is inserted into a one-sided CCTM-style betting geometry. These contaminated-reference constructions are ours for comparison; they are not algorithms claimed by Shaer et al.~\cite{ShaerEtAl2026}.
 
-\subsection{Baseline-strength audit}
+\subsection{Frozen baseline-strength audit}
 
 The final audit sweeps
 \[
@@ -103,13 +103,9 @@ Three baseline families are evaluated:
 
 For each simulated condition we report the strongest configuration selected \emph{ex post} from this frozen grid. This envelope is not itself one precommitted level-\(\alpha\) test; it is an adversarial descriptive benchmark designed to favor the confidence-band family.
 
-\subsection{Monte Carlo protocol}
+\subsection{Development freeze and publication-scale validation}
 
-The final baseline-strength audit uses 200 Monte Carlo paths per condition with seed \(20260918\). The principal metrics are crossing probability by horizon, median detection delay among detected paths, and median terminal log evidence as a diagnostic.
-
-Delay is conditional on detection and can be selection-biased for methods with very low crossing probability. Terminal log evidence is not directly comparable across methods because tuned confidence-band thresholds depend on \(\delta\), whereas the static and oracle thresholds equal 20.
-
-Before running the final audit, the primary stress point was fixed at
+The development audit used 200 Monte Carlo paths per condition with seed \(20260918\). Before inspecting the final development results, the primary stress point was fixed at
 \[
   K=32,\qquad \gamma=4,\qquad T=200,
 \]
@@ -117,7 +113,11 @@ and a strong empirical pass required
 \[
   \widehat P_{\mathrm{static}}
   -
-  \widehat P_{\mathrm{strongest\ tuned\ baseline}}
+  \widehat P_{\mathrm{strongest\ frozen-grid\ baseline}}
   \ge0.15.
 \]
-No further bettor or detector tuning was permitted after this criterion was evaluated.
+No bettor, threshold, baseline grid, or detector parameter was changed after this criterion was evaluated.
+
+The publication-scale validation then increased only Monte Carlo precision. It used 5,000 independent replications per condition, deterministic publication seed \(20260922\), and the identical frozen method and baseline grids. Crossing probabilities are reported with Wilson 95\% intervals. Median stopping times among detected paths are reported with percentile-bootstrap 95\% intervals based on 2,000 bootstrap replications. Because all methods are evaluated on identical simulated paths, differences in crossing probabilities are also summarized with paired bootstrap 95\% intervals.
+
+Delay is conditional on detection and can be selection-biased for methods with very low crossing probability. Null Monte Carlo is used only as an implementation sanity check; theorem-level validity is not inferred from empirical false-alarm rates.
