@@ -1,0 +1,48 @@
+{
+  "status": "post-V1 pre-registered weaker-SNR RTL-SDR characterization",
+  "finalization_mode": "existing detector outputs; detector was not rerun",
+  "motivation": "V1 static coupling saturated at the weakest tested alternative (-12 dB)",
+  "fresh_capture_requirement": true,
+  "target_captures": 30,
+  "passing_captures": 30,
+  "total_captures": 30,
+  "detector_result_rows": 180,
+  "K": 32,
+  "M": 2,
+  "T": 200,
+  "sample_rate_hz": 2048000,
+  "block_len": 16384,
+  "stride": 32768,
+  "skip_samples": 2048000,
+  "reference_contaminated_blocks_zero_based": [
+    7,
+    24
+  ],
+  "reference_injection_snr_db": 6.0,
+  "alternative_snr_db": [
+    -24.0,
+    -21.0,
+    -18.0,
+    -15.0,
+    -12.0
+  ],
+  "tone_offset_hz": 271000.0,
+  "baseline_key": [
+    "band_mix",
+    0.045,
+    null
+  ],
+  "receiver_settings": {
+    "center_frequency_hz": 100000000,
+    "sample_rate_hz": 2048000,
+    "manual_gain_db": 28.0
+  },
+  "qc": {
+    "min_unique_codes": 16,
+    "min_adc_std_codes": 2.0,
+    "max_clip_fraction": 0.01,
+    "max_power_p95_p5_db": 8.0
+  },
+  "injection_seed": 20260924,
+  "note": "Figures and manifest finalized from already-written V2 CSV outputs after a plotting-only floating-point error. No detector result was recomputed."
+}
