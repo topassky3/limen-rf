@@ -1132,7 +1132,7 @@ def write_sha256s(outdir: Path) -> None:
     lines = []
     for path in targets:
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
-        rel = path.relative_to(ROOT)
+        rel = path.resolve().relative_to(ROOT.resolve())
         lines.append(f"{digest}  {rel.as_posix()}")
     (outdir / "SHA256SUMS").write_text(
         "\n".join(lines) + "\n",
