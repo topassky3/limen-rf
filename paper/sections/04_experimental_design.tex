@@ -1,12 +1,12 @@
 \section{Experimental Design}
 
-\subsection{Goals and data-generating model}
+\subsection{Goals and primary data-generating model}
 
-The experiments evaluate finite-reference power rather than establish validity, which follows from Theorem~1. The final frozen comparisons use
+The experiments evaluate finite-reference power rather than establish validity, which follows from Theorem~1. The primary frozen simulation uses
 \[
   K\in\{24,32\},\qquad m=2,\qquad n=K-2,
 \]
-with clean reference values \(Y_i\sim\mathrm{Uniform}(0,1)\). The two contaminated references are fixed at value \(2\). Under the null,
+with clean reference values \(Y_i\sim\mathrm{Uniform}(0,1)\). The original two contaminated references are fixed at value \(2\). Under the null,
 \[
   X_t\sim\mathrm{Uniform}(0,1),
 \]
@@ -96,12 +96,12 @@ and threshold \(1/a(\delta)\), corresponding to the conservative marginal budget
 
 Three baseline families are evaluated:
 \begin{enumerate}[leftmargin=*]
-  \item a fixed mixture over \(\eta\in\{0.05,0.10,0.20,0.40,0.60,0.80,0.95\}\) using the signal \(h_t=2(L_\delta(X_t)-1/2)\), with a \(5\%\) constant-one hedge;
-  \item one-dimensional online Newton step (ONS) betting with predictable \(\eta_t\in[0,0.99]\) on the same exact-count lower-band signal; and
+  \item a fixed mixture over \(\eta\in\{0.05,0.10,0.20,0.40,0.60,0.80,0.95\}\) using \(h_t=2(L_\delta(X_t)-1/2)\), with a \(5\%\) constant-one hedge;
+  \item one-dimensional online Newton step betting with predictable \(\eta_t\in[0,0.99]\) on the same exact-count lower-band signal; and
   \item a one-sided CCTM-style ONS comparator using \eqref{eq:sym-band} with \(D\in\{0.50,0.90,0.99\}\).
 \end{enumerate}
 
-For each simulated condition we report the strongest configuration selected \emph{ex post} from this frozen grid. This envelope is not itself one precommitted level-\(\alpha\) test; it is an adversarial descriptive benchmark designed to favor the confidence-band family.
+For the original publication-scale table we report the strongest configuration selected \emph{ex post} from this frozen grid. This envelope is a descriptive adversarial benchmark rather than one precommitted level-\(\alpha\) test. At the primary \(K=32,\gamma=4,T=200\) point, the selected member is the fixed band mixture with \(\delta=0.045\).
 
 \subsection{Development freeze and publication-scale validation}
 
@@ -118,6 +118,35 @@ and a strong empirical pass required
 \]
 No bettor, threshold, baseline grid, or detector parameter was changed after this criterion was evaluated.
 
-The publication-scale validation then increased only Monte Carlo precision. It used 5,000 independent replications per condition, deterministic publication seed \(20260922\), and the identical frozen method and baseline grids. Crossing probabilities are reported with Wilson 95\% intervals. Median stopping times among detected paths are reported with percentile-bootstrap 95\% intervals based on 2,000 bootstrap replications. Because all methods are evaluated on identical simulated paths, differences in crossing probabilities are also summarized with paired bootstrap 95\% intervals.
+The publication-scale validation increased only Monte Carlo precision. It used 5,000 independent replications per condition, deterministic publication seed \(20260922\), and the identical frozen method and baseline grids. Crossing probabilities are reported with Wilson 95\% intervals. Median stopping times among detected paths are reported with percentile-bootstrap 95\% intervals based on 2,000 bootstrap replications. Null Monte Carlo is used only as an implementation sanity check.
 
-Delay is conditional on detection and can be selection-biased for methods with very low crossing probability. Null Monte Carlo is used only as an implementation sanity check; theorem-level validity is not inferred from empirical false-alarm rates.
+\subsection{Preregistered contamination-geometry stress test}
+
+After the method freeze and the publication-scale run, a separate V1b protocol was preregistered before viewing any V1b outcome. It keeps \(K=32\), \(m=2\), \(\alpha=0.05\), the same horizons, alternatives, bettor portfolio, thresholds, and baseline grid. Each V1b condition uses 5,000 replications and reuses the Publication V1 clean-reference/future-stream path seeds so that geometry comparisons are paired.
+
+The four frozen contamination geometries are:
+\begin{enumerate}[leftmargin=*]
+  \item \texttt{high\_outside}: \((2.0,2.0)\), the Publication V1 control;
+  \item \texttt{upper\_inside}: \((0.85,0.95)\);
+  \item \texttt{mixed\_inside}: \((0.10,0.90)\);
+  \item \texttt{random\_static\_inside}: two iid \(\mathrm{Beta}(1/2,1/2)\) values sampled independently of the clean reference and future stream once per replication.
+\end{enumerate}
+
+Because the in-support contaminants occupy random sorted positions, the oracle true-candidate index is recomputed for every replication. The primary inferential comparator is fixed in advance as the band mixture with \(\delta=0.045\); the full frozen grid remains a secondary descriptive envelope. In addition to crossing probabilities, V1b reports the empirical detection CDF and the horizon-truncated stopping metric
+\[
+  \tau_T^\dagger
+  =
+  \begin{cases}
+  \tau,&\tau\le T,\\
+  T+1,&\text{otherwise},
+  \end{cases}
+\]
+so non-detections are included in the delay-like summary.
+
+\subsection{Semi-synthetic RTL-SDR validation}
+
+The engineering validation uses real unsigned 8-bit IQ from an RTL-SDR Blog V4 receiver attached to an Orange Pi sensor node, with controlled post-ADC tone injection. Both V1 and V2 keep \(K=32\), \(m=2\), \(T=200\), log mean block power as the scalar score, 16,384-sample blocks, stride 32,768, manual gain 28 dB, and the fixed \texttt{band\_mix}, \(\delta=0.045\), comparator. Two physical reference-block identities receive a \(+6\) dB post-ADC tone.
+
+SDR V1 uses 20 fresh 10 s captures and the injected-SNR grid \(\{-12,-6,-3,0\}\) dB. Because the proposed method is already saturated at \(-12\) dB, a separate post-V1 protocol was preregistered and executed on 30 fresh captures using \(\{-24,-21,-18,-15,-12\}\) dB. All V1 and V2 captures passed their pre-outcome QC gates.
+
+The score streams exhibit non-negligible serial dependence. Accordingly, the SDR experiments are reported as external engineering sensitivity characterizations only. They are not used to claim hardware false-alarm control, iid validity, or analog front-end response to an over-the-air signal; injection occurs after ADC.
