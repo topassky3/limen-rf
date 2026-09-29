@@ -12,17 +12,17 @@ The theorem assumes scalar observations from a continuous null. Quantized, discr
 \paragraph{Independence and stationarity.}
 Clean references and future null observations are iid from the same unknown \(F\). Temporal dependence, drift, and reference/test mismatch are outside the current theorem and are particularly relevant in RF sensing.
 
-\paragraph{Frozen contaminant geometry.}
-The primary simulations place two contaminants at value 2, outside the support of the clean null and alternatives. Publication validation should also include in-support, mixed-tail, and random static contaminants without changing the frozen detector.
+\paragraph{Contamination-geometry scope.}
+The preregistered V1b stress test expands beyond the original two contaminants at value \(2\) to upper in-support, mixed low/high, and independently random in-support static contamination. The empirical advantage survives those four geometries, but this finite matrix does not imply uniform robustness over all possible static contamination values or mechanisms.
 
 \paragraph{Finite-reference asymptotics.}
 The asymptotic proposition shows that the frozen finite portfolio is not universally wealth-divergent for fixed reference size: unmatched fixed categorical components decay exponentially, while Dirichlet predictive components converge to finite prior-density ratios under interior limiting rank frequencies. This characterizes the present bettor family rather than all possible predictable betting strategies.
 
 \paragraph{Monte Carlo scope.}
-The publication-scale validation uses 5,000 replications per condition and reports Wilson or bootstrap 95\% intervals. This substantially improves precision over the 200-rep development audit, but it remains a finite simulation study under a deliberately narrow data-generating family. The intervals quantify Monte Carlo uncertainty under that family, not uncertainty over alternative physical environments.
+The publication-scale and V1b validations use 5,000 replications per condition and report Wilson or paired-bootstrap 95\% intervals. These quantify Monte Carlo uncertainty under the frozen data-generating families, not uncertainty over alternative physical environments.
 
 \paragraph{Baseline scope.}
-The contaminated-reference confidence-band comparators are our adaptations of clean-reference DKW/CCTM ideas. They are neither canonical nor optimal contaminated-CCTM procedures. The empirical claim is therefore limited to the tested valid adaptations.
+The contaminated-reference confidence-band comparators are our adaptations of clean-reference DKW/CCTM ideas. They are neither canonical nor optimal contaminated-CCTM procedures. The best-grid envelope is descriptive and ex post; V1b's primary \texttt{band\_mix}, \(\delta=0.045\), comparator is fixed before outcomes.
 
 \paragraph{No optimality claim.}
 The lower envelope is valid, but no minimax or uniformly most powerful property is proved. Better betting families or candidate aggregation strategies may exist.
@@ -30,5 +30,8 @@ The lower envelope is valid, but no minimax or uniformly most powerful property 
 \paragraph{Full-mixture optimization.}
 The polynomial dynamic program applies only to a fixed categorical bettor. The complete frozen portfolio is evaluated by enumeration. Scalable exact or certified approximate optimization is future work; any approximation used for testing must preserve a conservative lower bound compatible with Theorem~1.
 
-\paragraph{RF validation.}
-The mathematical theorem does not require hardware data. For an engineering audience, however, the next external-validation stage uses real RTL-SDR IQ plus controlled offline contamination and signal injection. This semi-synthetic design is intended to preserve receiver quantization, front-end imperfections, and environmental RF while retaining known ground truth. Even a successful hardware experiment would not prove the theorem or establish universal field performance; it would test whether the qualitative finite-reference behavior survives a physical receiver chain.
+\paragraph{RTL-SDR validation scope.}
+The semi-synthetic V1/V2 experiments use real RTL-SDR receiver/background IQ and controlled post-ADC injection. They therefore preserve receiver quantization and environmental structure but do not test signal-induced analog front-end nonlinearities. The score streams also exhibit substantial serial dependence, so hardware-null crossing frequencies are descriptive and do not validate the iid theorem or establish hardware type-I control. Additional SDR acquisition is not required for the present paper; a future over-the-air or dependence-aware study would address a different inferential problem.
+
+\paragraph{Persistent-identity efficiency.}
+The experiments indicate that enforcing one persistent latent contamination explanation can retain much more evidence than the tested generic CDF-band robustifications. A quantitative theorem characterizing when and by how much persistence improves finite-horizon detection remains open. Any such result should be treated as a separate theoretical extension rather than inferred from the current experiments.
