@@ -22,7 +22,7 @@ At the primary frozen setting
 \[
   K=32,\qquad m=2,\qquad \gamma=4,\qquad T=200,
 \]
-the oracle crossing probability is \(0.9810\). Static coupling reaches \(0.9144\) in the original outside-support geometry and between \(0.8894\) and \(0.9468\) across the three preregistered non-control geometries. The corresponding oracle-static point gaps are \(0.0666\), \(0.0916\), \(0.0388\), and \(0.0342\).
+the oracle crossing probability is \(0.9810\). Static coupling reaches \(0.9144\) in the original outside-support geometry and between \(0.8894\) and \(0.9468\) across the three pre-specified non-control geometries. The corresponding oracle-static point gaps are \(0.0666\), \(0.0916\), \(0.0388\), and \(0.0342\).
 
 The invariant oracle result across V1b geometries is a useful structural check: the clean reference and future stream are held fixed, and a correct oracle removes the contaminated sorted positions before applying the same clean-rank construction. Geometry affects the robust and confidence-band procedures, but not the underlying canonical clean rank sequence.
 
@@ -32,13 +32,13 @@ We do not derive an analytical efficiency bound for the oracle-static gap. Chara
 
 The geometry stress test rules out a simple explanation of the original power gap: that both contaminants at value \(2\) created an unusually favorable setting for static coupling. The fixed confidence-band comparator improves substantially when contaminants are moved into the support or split across tails, rising from \(0.1152\) to as high as \(0.3948\) at the primary point. The static method nevertheless remains between \(0.8894\) and \(0.9468\).
 
-This does not establish uniform dominance over all geometries. It does show that the main empirical finding survives a preregistered set of materially different static/exogenous contamination arrangements without changing the detector.
+This does not establish uniform dominance over all geometries. It does show that the main empirical finding survives a pre-specified set of materially different static/exogenous contamination arrangements without changing the detector.
 
 \subsection{Why the band comparison is conservative}
 
 The confidence-band baselines represent the contaminated reference through a simultaneous CDF uncertainty set. This remains valid without identifying contaminated positions, but the resulting uncertainty set can be substantially larger than the set compatible with one persistent contamination pattern. The final development audit intentionally favors the band family by sweeping a frozen parameter grid and reporting the best configuration ex post for each condition.
 
-Because the ex-post envelope is not one precommitted test, it is used only as a descriptive adversarial benchmark. V1b separately fixes \texttt{band\_mix}, \(\delta=0.045\), before outcomes and uses paired uncertainty against that comparator. This separates a clean inferential comparison from the broader descriptive best-grid envelope.
+Because the ex-post envelope is not one precommitted test, it is used only as a descriptive adversarial benchmark. V1b fixes \texttt{band\_mix}, \(\delta=0.045\), before its geometry outcomes and reports paired Monte Carlo uncertainty against that comparator. Because the comparator was informed by the earlier Publication V1 analysis and the V1b control reuses those paths, these intervals are not presented as selection-adjusted confirmatory inference.
 
 \subsection{Marginal versus conditional guarantees}
 
