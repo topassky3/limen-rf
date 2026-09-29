@@ -34,11 +34,9 @@ At the pre-specified primary point \(K=32,\gamma=4,T=200\),
   \widehat P_{\mathrm{best\ grid}}=0.1152,\qquad
   \widehat P_{\mathrm{oracle}}=0.9810.
 \]
-The static 95\% Wilson interval is \([0.9063,0.9218]\). The paired static-minus-baseline gap is \(0.7992\) with 95\% bootstrap interval \([0.7880,0.8104]\), far above the frozen development margin of 0.15. The paired oracle-minus-static gap is \(0.0666\) with 95\% bootstrap interval \([0.0598,0.0736]\).
+The static 95\% Wilson interval is \([0.9063,0.9218]\). At this point the strongest frozen-grid member is exactly the fixed \texttt{band\_mix} comparator with \(\delta=0.045\). Against that fixed comparator, the paired static-minus-baseline gap is \(0.7992\) with 95\% bootstrap interval \([0.7882,0.8102]\). The paired oracle-minus-static gap is \(0.0666\) with 95\% bootstrap interval \([0.0598,0.0734]\). We do not interpret an ordinary interval conditional on ex-post grid selection as selection-adjusted inference for the full best-grid envelope.
 
-For the strong \(\gamma=8\) alternative at \(K=32\), static coupling reaches \(0.9998\), the oracle reaches \(1.0000\), and the strongest frozen-grid baseline reaches \(0.8362\). The smaller oracle-static gap is consistent with saturation under a strong signal.
-
-For the weak \(\gamma=2\) alternative, static crossing probability is \(0.1824\) at \(K=24\) and \(0.2036\) at \(K=32\), while the oracle reaches \(0.4258\) and \(0.4396\). Unknown contamination identities therefore impose a substantial finite-reference penalty under weak shifts.
+For the strong \(\gamma=8\) alternative at \(K=32\), static coupling reaches \(0.9998\), the oracle reaches \(1.0000\), and the strongest frozen-grid baseline reaches \(0.8362\). For the weak \(\gamma=2\) alternative, static crossing probability is \(0.1824\) at \(K=24\) and \(0.2036\) at \(K=32\), while the oracle reaches \(0.4258\) and \(0.4396\).
 
 \begin{figure}[ht]
 \centering
@@ -69,25 +67,54 @@ Table~\ref{tab:delays} reports median stopping times among paths that cross by \
 \end{tabular}
 \end{table}
 
-At the primary \(K=32,\gamma=4\) point, the proposed method has median detected stopping time 15 (95\% bootstrap CI \([14.5,16]\)), versus 97 \([92.5,102]\) for the best-grid baseline and 8 \([8,8]\) for the oracle. The \(\gamma=2\) baseline delays are not substantively comparable because the best-grid baseline crosses on zero of 5,000 paths for \(K=24\) and only one path for \(K=32\). Because these medians condition on detection, they are interpreted together with crossing probabilities rather than as standalone speed metrics.
+At the primary \(K=32,\gamma=4\) point, the proposed method has median detected stopping time 15, versus 97 for the fixed \(\delta=0.045\) band mixture and 8 for the oracle. Because these medians condition on detection, they are interpreted together with crossing probabilities rather than as standalone speed metrics.
+
+\subsection{Preregistered contamination-geometry stress test}
+
+The V1b control exactly reproduces Publication V1 under the reused path seeds. Table~\ref{tab:v1b-geometry} reports the preregistered primary point for all four geometries.
+
+\begin{table}[ht]
+\centering
+\caption{V1b geometry stress test at \(K=32,\gamma=4,T=200\), 5,000 paired replications per geometry. The primary baseline is fixed \texttt{band\_mix}, \(\delta=0.045\).}
+\label{tab:v1b-geometry}
+\begin{tabular}{lrrrr}
+\toprule
+Geometry & Static & Primary band & Oracle & \(E[\tau_{200}^\dagger]\) static\\
+\midrule
+High outside & 0.9144 & 0.1152 & 0.9810 & 42.78\\
+Upper inside & 0.8894 & 0.2162 & 0.9810 & 41.23\\
+Mixed inside & 0.9422 & 0.3742 & 0.9810 & 27.49\\
+Random static inside & 0.9468 & 0.3948 & 0.9810 & 26.39\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The paired static-minus-primary gaps are \(0.7992\) \([0.7882,0.8102]\), \(0.6732\) \([0.6600,0.6862]\), \(0.5680\) \([0.5538,0.5818]\), and \(0.5520\) \([0.5386,0.5666]\), respectively. All three non-control geometries exceed the preregistered 0.15 effect-size gate, while the V1b null sanity gate remains satisfied. We therefore classify the frozen result as \emph{strong geometry-robust support} under the tested Model-A stress matrix.
+
+The baseline improves substantially for the in-support geometries, indicating that the original outside-support configuration was particularly unfavorable to generic confidence-band robustification. Nevertheless, the static procedure retains high crossing probability across all preregistered geometries. The oracle remains at \(0.9810\) because the clean reference and future path are paired across geometries and the oracle reconstructs the same canonical clean-rank process.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.82\linewidth]{../results/publication_v1/figures/delay_T200_K32.pdf}
-\caption{Median stopping time among detected paths for \(K=32\), with bootstrap 95\% intervals. Delay is conditional on crossing and should be interpreted jointly with crossing probability.}
-\label{fig:delay-k32}
+\includegraphics[width=0.88\linewidth]{../results/publication_v1b_geometry/figures/crossing_by_geometry_gamma4_T200.pdf}
+\caption{V1b crossing probability at the primary point across the four preregistered contamination geometries.}
+\label{fig:v1b-geometry}
 \end{figure}
 
-\subsection{Evidence diagnostics and tuning}
+\subsection{Semi-synthetic RTL-SDR validation}
 
-At \(K=32,\gamma=4,T=200\), median terminal log evidence is \(9.4131\) for static coupling and \(13.3054\) for the oracle. The selected best-grid comparator is the fixed band mixture at \(\delta=0.045\), with crossing probability \(0.1152\), median terminal log evidence \(-1.4528\), and threshold approximately 191.
+SDR V1 uses 20 fresh captures. At \(-12\) dB, static coupling and the oracle cross on 20/20 captures, while the fixed band comparator crosses on 15/20; median detected stopping times are 4.5, 3.5, and 29, respectively. The stronger V1 SNR values saturate in crossing probability.
 
-At \(K=32,\gamma=8,T=200\), corresponding static and oracle median terminal log evidences are \(28.3517\) and \(34.3784\). The selected best-grid band mixture at \(\delta=0.045\) reaches crossing probability \(0.8362\) with median terminal log evidence \(20.1043\). These values are diagnostic only because the confidence-band thresholds differ from 20.
+SDR V2 therefore uses 30 fresh captures and a preregistered weaker grid. At \(-18\) dB, static coupling crosses on 14/30 captures, the fixed band comparator on 0/30, and the oracle on 18/30. At \(-15\) dB, the counts are 22/30, 12/30, and 24/30, with median detected stopping times 8, 58.5, and 5. At the shared \(-12\) dB anchor, static coupling crosses on 30/30 captures in V2, with median stop 4, compared with 26/30 and median stop 30 for the baseline.
 
-The selected baseline differs across conditions because the reported comparator is deliberately the strongest ex-post member of the frozen grid. This makes it a descriptive adversarial benchmark rather than one precommitted level-\(\alpha\) test.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.82\linewidth]{../results/sdr_publication_v2/figures/sdr_v2_crossing_vs_snr.pdf}
+\caption{Semi-synthetic RTL-SDR V2 crossing probability over the preregistered weaker-SNR grid. Real receiver/background IQ is retained, while signal injection occurs after ADC.}
+\label{fig:sdr-v2}
+\end{figure}
 
-The publication-scale run preserves the qualitative conclusions of the earlier 200-rep development audit without changing the method. Representative static crossing estimates move from \(0.880\) to \(0.8758\) for \(K=24,\gamma=4\), from \(0.935\) to \(0.9144\) for \(K=32,\gamma=4\), and from \(0.195\) to \(0.2036\) for \(K=32,\gamma=2\). Likewise, the \(K=32,\gamma=8\) best-grid baseline changes only from approximately \(0.840\) to \(0.8362\).
+The SDR null results are descriptive only. The score streams exhibit substantial serial dependence, with lag-1 correlations extending up to approximately 0.9, so the iid theorem is not asserted for these captures. Likewise, post-ADC injection does not test signal-induced analog front-end compression or other over-the-air nonlinear effects.
 
 \subsection{Interpretation}
 
-A confidence-band method asks which null CDFs remain compatible with the contaminated reference. Static coupling asks which \emph{single persistent set of contaminated identities} could explain the entire repeated rank history. The experiments suggest that preserving this persistent combinatorial constraint can retain substantially more usable finite-reference evidence, especially in the moderate-shift regime.
+A confidence-band method asks which null CDFs remain compatible with the contaminated reference. Static coupling asks which \emph{single persistent set of contaminated identities} could explain the entire repeated rank history. The simulation, geometry stress test, and semi-synthetic receiver experiments consistently support the practical value of retaining this persistent combinatorial constraint, while the theorem remains limited to the stated iid static/exogenous model.
