@@ -120,9 +120,9 @@ No bettor, threshold, baseline grid, or detector parameter was changed after thi
 
 The publication-scale validation increased only Monte Carlo precision. It used 5,000 independent replications per condition, deterministic publication seed \(20260922\), and the identical frozen method and baseline grids. Crossing probabilities are reported with Wilson 95\% intervals. Median stopping times among detected paths are reported with percentile-bootstrap 95\% intervals based on 2,000 bootstrap replications. Null Monte Carlo is used only as an implementation sanity check.
 
-\subsection{Preregistered contamination-geometry stress test}
+\subsection{Pre-specified contamination-geometry stress test}
 
-After the method freeze and the publication-scale run, a separate V1b protocol was preregistered before viewing any V1b outcome. It keeps \(K=32\), \(m=2\), \(\alpha=0.05\), the same horizons, alternatives, bettor portfolio, thresholds, and baseline grid. Each V1b condition uses 5,000 replications and reuses the Publication V1 clean-reference/future-stream path seeds so that geometry comparisons are paired.
+After the method freeze and the publication-scale run, a separate V1b protocol was specified and committed to the project history before any V1b outcome was viewed. It keeps \(K=32\), \(m=2\), \(\alpha=0.05\), the same horizons, alternatives, bettor portfolio, thresholds, and baseline grid. Each V1b condition uses 5,000 replications and reuses the Publication V1 clean-reference/future-stream path seeds so that geometry comparisons are paired.
 
 The four frozen contamination geometries are:
 \begin{enumerate}[leftmargin=*]
@@ -132,7 +132,7 @@ The four frozen contamination geometries are:
   \item \texttt{random\_static\_inside}: two iid \(\mathrm{Beta}(1/2,1/2)\) values sampled independently of the clean reference and future stream once per replication.
 \end{enumerate}
 
-Because the in-support contaminants occupy random sorted positions, the oracle true-candidate index is recomputed for every replication. The primary inferential comparator is fixed in advance as the band mixture with \(\delta=0.045\); the full frozen grid remains a secondary descriptive envelope. In addition to crossing probabilities, V1b reports the empirical detection CDF and the horizon-truncated stopping metric
+Because the in-support contaminants occupy random sorted positions, the oracle true-candidate index is recomputed for every replication. The V1b comparator is fixed before V1b geometry outcomes as the band mixture with \(\delta=0.045\); the full frozen grid remains a secondary descriptive envelope. This configuration had been identified in the earlier Publication V1 analysis, and V1b reuses the Publication V1 control paths; accordingly, V1b bootstrap intervals are interpreted as Monte Carlo uncertainty conditional on this designated comparator, not as selection-adjusted confirmatory inference. In addition to crossing probabilities, V1b reports the empirical detection CDF and the horizon-truncated stopping metric
 \[
   \tau_T^\dagger
   =
@@ -147,6 +147,6 @@ so non-detections are included in the delay-like summary.
 
 The engineering validation uses real unsigned 8-bit IQ from an RTL-SDR Blog V4 receiver attached to an Orange Pi sensor node, with controlled post-ADC tone injection. Both V1 and V2 keep \(K=32\), \(m=2\), \(T=200\), log mean block power as the scalar score, 16,384-sample blocks, stride 32,768, manual gain 28 dB, and the fixed \texttt{band\_mix}, \(\delta=0.045\), comparator. Two physical reference-block identities receive a \(+6\) dB post-ADC tone.
 
-SDR V1 uses 20 fresh 10 s captures and the injected-SNR grid \(\{-12,-6,-3,0\}\) dB. Because the proposed method is already saturated at \(-12\) dB, a separate post-V1 protocol was preregistered and executed on 30 fresh captures using \(\{-24,-21,-18,-15,-12\}\) dB. All V1 and V2 captures passed their pre-outcome QC gates.
+SDR V1 uses 20 fresh 10 s captures and the injected-SNR grid \(\{-12,-6,-3,0\}\) dB. Because the proposed method is already saturated at \(-12\) dB, a separate post-V1 protocol was specified and frozen before V2 detector outcomes and executed on 30 fresh captures using \(\{-24,-21,-18,-15,-12\}\) dB. All V1 and V2 captures passed their pre-outcome QC gates.
 
 The score streams exhibit non-negligible serial dependence. Accordingly, the SDR experiments are reported as external engineering sensitivity characterizations only. They are not used to claim hardware false-alarm control, iid validity, or analog front-end response to an over-the-air signal; injection occurs after ADC.
