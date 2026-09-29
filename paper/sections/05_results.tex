@@ -34,7 +34,7 @@ At the pre-specified primary point \(K=32,\gamma=4,T=200\),
   \widehat P_{\mathrm{best\ grid}}=0.1152,\qquad
   \widehat P_{\mathrm{oracle}}=0.9810.
 \]
-The static 95\% Wilson interval is \([0.9063,0.9218]\). At this point the strongest frozen-grid member is exactly the fixed \texttt{band\_mix} comparator with \(\delta=0.045\). Against that fixed comparator, the paired static-minus-baseline gap is \(0.7992\) with 95\% bootstrap interval \([0.7882,0.8102]\). The paired oracle-minus-static gap is \(0.0666\) with 95\% bootstrap interval \([0.0598,0.0734]\). We do not interpret an ordinary interval conditional on ex-post grid selection as selection-adjusted inference for the full best-grid envelope.
+The static 95\% Wilson interval is \([0.9063,0.9218]\). At this point the strongest frozen-grid member is \texttt{band\_mix} with \(\delta=0.045\). Conditional on that selected configuration, the paired static-minus-baseline gap is \(0.7992\) with a bootstrap Monte Carlo interval \([0.7882,0.8102]\). The paired oracle-minus-static gap is \(0.0666\) with 95\% bootstrap interval \([0.0598,0.0734]\). We do not interpret an ordinary interval conditional on ex-post grid selection as selection-adjusted inference for the full best-grid envelope.
 
 For the strong \(\gamma=8\) alternative at \(K=32\), static coupling reaches \(0.9998\), the oracle reaches \(1.0000\), and the strongest frozen-grid baseline reaches \(0.8362\). For the weak \(\gamma=2\) alternative, static crossing probability is \(0.1824\) at \(K=24\) and \(0.2036\) at \(K=32\), while the oracle reaches \(0.4258\) and \(0.4396\).
 
@@ -69,9 +69,9 @@ Table~\ref{tab:delays} reports median stopping times among paths that cross by \
 
 At the primary \(K=32,\gamma=4\) point, the proposed method has median detected stopping time 15, versus 97 for the fixed \(\delta=0.045\) band mixture and 8 for the oracle. Because these medians condition on detection, they are interpreted together with crossing probabilities rather than as standalone speed metrics.
 
-\subsection{Preregistered contamination-geometry stress test}
+\subsection{Pre-specified contamination-geometry stress test}
 
-The V1b control exactly reproduces Publication V1 under the reused path seeds. Table~\ref{tab:v1b-geometry} reports the preregistered primary point for all four geometries.
+The V1b control exactly reproduces Publication V1 under the reused path seeds. Table~\ref{tab:v1b-geometry} reports the pre-specified primary point for all four geometries.
 
 \begin{table}[ht]
 \centering
@@ -89,14 +89,14 @@ Random static inside & 0.9468 & 0.3948 & 0.9810 & 26.39\\
 \end{tabular}
 \end{table}
 
-The paired static-minus-primary gaps are \(0.7992\) \([0.7882,0.8102]\), \(0.6732\) \([0.6600,0.6862]\), \(0.5680\) \([0.5538,0.5818]\), and \(0.5520\) \([0.5386,0.5666]\), respectively. All three non-control geometries exceed the preregistered 0.15 effect-size gate, while the V1b null sanity gate remains satisfied. We therefore classify the frozen result as \emph{strong geometry-robust support} under the tested Model-A stress matrix.
+The paired static-minus-primary gaps are \(0.7992\) \([0.7882,0.8102]\), \(0.6732\) \([0.6600,0.6862]\), \(0.5680\) \([0.5538,0.5818]\), and \(0.5520\) \([0.5386,0.5666]\), respectively. All three non-control geometries exceed the pre-specified 0.15 stress-test margin, while the V1b null sanity gate remains satisfied.
 
-The baseline improves substantially for the in-support geometries, indicating that the original outside-support configuration was particularly unfavorable to generic confidence-band robustification. Nevertheless, the static procedure retains high crossing probability across all preregistered geometries. The oracle remains at \(0.9810\) because the clean reference and future path are paired across geometries and the oracle reconstructs the same canonical clean-rank process.
+The baseline improves substantially for the in-support geometries, indicating that the original outside-support configuration was particularly unfavorable to the tested confidence-band comparator. Nevertheless, the static procedure retains high crossing probability across all pre-specified geometries. The oracle remains at \(0.9810\) because the clean reference and future path are paired across geometries and the oracle reconstructs the same canonical clean-rank process.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.88\linewidth]{../results/publication_v1b_geometry/figures/crossing_by_geometry_gamma4_T200.pdf}
-\caption{V1b crossing probability at the primary point across the four preregistered contamination geometries.}
+\caption{V1b crossing probability at the primary point across the four pre-specified contamination geometries.}
 \label{fig:v1b-geometry}
 \end{figure}
 
@@ -104,12 +104,12 @@ The baseline improves substantially for the in-support geometries, indicating th
 
 SDR V1 uses 20 fresh captures. At \(-12\) dB, static coupling and the oracle cross on 20/20 captures, while the fixed band comparator crosses on 15/20; median detected stopping times are 4.5, 3.5, and 29, respectively. The stronger V1 SNR values saturate in crossing probability.
 
-SDR V2 therefore uses 30 fresh captures and a preregistered weaker grid. At \(-18\) dB, static coupling crosses on 14/30 captures, the fixed band comparator on 0/30, and the oracle on 18/30. At \(-15\) dB, the counts are 22/30, 12/30, and 24/30, with median detected stopping times 8, 58.5, and 5. At the shared \(-12\) dB anchor, static coupling crosses on 30/30 captures in V2, with median stop 4, compared with 26/30 and median stop 30 for the baseline.
+SDR V2 therefore uses 30 fresh captures and a weaker grid frozen before V2 detector outcomes. At \(-18\) dB, static coupling crosses on 14/30 captures, the fixed band comparator on 0/30, and the oracle on 18/30. At \(-15\) dB, the counts are 22/30, 12/30, and 24/30, with median detected stopping times 8, 58.5, and 5. At the shared \(-12\) dB anchor, static coupling crosses on 30/30 captures in V2, with median stop 4, compared with 26/30 and median stop 30 for the baseline.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.82\linewidth]{../results/sdr_publication_v2/figures/sdr_v2_crossing_vs_snr.pdf}
-\caption{Semi-synthetic RTL-SDR V2 crossing probability over the preregistered weaker-SNR grid. Real receiver/background IQ is retained, while signal injection occurs after ADC.}
+\caption{Semi-synthetic RTL-SDR V2 crossing probability over the pre-specified weaker-SNR grid. Real receiver/background IQ is retained, while signal injection occurs after ADC.}
 \label{fig:sdr-v2}
 \end{figure}
 
