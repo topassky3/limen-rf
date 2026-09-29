@@ -46,7 +46,7 @@ on every sample path. Since \(E_t^{(C^\star)}\) is a valid clean PRM, Ville's in
     \sup_{t\ge0}\underline E_t\ge\frac1\alpha
   \right)\le\alpha.
 \]
-The same static candidate is reused for the full sequence, so the construction preserves information that a generic confidence band discards.
+The same static candidate is reused for the full sequence, so the construction preserves persistent identity information that the tested CDF-band robustifications do not represent explicitly.
 
 The static contamination positions also induce a combinatorial structure. Deleting one sorted reference merges two adjacent observed-rank bins. Therefore a candidate set corresponds to a contiguous partition of the \(K+1\) observed-rank bins into \(K-m+1\) candidate clean-rank bins. For one fixed categorical bettor, the candidate log wealth is additive across these segments and admits an \(O(Km^2)\)-type dynamic program. The frozen empirical method uses a convex portfolio of bettors, so we restrict the polynomial-time claim to the fixed-categorical case.
 
@@ -56,9 +56,9 @@ The contributions are:
   \item an anytime-valid robust crossing construction obtained by a lower envelope over candidate PRM wealths and pathwise domination by the true candidate, together with a corollary that requires only an upper bound on the number of contaminants;
   \item a one-to-one contiguous-partition representation of contamination positions and an exact \(O(Km^2)\)-time dynamic program for fixed categorical bettors;
   \item a finite-reference asymptotic characterization of the frozen fixed-categorical and Dirichlet-predictive betting components; and
-  \item a post-freeze finite-reference Monte Carlo validation with 5,000 replications per condition, uncertainty intervals, an oracle comparison, and adversarial best-grid confidence-band benchmarks.
+  \item a post-freeze 5,000-replication Monte Carlo validation, a pre-specified contamination-geometry stress test, and separate semi-synthetic RTL-SDR sensitivity experiments with frozen detector settings.
 \end{enumerate}
 
-The empirical comparison is deliberately scoped. At the primary frozen setting \(K=32\), \(m=2\), \(T=200\), and \(X_t\sim\mathrm{Beta}(4,1)\), the proposed method crosses by the horizon on \(91.44\%\) of 5,000 runs (95\% CI \(90.63\%\)--\(92.18\%\)), compared with \(11.52\%\) for the strongest ex-post frozen-grid confidence-band benchmark and \(98.10\%\) for the oracle. The paired static-minus-baseline gap is \(79.92\) percentage points (95\% bootstrap CI \(78.80\)--\(81.04\)). These results do not imply universal superiority over CCTM, conformal methods, or robust e-processes.
+The empirical comparison is deliberately scoped. At the primary frozen setting \(K=32\), \(m=2\), \(T=200\), and \(X_t\sim\mathrm{Beta}(4,1)\), the proposed method crosses by the horizon on \(91.44\%\) of 5,000 runs (95\% CI \(90.63\%\)--\(92.18\%\)), compared with \(11.52\%\) for the strongest ex-post frozen-grid confidence-band benchmark and \(98.10\%\) for the oracle. The descriptive paired static-minus-selected-baseline gap is \(79.92\) percentage points; its bootstrap interval is conditional on the selected baseline configuration and is not interpreted as selection-adjusted inference for the full grid envelope. These results do not imply universal superiority over CCTM, conformal methods, or robust e-processes.
 
 The remainder of the paper formalizes the model and imported clean PRM result, proves the robust crossing theorem, describes the structural partition result and experimental protocol, reports finite-reference results, and discusses scope and limitations.
