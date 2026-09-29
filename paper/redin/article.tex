@@ -26,6 +26,22 @@
 \emailAuthor{orozjuanfelipe@gmail.com}
 \date{}
 
+% The official REDIN class hard-codes "Double-blind review" in the
+% title block.  This identified build replaces that literal at render time
+% while keeping the journal class and the rest of its title layout intact.
+\makeatletter
+\patchcmd{\@maketitle}
+  {Double-blind review}
+  {Juan Felipe Orozco Cort\'es}
+  {}
+  {}
+\patchcmd{\maketitle}
+  {Double-blind review}
+  {Juan Felipe Orozco Cort\'es}
+  {}
+  {}
+\makeatother
+
 \abstract{%
 Sequential distribution-shift detection often relies on a finite reference bank that may already contain persistent interferers or outliers. We study a fixed reference with an unknown set of static, exogenous replacements whose identities remain unchanged during monitoring. For every candidate set of contaminated sorted positions, we reconstruct a candidate clean-reference rank sequence and apply a predictive-rank betting construction. The true candidate recovers the clean rank process exactly, so the pointwise lower envelope of candidate wealths is pathwise dominated by a valid clean predictive-rank martingale, yielding finite-sample anytime threshold-crossing control. A corollary allows only an upper bound on the contamination count, and the induced contiguous-partition structure yields an exact \(O(Km^2)\) dynamic program for a fixed categorical bettor. In 5,000-replication post-freeze simulations at \(K=32\), \(m=2\), \(T=200\), and a \(\mathrm{Beta}(4,1)\) shift, crossing probabilities were \(0.9144\) for static coupling, \(0.1152\) for the designated confidence-band comparator, and \(0.9810\) for the oracle. A pre-specified contamination-geometry stress test retained static crossing probabilities of \(0.8894\)--\(0.9468\) across three non-control geometries. Semi-synthetic RTL-SDR experiments with real receiver/background IQ and controlled post-ADC injection reproduced the qualitative sensitivity advantage. The hardware experiments are engineering sensitivity checks, not type-I validation.
 }
