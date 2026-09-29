@@ -219,13 +219,16 @@ Define \(DP[b,d]\) as the minimum additive cost among all valid contiguous parti
 \]
 Choosing its length \(\ell\ge1\) deletes exactly \(\ell-1\) additional boundaries, and therefore gives the recurrence
 \begin{equation}
+\begin{aligned}
   DP[b+\ell,d+\ell-1]
-  =
-  \min\!\left\{
-    DP[b+\ell,d+\ell-1],
+  &=
+  \min\!\bigl\{
+    DP[b+\ell,d+\ell-1],\\
+  &\qquad\quad
     DP[b,d]+c(b-d,b,\ell)
-  \right\}.
-  \label{eq:dp-recurrence}
+  \bigr\}.
+\end{aligned}
+\label{eq:dp-recurrence}
 \end{equation}
 Only transitions satisfying
 \[
@@ -312,14 +315,16 @@ and converges to the finite positive limit
 \begin{proof}
 For part (a), the fixed-categorical closed form gives
 \[
+\begin{aligned}
   \frac1t\log E_t^{(a)}
-  =
-  \frac{\log\Gamma(t+k)}{t}
-  -
-  \frac1t\sum_{j=0}^n\log\Gamma(N_j(t)+1)
-  +
+  &=
+  \frac{\log\Gamma(t+k)}{t}\\
+  &\quad-
+  \frac1t\sum_{j=0}^n\log\Gamma(N_j(t)+1)\\
+  &\quad+
   \sum_{j=0}^n\widehat\pi_{j,t}\log a_j
   +o(1).
+\end{aligned}
 \]
 Stirling's formula and \(\widehat\pi_{j,t}\to\pi_j>0\) imply
 \[
