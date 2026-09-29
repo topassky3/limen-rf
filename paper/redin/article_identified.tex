@@ -1,0 +1,71 @@
+\documentclass{packages/redina}
+
+% Additional packages required by the LIMEN-RF manuscript.
+\usepackage{amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{microtype}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+% Shared manuscript sections use this root for frozen result figures.
+\newcommand{\resultroot}{../../results}
+
+% ------------------------------------------------------------------
+% Identified author version.
+% Keep paper/redin/article.tex as the anonymous double-blind version.
+% ------------------------------------------------------------------
+\title{Anytime-Valid Predictive-Rank Detection with a Statically Contaminated Reference Set}
+\titulo{Detecci\'on por rangos predictivos con referencia est\'aticamente contaminada}
+
+\author[1]{Juan Felipe Orozco Cort\'es}
+\affil[1]{Independent Researcher, Yarumal, Antioquia, Colombia}
+\authorCorr{Juan Felipe Orozco Cort\'es}
+\emailAuthor{orozjuanfelipe@gmail.com}
+\date{}
+
+\abstract{%
+Sequential distribution-shift detection often relies on a finite reference bank that may already contain persistent interferers or outliers. We study a fixed reference with an unknown set of static, exogenous replacements whose identities remain unchanged during monitoring. For every candidate set of contaminated sorted positions, we reconstruct a candidate clean-reference rank sequence and apply a predictive-rank betting construction. The true candidate recovers the clean rank process exactly, so the pointwise lower envelope of candidate wealths is pathwise dominated by a valid clean predictive-rank martingale, yielding finite-sample anytime threshold-crossing control. A corollary allows only an upper bound on the contamination count, and the induced contiguous-partition structure yields an exact \(O(Km^2)\) dynamic program for a fixed categorical bettor. In 5,000-replication post-freeze simulations at \(K=32\), \(m=2\), \(T=200\), and a \(\mathrm{Beta}(4,1)\) shift, crossing probabilities were \(0.9144\) for static coupling, \(0.1152\) for the designated confidence-band comparator, and \(0.9810\) for the oracle. A pre-specified contamination-geometry stress test retained static crossing probabilities of \(0.8894\)--\(0.9468\) across three non-control geometries. Semi-synthetic RTL-SDR experiments with real receiver/background IQ and controlled post-ADC injection reproduced the qualitative sensitivity advantage. The hardware experiments are engineering sensitivity checks, not type-I validation.
+}
+
+\resumen{%
+La detecci\'on secuencial de cambios de distribuci\'on suele apoyarse en un banco finito de referencia que puede contener interferencias u observaciones at\'ipicas persistentes. Estudiamos una referencia fija con un conjunto desconocido de reemplazos est\'aticos y ex\'ogenos cuyas identidades permanecen invariantes durante el monitoreo. Para cada conjunto candidato de posiciones contaminadas ordenadas reconstruimos una secuencia candidata de rangos respecto de la referencia limpia y aplicamos una construcci\'on de apuestas basada en rangos predictivos. El candidato verdadero recupera exactamente el proceso de rangos limpio; por ello, la envolvente inferior puntual de las riquezas candidatas queda dominada camino a camino por una martingala v\'alida de rangos predictivos y proporciona control finito de cruces de umbral v\'alido en cualquier momento. Un corolario requiere solamente una cota superior para el n\'umero de contaminantes, y la estructura inducida de particiones contiguas produce un programa din\'amico exacto \(O(Km^2)\) para un apostador categ\'orico fijo. En simulaciones poscongelamiento de 5.000 repeticiones con \(K=32\), \(m=2\), \(T=200\) y un cambio \(\mathrm{Beta}(4,1)\), las probabilidades de cruce fueron \(0.9144\) para el acoplamiento est\'atico, \(0.1152\) para el comparador designado basado en bandas de confianza y \(0.9810\) para el or\'aculo. Una prueba de estr\'es geom\'etrica pre-especificada mantuvo probabilidades de cruce de \(0.8894\)--\(0.9468\) en tres geometr\'ias no control. Experimentos semi-sint\'eticos con RTL-SDR y se\~nal inyectada despu\'es del ADC reprodujeron cualitativamente la ventaja de sensibilidad. Estos experimentos de hardware eval\'uan sensibilidad de ingenier\'ia, no control de error tipo I.
+}
+
+\keywords{%
+anytime-valid inference, predictive ranks, contaminated reference data, distribution-shift detection, CFAR%
+}{%
+inferencia v\'alida en cualquier momento, rangos predictivos, datos de referencia contaminados, detecci\'on de cambio de distribuci\'on, CFAR%
+}
+
+\begin{document}
+\maketitle
+
+\input{../sections/01_introduction}
+\input{../sections/02_problem_background}
+\input{../sections/03_method}
+\input{../sections/04_experimental_design}
+\input{../sections/05_results}
+\input{../sections/06_discussion}
+\input{../sections/07_limitations}
+\input{../sections/08_conclusion}
+
+\section{Declaration of competing interest}
+The author declares no competing financial or non-financial interests relevant to this work.
+
+\section{Funding}
+This research received no external funding.
+
+\section{Author contributions}
+Juan Felipe Orozco Cort\'es: Conceptualization, methodology, software, validation, formal analysis, investigation, data curation, visualization, writing---original draft, writing---review and editing, and project administration.
+
+\section{Data availability statement}
+The source code, frozen protocols, simulation outputs, and reproducibility artifacts supporting this study are maintained in the private GitHub repository \texttt{topassky3/limen-rf}. An anonymized review copy can be provided to editors and reviewers if required by the journal.
+
+\bibliographystyle{IEEEtran}
+\bibliography{../references}
+
+\end{document}
