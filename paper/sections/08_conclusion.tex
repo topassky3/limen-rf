@@ -24,10 +24,14 @@ The lower envelope itself need not be an e-process; its guarantee follows from d
 
 Static contamination also induces a contiguous-partition representation of observed-rank bins. For a fixed categorical bettor, this structure leads to an exact \(O(Km^2)\)-time, \(O(Km)\)-memory dynamic program. A corollary extends validity to an unknown contamination count bounded by \(M\), and the finite-reference asymptotic analysis explains why the frozen finite portfolio need not accumulate unbounded evidence for every persistent alternative when the reference size is fixed.
 
-In the frozen simulation study, persistent-identity coupling retains substantially more finite-reference power than the tested confidence-band robustifications. At
+In the frozen publication-scale simulation at
 \[
   K=32,\qquad m=2,\qquad T=200,\qquad X_t\sim\mathrm{Beta}(4,1),
 \]
-the observed crossing probabilities in 5,000 post-freeze replications are \(0.9144\) for static coupling, \(0.1152\) for the strongest ex-post frozen-grid confidence-band benchmark, and \(0.9810\) for the oracle. The paired static-minus-baseline gap is \(0.7992\) with 95\% bootstrap interval \([0.7880,0.8104]\), while median detected stopping times are 15, 97, and 8.
+static coupling crosses with probability \(0.9144\), the fixed \texttt{band\_mix}, \(\delta=0.045\), comparator with \(0.1152\), and the oracle with \(0.9810\). The paired static-minus-fixed-baseline gap is \(0.7992\) with 95\% bootstrap interval \([0.7882,0.8102]\).
 
-The conclusion is deliberately narrow: when contamination is static, preserving persistent identity structure can provide finite-reference information that is lost when uncertainty is represented only through a generic CDF band. The result is not a claim of universal robustness or superiority; it applies to the stated static/exogenous model and inherits the marginal fixed-reference interpretation of predictive-rank martingales. Semi-synthetic RTL-SDR validation is the next step toward establishing whether the same qualitative behavior survives a physical receiver chain.
+A separate preregistered 5,000-replication geometry stress test preserves the same detector and underlying paths while moving the two contaminants to upper in-support, mixed low/high, and independently random in-support configurations. Static crossing probabilities remain between \(0.8894\) and \(0.9468\), while the fixed baseline improves to \(0.2162\)--\(0.3948\). All non-control static-minus-baseline gaps remain above the preregistered 0.15 margin.
+
+Finally, two semi-synthetic RTL-SDR experiments use real receiver/background IQ with controlled post-ADC injection. The weaker-SNR V2 study exposes a non-saturated transition: at \(-18\) dB static coupling crosses on 14/30 captures versus 0/30 for the fixed comparator, and at \(-15\) dB it crosses on 22/30 versus 12/30. Because the physical score streams exhibit serial dependence and injection is post-ADC, these results are engineering sensitivity evidence rather than hardware type-I validation.
+
+The conclusion is deliberately narrow: when a finite reference contains a fixed unknown set of static/exogenous contaminated identities, preserving that persistent latent structure can retain substantial finite-reference information that is lost by the tested generic CDF-band robustifications. The theorem does not cover value-adaptive identity selection, temporal dependence, or arbitrary changing contamination, and no minimax optimality is claimed.
