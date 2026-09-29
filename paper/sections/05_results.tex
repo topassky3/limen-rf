@@ -30,9 +30,11 @@ Table~\ref{tab:crossing} summarizes the post-freeze publication-scale validation
 
 At the pre-specified primary point \(K=32,\gamma=4,T=200\),
 \[
-  \widehat P_{\mathrm{static}}=0.9144,\qquad
-  \widehat P_{\mathrm{best\ grid}}=0.1152,\qquad
-  \widehat P_{\mathrm{oracle}}=0.9810.
+\begin{aligned}
+  \widehat P_{\mathrm{static}}&=0.9144,\\
+  \widehat P_{\mathrm{best\ grid}}&=0.1152,\\
+  \widehat P_{\mathrm{oracle}}&=0.9810.
+\end{aligned}
 \]
 The static 95\% Wilson interval is \([0.9063,0.9218]\). At this point the strongest frozen-grid member is \texttt{band\_mix} with \(\delta=0.045\). Conditional on that selected configuration, the paired static-minus-baseline gap is \(0.7992\) with a bootstrap Monte Carlo interval \([0.7882,0.8102]\). The paired oracle-minus-static gap is \(0.0666\) with 95\% bootstrap interval \([0.0598,0.0734]\). We do not interpret an ordinary interval conditional on ex-post grid selection as selection-adjusted inference for the full best-grid envelope.
 
@@ -72,12 +74,12 @@ The V1b control exactly reproduces Publication V1 under the reused path seeds. T
 \label{tab:v1b-geometry}
 \begin{tabular}{lrrrr}
 \toprule
-Geometry & Static & Primary band & Oracle & \(E[\tau_{200}^\dagger]\) static\\
+Geometry & Static & Band & Oracle & \(E[\tau_{200}^\dagger]\)\\
 \midrule
 High outside & 0.9144 & 0.1152 & 0.9810 & 42.78\\
 Upper inside & 0.8894 & 0.2162 & 0.9810 & 41.23\\
 Mixed inside & 0.9422 & 0.3742 & 0.9810 & 27.49\\
-Random static inside & 0.9468 & 0.3948 & 0.9810 & 26.39\\
+Random inside & 0.9468 & 0.3948 & 0.9810 & 26.39\\
 \bottomrule
 \end{tabular}
 \end{table}
