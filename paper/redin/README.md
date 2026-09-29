@@ -40,7 +40,7 @@ cd ~/projects/limen-rf/paper/redin
 latexmk -xelatex -interaction=nonstopmode -halt-on-error article.tex
 \`\`\`
 
-If XeLaTeX exposes incompatibilities in the supplied journal class, the template README also permits PDFLaTeX. Prefer XeLaTeX for the submission build unless the official class requires otherwise.
+The template README mentions both PDFLaTeX and XeLaTeX, but the supplied `redina.cls` currently loads `mathspec`, which is XeTeX-specific. Therefore the REDIN build should use **XeLaTeX** in practice. On Ubuntu/WSL, install it with `sudo apt install texlive-xetex` if the `xelatex` executable is missing.
 
 ## Double-blind metadata
 
