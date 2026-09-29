@@ -38,13 +38,6 @@ The static 95\% Wilson interval is \([0.9063,0.9218]\). At this point the strong
 
 For the strong \(\gamma=8\) alternative at \(K=32\), static coupling reaches \(0.9998\), the oracle reaches \(1.0000\), and the strongest frozen-grid baseline reaches \(0.8362\). For the weak \(\gamma=2\) alternative, static crossing probability is \(0.1824\) at \(K=24\) and \(0.2036\) at \(K=32\), while the oracle reaches \(0.4258\) and \(0.4396\).
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.82\linewidth]{../results/publication_v1/figures/crossing_T200_K32.pdf}
-\caption{Crossing probability by \(T=200\) for \(K=32\), with 95\% Wilson intervals. The confidence-band curve is the strongest ex-post configuration from the frozen baseline grid for each alternative.}
-\label{fig:crossing-k32}
-\end{figure}
-
 \subsection{Detection delays}
 
 Table~\ref{tab:delays} reports median stopping times among paths that cross by \(T=200\).
@@ -92,13 +85,6 @@ Random static inside & 0.9468 & 0.3948 & 0.9810 & 26.39\\
 The paired static-minus-primary gaps are \(0.7992\) \([0.7882,0.8102]\), \(0.6732\) \([0.6600,0.6862]\), \(0.5680\) \([0.5538,0.5818]\), and \(0.5520\) \([0.5386,0.5666]\), respectively. All three non-control geometries exceed the pre-specified 0.15 stress-test margin, while the V1b null sanity gate remains satisfied.
 
 The baseline improves substantially for the in-support geometries, indicating that the original outside-support configuration was particularly unfavorable to the tested confidence-band comparator. Nevertheless, the static procedure retains high crossing probability across all pre-specified geometries. The oracle remains at \(0.9810\) because the clean reference and future path are paired across geometries and the oracle reconstructs the same canonical clean-rank process.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.88\linewidth]{../results/publication_v1b_geometry/figures/crossing_by_geometry_gamma4_T200.pdf}
-\caption{V1b crossing probability at the primary point across the four pre-specified contamination geometries.}
-\label{fig:v1b-geometry}
-\end{figure}
 
 \subsection{Semi-synthetic RTL-SDR validation}
 
