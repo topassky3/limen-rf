@@ -18,29 +18,37 @@ The lower envelope can still be conservative, but it preserves the constraint th
 
 \subsection{Relation to the oracle}
 
-The oracle separates finite-reference uncertainty from uncertainty about contamination identities. At the primary frozen setting
+At the primary frozen setting
 \[
   K=32,\qquad m=2,\qquad \gamma=4,\qquad T=200,
 \]
-the oracle crossing probability is \(0.9810\), while static coupling reaches \(0.9144\). The paired oracle-minus-static gap is \(0.0666\) with 95\% bootstrap interval \([0.0598,0.0736]\). Most of the observed oracle crossing probability is therefore retained in this scenario, although a measurable finite-reference penalty remains. For \(\gamma=2\), the gap is much larger, indicating that uncertainty over candidate identities is especially costly under weak shifts.
+the oracle crossing probability is \(0.9810\). Static coupling reaches \(0.9144\) in the original outside-support geometry and between \(0.8894\) and \(0.9468\) across the three preregistered non-control geometries. The corresponding oracle-static point gaps are \(0.0666\), \(0.0916\), \(0.0388\), and \(0.0342\).
 
-We do not derive an analytical efficiency bound for this gap. Characterizing its dependence on \(K\), \(m\), horizon, and alternative strength is an open problem.
+The invariant oracle result across V1b geometries is a useful structural check: the clean reference and future stream are held fixed, and a correct oracle removes the contaminated sorted positions before applying the same clean-rank construction. Geometry affects the robust and confidence-band procedures, but not the underlying canonical clean rank sequence.
+
+We do not derive an analytical efficiency bound for the oracle-static gap. Characterizing its dependence on \(K\), \(m\), horizon, and alternative strength remains open.
+
+\subsection{What V1b changes}
+
+The geometry stress test rules out a simple explanation of the original power gap: that both contaminants at value \(2\) created an unusually favorable setting for static coupling. The fixed confidence-band comparator improves substantially when contaminants are moved into the support or split across tails, rising from \(0.1152\) to as high as \(0.3948\) at the primary point. The static method nevertheless remains between \(0.8894\) and \(0.9468\).
+
+This does not establish uniform dominance over all geometries. It does show that the main empirical finding survives a preregistered set of materially different static/exogenous contamination arrangements without changing the detector.
 
 \subsection{Why the band comparison is conservative}
 
-The confidence-band baselines represent the contaminated reference through a simultaneous CDF uncertainty set. This remains valid without identifying contaminated positions, but the resulting uncertainty set can be substantially larger than the set compatible with one persistent contamination pattern. The final audit intentionally favors the band family by sweeping a frozen parameter grid and reporting the best configuration ex post for each condition.
+The confidence-band baselines represent the contaminated reference through a simultaneous CDF uncertainty set. This remains valid without identifying contaminated positions, but the resulting uncertainty set can be substantially larger than the set compatible with one persistent contamination pattern. The final development audit intentionally favors the band family by sweeping a frozen parameter grid and reporting the best configuration ex post for each condition.
 
-Because the ex-post envelope is not one precommitted test, it is used only as a descriptive adversarial benchmark. The large primary gap therefore supports the structural interpretation rather than a claim that the baseline was poorly tuned.
+Because the ex-post envelope is not one precommitted test, it is used only as a descriptive adversarial benchmark. V1b separately fixes \texttt{band\_mix}, \(\delta=0.045\), before outcomes and uses paired uncertainty against that comparator. This separates a clean inferential comparison from the broader descriptive best-grid envelope.
 
 \subsection{Marginal versus conditional guarantees}
 
 Theorem~1 inherits the marginal fixed-reference interpretation of predictive-rank martingales \cite{KuangXia2026}. It averages over the random clean reference sample. CCTM instead targets a calibration-conditional guarantee with high probability over a clean reference draw \cite{ShaerEtAl2026}. These are different inferential targets. We do not claim that one uniformly dominates the other.
 
-\subsection{Connection to CFAR}
+\subsection{Connection to CFAR and receiver data}
 
 The radar motivation is direct but limited. Classical CFAR uses neighboring reference cells to set a threshold for a cell under test, with order-statistic and censored variants addressing nonhomogeneous windows and multiple interferers \cite{Rohling1983}. Our setting instead reuses one finite reference bank repeatedly, permits persistent contaminated cells, and requires optional-stopping-safe sequential evidence.
 
-The method is therefore CFAR-style in its use of reference data and ranks, but it is not a drop-in replacement for sliding-window OS-CFAR. A physical RF implementation must first map IQ or power measurements into a scalar score whose behavior is reasonably aligned with the statistical model. This motivates the separate semi-synthetic SDR validation rather than treating simulation as a substitute for receiver data.
+The semi-synthetic RTL-SDR experiments provide an engineering bridge rather than a theorem check. Real receiver/background IQ preserves quantization and environmental structure, while controlled post-ADC injection preserves known ground truth. V2 exposes a non-saturated transition: at \(-18\) dB static crosses on 14/30 captures versus 0/30 for the fixed band comparator, and at \(-15\) dB the corresponding counts are 22/30 versus 12/30. These observations are qualitatively consistent with the simulation advantage, but serial dependence prevents interpretation as hardware type-I validation.
 
 \subsection{Structural versus distributional robustness}
 
