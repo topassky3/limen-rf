@@ -1,119 +1,278 @@
 # LIMEN-RF
 
-**Anytime-valid predictive-rank detection with a statically contaminated fixed reference set**
+> **Anytime-valid predictive-rank detection with a statically contaminated fixed reference set**
 
 [![CI](https://github.com/topassky3/limen-rf/actions/workflows/ci.yml/badge.svg)](https://github.com/topassky3/limen-rf/actions/workflows/ci.yml)
 
-LIMEN-RF is a reproducible research repository for sequential distribution-shift detection when a finite reference bank already contains a small, unknown set of **static/exogenous contaminated observations** and the same bank is repeatedly reused online.
+**LIMEN-RF** is a reproducible research project for sequential distribution-shift detection when a finite reference bank may already contain a small number of **static, exogenous contaminated observations** and that same bank is repeatedly reused online.
 
 **Author:** Juan Felipe Orozco Cortés  
 **Manuscript:** *Anytime-Valid Predictive-Rank Detection with a Statically Contaminated Reference Set*  
-**Research status:** theory core frozen, publication-scale Monte Carlo complete, contamination-geometry stress test complete, RTL-SDR V1/V2 engineering characterization complete, manuscript prepared for peer review.
+**Status:** theory frozen · publication Monte Carlo complete · geometry stress test complete · RTL-SDR V1/V2 characterization complete · manuscript prepared for peer review
 
-## Core idea
+---
 
-Let a fixed reference bank contain (K) observed values, exactly (m) of which are static/exogenous contaminants. For every candidate set (C) of contaminated sorted positions, LIMEN-RF reconstructs a candidate clean-reference rank sequence
+## At a glance
 
-[
-R_t^{(C)} = Q_t - \#\{c \in C : c \le Q_t\}.
-]
+| Item | LIMEN-RF |
+|---|---|
+| Statistical setting | Fixed finite reference bank with unknown persistent contamination identities |
+| Online task | Sequential distribution-shift detection |
+| Core mechanism | Candidate-wise clean-rank reconstruction + predictive-rank betting |
+| Validity statement | Finite-sample anytime threshold-crossing control under the stated iid continuous, static/exogenous model |
+| Primary simulation | 5,000 replications, (K=32), (m=2), (T=200) |
+| Stress test | Four pre-specified contamination geometries |
+| Hardware evidence | Semi-synthetic RTL-SDR V1/V2 engineering characterization |
+| Reproducibility | Frozen runbooks, manifests, hashes, source code, tests and CI |
 
-For the true candidate (C^\star), this is exactly the rank against the latent clean reference sample. The same pre-specified predictive-rank betting functional is applied to every candidate. The robust evidence is the pointwise lower envelope
+---
 
-[
-\underline E_t = \min_C E_t^{(C)}.
-]
+## The problem
 
-Because (\underline E_t \le E_t^{(C^\star)}) pathwise and the true-candidate wealth is a valid clean predictive-rank martingale, threshold crossing is anytime-valid under the stated iid continuous, static/exogenous model.
+A sequential detector often compares new observations against a finite reference bank. If a few reference cells are already contaminated and their identities are unknown, repeatedly reusing that bank can distort the evidence accumulated online.
 
-**Important:** the lower envelope itself is **not** claimed to be a martingale, supermartingale, or e-process.
+LIMEN-RF treats those contamination identities as **persistent but unknown**.
 
-## Main scientific contributions
+For every candidate set of contaminated sorted positions, the method reconstructs the rank sequence that would remain after deleting that candidate.
 
-- pathwise reconstruction of the latent clean rank process under unknown persistent contamination identities;
-- finite-sample anytime threshold-crossing control through true-candidate domination;
-- an upper-bound-only contamination-count corollary;
-- a one-to-one contiguous-partition representation of candidate deletions;
-- an exact (O(Km^2))-time, (O(Km))-memory dynamic program for a fixed categorical bettor;
-- frozen publication-scale Monte Carlo, a pre-specified contamination-geometry stress test, and semi-synthetic RTL-SDR engineering validation.
+The reconstruction is:
 
-## Publication-scale results
+```text
+R_t(C) = Q_t - #{ c in C : c <= Q_t }
+```
 
-Primary frozen simulation setting: (K=32), (m=2), (T=200), (X_t\sim\mathrm{Beta}(4,1)), 5,000 replications.
+where:
 
-| Method | Crossing probability by (T=200) |
+- `Q_t` is the rank/count of the new observation against the full observed reference bank;
+- `C` is one candidate set of contaminated sorted positions;
+- `R_t(C)` is the corresponding reconstructed clean-reference rank.
+
+For the true candidate `C*`, the reconstruction is exactly the rank against the latent clean reference sample.
+
+The robust evidence used for threshold crossing is:
+
+```text
+E_robust(t) = min_C E_t(C)
+```
+
+and therefore, pathwise,
+
+```text
+E_robust(t) <= E_t(C*)
+```
+
+The true-candidate wealth is the clean predictive-rank martingale. This containment is what yields the anytime-valid crossing guarantee.
+
+> **Important:** `E_robust(t)` itself is **not claimed to be a martingale, supermartingale, or e-process**.
+
+---
+
+## Main contributions
+
+1. **Pathwise rank reconstruction** under unknown persistent contamination identities.
+2. **Anytime-valid threshold-crossing control** through domination by the true candidate.
+3. **Unknown-contamination-count extension** when only an upper bound is available.
+4. **Contiguous-partition representation** of candidate deletions.
+5. **Exact dynamic program** for a fixed categorical bettor with:
+   - time complexity: `O(K m^2)`
+   - memory complexity: `O(K m)`
+6. **Frozen publication-scale experiments** plus a contamination-geometry stress test.
+7. **RTL-SDR engineering characterization** using real receiver/background IQ with controlled post-ADC injection.
+
+---
+
+## Publication-scale result
+
+Primary frozen simulation point:
+
+```text
+K = 32
+m = 2
+T = 200
+future shift = Beta(4, 1)
+replications = 5,000
+```
+
+| Method | Crossing probability by T = 200 |
 |---|---:|
-| Static candidate coupling | 0.9144 |
-| Designated band comparator | 0.1152 |
+| **Static candidate coupling** | **0.9144** |
+| Designated confidence-band comparator | 0.1152 |
 | Oracle | 0.9810 |
 
-The pre-specified V1b geometry stress test retained static crossing probabilities from **0.8894 to 0.9468** across the three non-control geometries at the primary point.
+The pre-specified V1b stress test changed only the contamination geometry while keeping the detector frozen.
 
-RTL-SDR V2 uses 30 fresh captures and a weaker injected-SNR grid. At (-18\) dB, static coupling crossed on **14/30** captures, the fixed band comparator on **0/30**, and the oracle on **18/30**. At (-15\) dB the counts were **22/30**, **12/30**, and **24/30**.
+At the same primary point, static crossing probabilities across the three non-control geometries were:
 
-The SDR experiments are **engineering sensitivity characterizations only**: the score streams exhibit serial dependence and the controlled signal injection occurs after the ADC, so the iid theorem is not claimed as hardware type-I validation.
+| Geometry | Static | Designated comparator | Oracle |
+|---|---:|---:|---:|
+| Upper in-support | 0.8894 | 0.2162 | 0.9810 |
+| Mixed in-support | 0.9422 | 0.3742 | 0.9810 |
+| Random static in-support | 0.9468 | 0.3948 | 0.9810 |
 
-## Scope
+### Geometry stress test
 
-The theorem assumes:
+![LIMEN-RF crossing probability by contamination geometry](results/publication_v1b_geometry/figures/crossing_by_geometry_gamma4_T200.png)
 
-- scalar observations from an unknown continuous null distribution (F);
-- a fixed observed reference bank;
-- static/exogenous contaminated identities;
+The figure is generated from the frozen V1b artifacts stored under `results/publication_v1b_geometry/`.
+
+---
+
+## RTL-SDR characterization
+
+A second evidence layer uses fresh RTL-SDR captures with controlled post-ADC tone injection.
+
+Selected V2 results:
+
+| Injected SNR | Static | Comparator | Oracle |
+|---|---:|---:|---:|
+| -24 dB | 2/30 | 0/30 | 4/30 |
+| -21 dB | 3/30 | 0/30 | 5/30 |
+| -18 dB | **14/30** | **0/30** | 18/30 |
+| -15 dB | **22/30** | **12/30** | 24/30 |
+| -12 dB | **30/30** | **26/30** | 30/30 |
+
+![RTL-SDR V2 crossing probability versus injected SNR](results/sdr_publication_v2/figures/sdr_v2_crossing_vs_snr.png)
+
+These experiments are **engineering sensitivity characterizations**, not a hardware validation of the iid type-I theorem. The physical score streams exhibit serial dependence, and the controlled injection is performed after the ADC.
+
+---
+
+## Scientific scope
+
+The theorem applies when:
+
+- observations are scalar;
+- the clean null distribution is unknown and continuous;
+- the observed reference bank is fixed;
+- contaminated identities are static/exogenous;
 - deleting the true contaminated cells leaves an iid clean reference sample;
-- future null observations are iid from the same (F).
+- future null observations are iid from the same clean distribution.
 
-The current paper does **not** claim validity for value-adaptive replacement after inspecting the clean bank, online-changing contamination identities, temporal dependence, arbitrary drift, minimax optimality, or universal superiority over conformal/CCTM/e-process methods.
+The paper does **not** claim validity for:
 
-## Repository map
+- value-adaptive replacement after inspecting the realized clean bank;
+- contamination identities that change during monitoring;
+- arbitrary temporal dependence;
+- arbitrary distribution drift;
+- minimax optimality;
+- universal superiority over conformal, CCTM, or other e-process methods;
+- hardware type-I control from the RTL-SDR experiments.
 
-- `src/limen_rf/` — reusable implementation.
-- `tests/` — regression/unit tests.
-- `experiments/` — frozen simulation and SDR experiment drivers.
-- `configs/` — experiment configuration.
-- `docs/math/` — theorem development, method freeze, and formal audit.
-- `docs/experiments/` — pre-outcome protocols/runbooks and frozen result notes.
-- `docs/literature/` — prior-art and novelty audits.
-- `results/publication_v1/` — publication-scale Monte Carlo summaries and figures.
-- `results/publication_v1b_geometry/` — geometry-stress artifacts, hashes, and figures.
-- `results/sdr_publication_v2/` — finalized SDR V2 derived outputs and figures.
-- `paper/` — shared manuscript source.
-- `paper/redin/` — journal-format identified and double-blind manuscript wrappers.
+---
 
-## Quick start
+## Reproduce the software
 
-The repository uses Python 3.13+ and [uv](https://docs.astral.sh/uv/).
+Requirements:
+
+- Python 3.13 or 3.14
+- [uv](https://docs.astral.sh/uv/)
 
 ```bash
 git clone https://github.com/topassky3/limen-rf.git
 cd limen-rf
 
 uv sync --locked
+
 uv run ruff check .
 uv run pytest
 uv run python -m limen_rf.smoke
 ```
 
-For the frozen publication workflows, see **[REPRODUCIBILITY.md](REPRODUCIBILITY.md)**.
+The same software checks run automatically in GitHub Actions.
 
-## Reproducibility discipline
+For publication experiment reproduction, artifact hashes, and frozen run commands, use:
 
-The detector portfolio and experiment settings were frozen before the publication-scale outcomes were used for manuscript conclusions. Historical runbooks are preserved in `docs/experiments/`.
+**[REPRODUCIBILITY.md](REPRODUCIBILITY.md)**
 
-Terminology note: some historical internal artifacts use the word **“preregistered.”** The manuscript uses the more precise description **“pre-specified and repository-frozen before outcomes were viewed”** because the protocol was frozen in repository history rather than registered in an external preregistration registry.
+---
 
-No additional Monte Carlo matrix or SDR detector rerun is planned for outcome improvement.
+## Repository guide
+
+| Path | Purpose |
+|---|---|
+| `src/limen_rf/` | Reusable implementation |
+| `tests/` | Unit and regression tests |
+| `experiments/` | Frozen Monte Carlo and SDR experiment drivers |
+| `configs/` | Experiment configuration |
+| `docs/math/` | Theorems, method freeze, proof/audit material |
+| `docs/experiments/` | Pre-outcome protocols, runbooks and frozen result notes |
+| `docs/literature/` | Prior-art and novelty audits |
+| `results/publication_v1/` | Publication Monte Carlo summaries and figures |
+| `results/publication_v1b_geometry/` | Geometry stress-test artifacts and SHA-256 hashes |
+| `results/sdr_publication_v2/` | Frozen SDR V2 derived outputs and figures |
+| `paper/sections/` | Shared scientific manuscript source |
+| `paper/redin/` | REDIN identified and double-blind manuscript wrappers |
+
+---
+
+## Scientific freeze and audit trail
+
+The detector was frozen before the publication-scale outcomes were used for manuscript conclusions.
+
+Key documents:
+
+- **Method freeze:** [docs/math/method_freeze_post_killtest13.md](docs/math/method_freeze_post_killtest13.md)
+- **Formal audit:** [docs/math/formal_audit_external_review_v0_1.md](docs/math/formal_audit_external_review_v0_1.md)
+- **V1 protocol:** [docs/experiments/publication_validation_v1_runbook.md](docs/experiments/publication_validation_v1_runbook.md)
+- **V1b protocol:** [docs/experiments/publication_validation_v1b_geometry_runbook.md](docs/experiments/publication_validation_v1b_geometry_runbook.md)
+- **V1b frozen result:** [docs/experiments/publication_validation_v1b_geometry_result.md](docs/experiments/publication_validation_v1b_geometry_result.md)
+- **SDR V2 protocol:** [docs/experiments/sdr_publication_v2_runbook.md](docs/experiments/sdr_publication_v2_runbook.md)
+- **SDR V2 frozen result:** [docs/experiments/sdr_publication_v2_result.md](docs/experiments/sdr_publication_v2_result.md)
+- **Final novelty sweep:** [docs/literature/final_novelty_sweep_static_contaminated_reference.md](docs/literature/final_novelty_sweep_static_contaminated_reference.md)
+
+Some historical internal files use the word *preregistered*. The manuscript uses the more precise wording **pre-specified and repository-frozen before outcomes were viewed**, because the protocol was frozen in repository history rather than registered in an external preregistration registry.
+
+---
+
+## Manuscript
+
+The journal manuscript source is under `paper/`.
+
+REDIN wrappers:
+
+- `paper/redin/article.tex` — identified author version
+- `paper/redin/article_identified.tex` — synchronized identified alias
+- `paper/redin/article_blind.tex` — double-blind reviewer version
+
+Compilation instructions are in:
+
+**[paper/redin/README.md](paper/redin/README.md)**
+
+---
 
 ## Data availability
 
-Simulation outputs, manifests, hashes, figures, source code, protocols, and derived RTL-SDR result tables are versioned in this repository.
+This repository versions:
 
-Raw receiver IQ captures are intentionally not versioned under `data/` (the directory is ignored by Git). Therefore the simulation study is directly reproducible from the repository, while the physical-capture portion is auditable from frozen derived artifacts and requires the original/local IQ captures for detector-level replay.
+- source code;
+- tests;
+- frozen experimental protocols;
+- simulation outputs;
+- manifests;
+- SHA-256 hashes;
+- derived RTL-SDR result tables;
+- publication figures.
+
+Raw receiver IQ captures under `data/` are intentionally not versioned in Git.
+
+Consequently:
+
+- the simulation study is directly reproducible from the repository;
+- the frozen SDR derived artifacts are auditable and hash-verifiable;
+- detector-level replay of the physical acquisition requires the original/local IQ captures or a new acquisition under the documented receiver settings.
+
+---
 
 ## Citation
 
-GitHub will expose citation metadata from **[CITATION.cff](CITATION.cff)**. Once the associated article receives a DOI, the citation file should be updated to prefer the published article.
+Citation metadata is provided in **[CITATION.cff](CITATION.cff)**.
+
+Once the associated article receives a DOI, the citation metadata should be updated to point first to the published article.
+
+---
 
 ## License
 
-No open-source license has been selected yet. Public visibility alone does not grant reuse rights. A software/data license should be chosen explicitly before encouraging third-party redistribution.
+No open-source license has been selected yet.
+
+Making a repository public does not by itself grant permission to reuse, modify, or redistribute its contents. A software/data license should be chosen explicitly if third-party reuse is intended.
