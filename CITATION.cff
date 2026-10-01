@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use LIMEN-RF in research, please cite this repository. Update to the published article citation once a DOI is available."
+title: "LIMEN-RF: Anytime-valid predictive-rank detection with a statically contaminated fixed reference set"
+type: software
+authors:
+  - family-names: "Orozco Cortés"
+    given-names: "Juan Felipe"
+version: 0.1.0
+repository-code: "https://github.com/topassky3/limen-rf"
+url: "https://github.com/topassky3/limen-rf"
+keywords:
+  - anytime-valid inference
+  - predictive ranks
+  - sequential detection
+  - contaminated reference data
+  - CFAR
+  - software-defined radio
