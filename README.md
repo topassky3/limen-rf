@@ -37,13 +37,13 @@ For every candidate set of contaminated sorted positions, the method reconstruct
 
 The reconstruction is
 
-$
+```math
 R_t^{(C)}
 =
 Q_t
 -
 \#\{c \in C : c \le Q_t\}.
-$
+```
 
 where:
 
@@ -55,19 +55,19 @@ For the true candidate $C^\star$, the reconstruction is exactly the rank against
 
 The robust evidence used for threshold crossing is
 
-$
+```math
 \underline{E}_t
 =
 \min_C E_t^{(C)}.
-$
+```
 
 Therefore, pathwise,
 
-$
+```math
 \underline{E}_t
 \le
 E_t^{(C^\star)}.
-$
+```
 
 The true-candidate wealth is the clean predictive-rank martingale. This pathwise domination is what yields the anytime-valid crossing guarantee.
 
