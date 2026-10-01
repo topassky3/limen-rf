@@ -5,9 +5,33 @@ __pycache__/
 .ruff_cache/
 .ipynb_checkpoints/
 .idea/
+.vscode/
+.DS_Store
+.coverage
+htmlcov/
+
+# Raw/local acquisition data
 results/raw/
 data/
 *.bin
 *.iq
 *.cf32
+*.u8
+
+# Local configuration and credentials
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local logs / LaTeX build products
+*.log
+*.aux
+*.out
+*.xdv
+*.fls
+*.fdb_latexmk
+*.synctex.gz
