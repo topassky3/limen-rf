@@ -32,6 +32,9 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 100
 target-version = "py313"
+# Publication experiment drivers are frozen research artifacts. Keep their
+# source stable after outcome generation; lint the reusable package/tests.
+extend-exclude = ["experiments"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
