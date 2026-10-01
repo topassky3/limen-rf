@@ -35,35 +35,43 @@ LIMEN-RF treats those contamination identities as **persistent but unknown**.
 
 For every candidate set of contaminated sorted positions, the method reconstructs the rank sequence that would remain after deleting that candidate.
 
-The reconstruction is:
+The reconstruction is
 
-```text
-R_t(C) = Q_t - #{ c in C : c <= Q_t }
-```
+$
+R_t^{(C)}
+=
+Q_t
+-
+\#\{c \in C : c \le Q_t\}.
+$
 
 where:
 
-- `Q_t` is the rank/count of the new observation against the full observed reference bank;
-- `C` is one candidate set of contaminated sorted positions;
-- `R_t(C)` is the corresponding reconstructed clean-reference rank.
+- $Q_t$ is the rank/count of the new observation against the full observed reference bank;
+- $C$ is one candidate set of contaminated sorted positions;
+- $R_t^{(C)}$ is the corresponding reconstructed clean-reference rank.
 
-For the true candidate `C*`, the reconstruction is exactly the rank against the latent clean reference sample.
+For the true candidate $C^\star$, the reconstruction is exactly the rank against the latent clean reference sample.
 
-The robust evidence used for threshold crossing is:
+The robust evidence used for threshold crossing is
 
-```text
-E_robust(t) = min_C E_t(C)
-```
+$
+\underline{E}_t
+=
+\min_C E_t^{(C)}.
+$
 
-and therefore, pathwise,
+Therefore, pathwise,
 
-```text
-E_robust(t) <= E_t(C*)
-```
+$
+\underline{E}_t
+\le
+E_t^{(C^\star)}.
+$
 
-The true-candidate wealth is the clean predictive-rank martingale. This containment is what yields the anytime-valid crossing guarantee.
+The true-candidate wealth is the clean predictive-rank martingale. This pathwise domination is what yields the anytime-valid crossing guarantee.
 
-> **Important:** `E_robust(t)` itself is **not claimed to be a martingale, supermartingale, or e-process**.
+> **Important:** $\underline{E}_t$ itself is **not claimed to be a martingale, supermartingale, or e-process**.
 
 ---
 
@@ -74,8 +82,8 @@ The true-candidate wealth is the clean predictive-rank martingale. This containm
 3. **Unknown-contamination-count extension** when only an upper bound is available.
 4. **Contiguous-partition representation** of candidate deletions.
 5. **Exact dynamic program** for a fixed categorical bettor with:
-   - time complexity: `O(K m^2)`
-   - memory complexity: `O(K m)`
+   - time complexity: $O(Km^2)$
+   - memory complexity: $O(Km)$
 6. **Frozen publication-scale experiments** plus a contamination-geometry stress test.
 7. **RTL-SDR engineering characterization** using real receiver/background IQ with controlled post-ADC injection.
 
@@ -85,13 +93,11 @@ The true-candidate wealth is the clean predictive-rank martingale. This containm
 
 Primary frozen simulation point:
 
-```text
-K = 32
-m = 2
-T = 200
-future shift = Beta(4, 1)
-replications = 5,000
-```
+- $K=32$ observed reference values
+- $m=2$ static contaminants
+- monitoring horizon $T=200$
+- future shift $X_t \sim \mathrm{Beta}(4,1)$
+- 5,000 Monte Carlo replications
 
 | Method | Crossing probability by T = 200 |
 |---|---:|
