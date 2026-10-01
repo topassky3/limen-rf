@@ -38,6 +38,9 @@ Compile from inside \`paper/redin\` so the REDIN class can find its relative \`p
 cd ~/projects/limen-rf/paper/redin
 
 latexmk -xelatex -interaction=nonstopmode -halt-on-error article.tex
+
+# Double-blind reviewer manuscript
+latexmk -xelatex -interaction=nonstopmode -halt-on-error article_blind.tex
 \`\`\`
 
 The template README mentions both PDFLaTeX and XeLaTeX, but the supplied `redina.cls` currently loads `mathspec`, which is XeTeX-specific. Therefore the REDIN build should use **XeLaTeX** in practice. On Ubuntu/WSL, install it with `sudo apt install texlive-xetex` if the `xelatex` executable is missing.
