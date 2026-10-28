@@ -35,3 +35,6 @@ jobs:
 
       - name: Deterministic smoke test
         run: uv run python -m limen_rf.smoke
+
+      - name: REDIN editorial compliance
+        run: uv run python scripts/check_redin_editorial.py
