@@ -14,14 +14,14 @@ For \(C\neq C^\star\), the reconstructed sequence need not obey the clean predic
 \]
 Because the betting rule is a deterministic predictable functional of the candidate rank history, the true-candidate bet \(q_t^{(C^\star)}\) is \(\mathcal G_{t-1}^\star\)-measurable. Therefore \(E_t^{(C^\star)}\) is exactly the clean PRM with respect to the canonical clean-rank filtration \((\mathcal G_t^\star)\).
 
-Define the robust evidence lower envelope
+The robust evidence lower envelope is defined by Equation~\eqref{eq:lower-envelope}:
 \begin{equation}
   \underline E_t
   =
   \min_{C\in\mathcal C_m}E_t^{(C)}.
   \label{eq:lower-envelope}
 \end{equation}
-Since \(C^\star\in\mathcal C_m\),
+Since \(C^\star\in\mathcal C_m\), the pathwise domination relation is given by Equation~\eqref{eq:pathwise-domination}:
 \begin{equation}
   \underline E_t
   \le
@@ -46,7 +46,7 @@ For every realized reference bank, deleting the realized contaminated positions 
 \end{proof}
 
 \begin{theorem}[Anytime-valid robust crossing under exactly \(m\) static contaminants]
-Assume the model of Section~2 with exactly \(m\) static/exogenous contaminated references. Let \(E_t^{(C)}\) be the candidate wealth obtained by applying the same pre-specified valid clean-reference betting functional to each reconstructed candidate sequence. Then, for every \(\alpha\in(0,1)\),
+Assume the model of Section~2 with exactly \(m\) static/exogenous contaminated references. Let \(E_t^{(C)}\) be the candidate wealth obtained by applying the same pre-specified valid clean-reference betting functional to each reconstructed candidate sequence. Then, for every \(\alpha\in(0,1)\), the anytime-valid crossing bound in Equation~\eqref{eq:main-theorem} holds:
 \begin{equation}
   \Pr_{H_0}\!\left(
     \sup_{t\ge0}\underline E_t\ge\frac1\alpha
@@ -96,7 +96,7 @@ For \(C\in\mathcal C_r\), reconstruct ranks by
 \]
 and compute a valid clean-reference predictive-rank wealth \(E_t^{(r,C)}\) using the null law corresponding to \(n_r\) clean references.
 
-Define
+The upper-bound envelope is defined by Equation~\eqref{eq:upper-bound-envelope}:
 \begin{equation}
   \underline E_t^{(\le M)}
   =
@@ -107,7 +107,7 @@ Define
 \end{equation}
 
 \begin{corollary}[Anytime validity with only an upper bound]
-Suppose the true number of static/exogenous contaminated references is \(m^\star\le M\). Then, for every \(\alpha\in(0,1)\),
+Suppose the true number of static/exogenous contaminated references is \(m^\star\le M\). Then, for every \(\alpha\in(0,1)\), the anytime-valid crossing bound in Equation~\eqref{eq:upper-bound-validity} holds:
 \begin{equation}
   \Pr_{H_0}\!\left(
     \sup_{t\ge0}
@@ -169,7 +169,7 @@ Let
   H_q(t)=\sum_{s=1}^t\mathbf 1\{Q_s=q\},
   \qquad q=0,\ldots,K,
 \]
-be the observed full-reference rank histogram and let \(N_j^{(C)}(t)\) be the histogram after the candidate merges. Then
+be the observed full-reference rank histogram and let \(N_j^{(C)}(t)\) be the histogram after the candidate merges. Equation~\eqref{eq:fixed-categorical-closed} gives the candidate log wealth:
 \begin{align}
   \log E_t^{(C)}
   &=
@@ -220,7 +220,7 @@ Define \(DP[b,d]\) as the minimum additive cost among all valid contiguous parti
 \[
   j=b-d.
 \]
-Choosing its length \(\ell\ge1\) deletes exactly \(\ell-1\) additional boundaries, and therefore gives the recurrence
+Choosing its length \(\ell\ge1\) deletes exactly \(\ell-1\) additional boundaries, and therefore gives the recurrence in Equation~\eqref{eq:dp-recurrence}:
 \begin{equation}
 \begin{aligned}
   DP[b+\ell,d+\ell-1]
@@ -258,7 +258,7 @@ Let
   =
   \frac{N_j(t)}{t},
 \]
-and suppose
+and suppose the interior-frequency condition in Equation~\eqref{eq:interior-rank-frequencies} holds:
 \begin{equation}
   \widehat\pi_{j,t}\longrightarrow\pi_j>0,
   \qquad j=0,\ldots,n.
@@ -269,7 +269,7 @@ and suppose
 Under \eqref{eq:interior-rank-frequencies}:
 
 \begin{enumerate}[label=(\alph*),leftmargin=*]
-\item For a fixed categorical bettor \(a=(a_0,\ldots,a_n)\) with all \(a_j>0\),
+\item For a fixed categorical bettor \(a=(a_0,\ldots,a_n)\) with all \(a_j>0\), the limiting per-time log wealth is stated in Equation~\eqref{eq:fixed-cat-asymptotic}:
 \begin{equation}
   \frac1t\log E_t^{(a)}
   \longrightarrow
@@ -291,7 +291,7 @@ whose predictive probabilities are
   =
   \frac{N_{j,t-1}+\alpha_j}{t-1+A},
 \]
-the wealth has the exact form
+the wealth has the exact form in Equation~\eqref{eq:dirichlet-wealth-exact}:
 \begin{equation}
   E_t^{(\boldsymbol\alpha)}
   =
@@ -302,7 +302,7 @@ the wealth has the exact form
        {\Gamma(\alpha_j)\Gamma(N_j(t)+1)},
   \label{eq:dirichlet-wealth-exact}
 \end{equation}
-and converges to the finite positive limit
+and converges to the finite positive limit in Equation~\eqref{eq:dirichlet-wealth-limit}:
 \begin{equation}
   E_t^{(\boldsymbol\alpha)}
   \longrightarrow
