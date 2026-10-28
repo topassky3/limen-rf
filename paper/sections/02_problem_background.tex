@@ -49,7 +49,7 @@ Let
   =
   \{C\subseteq\{1,\ldots,K\}:|C|=m\}.
 \]
-For \(C\in\mathcal C_m\), define the reconstructed candidate rank
+For \(C\in\mathcal C_m\), the reconstructed candidate rank is defined by Equation~\eqref{eq:candidate-rank}:
 \begin{equation}
   R_t^{(C)}
   =
@@ -59,7 +59,7 @@ For \(C\in\mathcal C_m\), define the reconstructed candidate rank
 \end{equation}
 
 \begin{lemma}[True-candidate rank reconstruction]
-Under the static/exogenous contamination model,
+Under the static/exogenous contamination model, the identity in Equation~\eqref{eq:true-reconstruction} holds:
 \begin{equation}
   R_t^{(C^\star)}
   =
@@ -75,13 +75,13 @@ The full rank \(Q_t\) counts every observed reference not exceeding \(X_t\), inc
 
 \subsection{Clean fixed-reference predictive ranks}
 
-We recall the clean predictive-rank result of Kuang and Xia \cite{KuangXia2026}. Let \(Y_1,\ldots,Y_n,X_1,X_2,\ldots\) be iid from continuous \(F\), and define
+We recall the clean predictive-rank result for a repeatedly reused fixed reference sample \cite{KuangXia2026}. Let \(Y_1,\ldots,Y_n,X_1,X_2,\ldots\) be iid from continuous \(F\), and define
 \[
   R_t=\#\{i:Y_i\le X_t\},
   \qquad
   N_{j,t-1}=\sum_{s<t}\mathbf 1\{R_s=j\}.
 \]
-With \(\mathcal G_t=\sigma(R_1,\ldots,R_t)\), the exact predictive null law is
+With \(\mathcal G_t=\sigma(R_1,\ldots,R_t)\), the exact predictive null law is given by Equation~\eqref{eq:predictive-null}:
 \begin{equation}
   \Pr(R_t=j\mid\mathcal G_{t-1})
   =
@@ -108,7 +108,7 @@ where \(\Delta_n\) is the probability simplex on \(\{0,\ldots,n\}\), and set
 \[
   q_t=\mathsf q_t(R_1,\ldots,R_{t-1}).
 \]
-This functional view will be useful under contamination: the same pre-specified map is applied to every candidate reconstructed rank history, and for the true candidate it is automatically predictable with respect to the canonical clean-rank filtration. Define
+This functional view will be useful under contamination: the same pre-specified map is applied to every candidate reconstructed rank history, and for the true candidate it is automatically predictable with respect to the canonical clean-rank filtration. Equation~\eqref{eq:clean-prm} defines the one-step factor and cumulative wealth:
 \begin{equation}
   e_t=\frac{q_{t,R_t}}{p_{t,R_t}},
   \qquad
@@ -117,14 +117,14 @@ This functional view will be useful under contamination: the same pre-specified 
   E_t=\prod_{s=1}^t e_s.
   \label{eq:clean-prm}
 \end{equation}
-Kuang and Xia \cite{KuangXia2026} show that \((E_t)\) is a nonnegative martingale because
+Previous work shows that \((E_t)\) is a nonnegative martingale \cite{KuangXia2026} because
 \[
   \mathbb E[e_t\mid\mathcal G_{t-1}]
   =
   \sum_{j=0}^n p_{t,j}\frac{q_{t,j}}{p_{t,j}}
   =1.
 \]
-Consequently, Ville's inequality gives
+Consequently, Ville's inequality gives the crossing bound in Equation~\eqref{eq:ville-clean}:
 \begin{equation}
   \Pr_{H_0}\!\left(
     \sup_{t\ge0}E_t\ge\frac1\alpha
@@ -137,7 +137,7 @@ The frozen empirical method uses a fixed convex portfolio of PRM wealth processe
 
 \subsection{Canonical clean-rank process}
 
-Under the contaminated-reference model, define the latent canonical clean rank
+Under the contaminated-reference model, Equation~\eqref{eq:canonical-clean-rank} defines the latent canonical clean rank and its filtration:
 \begin{equation}
   R_t^\star
   =
