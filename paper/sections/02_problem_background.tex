@@ -68,10 +68,11 @@ The full rank \(Q_t\) counts every observed reference not exceeding \(X_t\), inc
 
 We recall the clean predictive-rank result for a repeatedly reused fixed reference sample \cite{KuangXia2026}. Let \(Y_1,\ldots,Y_n,X_1,X_2,\ldots\) be iid from continuous \(F\). Equation~\eqref{eq:clean-rank-counts} defines the clean rank and its earlier frequency counts:
 \begin{equation}
-R_t=\#\{i:Y_i\le X_t\},
-  \qquad
-  N_{j,t-1}=\sum_{s<t}\mathbf 1\{R_s=j\}.
-  \label{eq:clean-rank-counts}
+\begin{aligned}
+R_t &= \#\{i:Y_i\le X_t\},\\
+N_{j,t-1} &= \sum_{s<t}\mathbf 1\{R_s=j\}.
+\end{aligned}
+\label{eq:clean-rank-counts}
 \end{equation}
 With \(\mathcal G_t=\sigma(R_1,\ldots,R_t)\), the exact predictive null law is given by Equation~\eqref{eq:predictive-null}:
 \begin{equation}
@@ -110,11 +111,12 @@ This functional view will be useful under contamination: the same pre-specified 
 \end{equation}
 The normalization identity in Equation~\eqref{eq:martingale-normalization} shows why \((E_t)\) is a nonnegative martingale \cite{KuangXia2026}:
 \begin{equation}
+\begin{aligned}
 \mathbb E[e_t\mid\mathcal G_{t-1}]
-  =
-  \sum_{j=0}^n p_{t,j}\frac{q_{t,j}}{p_{t,j}}
-  =1.
-  \label{eq:martingale-normalization}
+&=\sum_{j=0}^n p_{t,j}\frac{q_{t,j}}{p_{t,j}}\\
+&=1.
+\end{aligned}
+\label{eq:martingale-normalization}
 \end{equation}
 Consequently, Ville's inequality gives the crossing bound in Equation~\eqref{eq:ville-clean}:
 \begin{equation}
