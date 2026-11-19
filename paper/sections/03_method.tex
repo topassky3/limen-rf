@@ -58,10 +58,12 @@ The preceding lemma identifies \(E_t^{(C^\star)}\) with the canonical clean PRM
 \(\Phi_t(R_1^\star,\ldots,R_t^\star).\)
 Hence \(E_t^{(C^\star)}\) is a nonnegative martingale with respect to \((\mathcal G_t^\star)\). By Equation~\eqref{eq:pathwise-domination}, the crossing-event inclusion in Equation~\eqref{eq:crossing-event-inclusion} follows:
 \begin{equation}
+\begin{aligned}
 \left\{\sup_t\underline E_t\ge1/\alpha\right\}
-  \subseteq
-  \left\{\sup_tE_t^{(C^\star)}\ge1/\alpha\right\}.
-  \label{eq:crossing-event-inclusion}
+&\subseteq\\
+\left\{\sup_tE_t^{(C^\star)}\ge1/\alpha\right\}.
+\end{aligned}
+\label{eq:crossing-event-inclusion}
 \end{equation}
 Ville's inequality for the canonical true-candidate martingale yields \eqref{eq:main-theorem}.
 \end{proof}
@@ -76,12 +78,12 @@ For each
 \(r\in\{0,\ldots,M\},\)
 Equation~\eqref{eq:bounded-contamination-candidates} defines the candidate sets and number of clean references:
 \begin{equation}
+\begin{aligned}
 \mathcal C_r
-  =
-  \{C\subseteq\{1,\ldots,K\}:|C|=r\},
-  \qquad
-  n_r=K-r.
-  \label{eq:bounded-contamination-candidates}
+&=\{C\subseteq\{1,\ldots,K\}:|C|=r\},\\
+n_r&=K-r.
+\end{aligned}
+\label{eq:bounded-contamination-candidates}
 \end{equation}
 For \(C\in\mathcal C_r\), the rank reconstruction is given by Equation~\eqref{eq:bounded-contamination-rank}:
 \begin{equation}
@@ -149,9 +151,11 @@ Consider a fixed categorical betting distribution
 \(a=(a_0,\ldots,a_n), \qquad a_j>0,\qquad \sum_{j=0}^n a_j=1.\)
 The full-reference rank histogram is defined by Equation~\eqref{eq:observed-rank-histogram}:
 \begin{equation}
-H_q(t)=\sum_{s=1}^t\mathbf 1\{Q_s=q\},
-  \qquad q=0,\ldots,K,
-  \label{eq:observed-rank-histogram}
+\begin{aligned}
+H_q(t)&=\sum_{s=1}^t\mathbf 1\{Q_s=q\},\\
+&\qquad q=0,\ldots,K.
+\end{aligned}
+\label{eq:observed-rank-histogram}
 \end{equation}
 Let \(N_j^{(C)}(t)\) be the histogram after the candidate merges. Equation~\eqref{eq:fixed-categorical-closed} gives the candidate log wealth:
 \begin{align}
@@ -190,12 +194,12 @@ N(b,\ell)
 \end{equation}
 If this segment is the next contiguous block and is assigned to clean-rank index \(j\), its additive contribution to Equation~\eqref{eq:fixed-categorical-closed}, excluding constants independent of the partition, is given by Equation~\eqref{eq:segment-additive-cost}:
 \begin{equation}
+\begin{aligned}
 c(j,b,\ell)
-  =
-  N(b,\ell)\log a_j
-  -
-  \log\Gamma(N(b,\ell)+1).
-  \label{eq:segment-additive-cost}
+&=N(b,\ell)\log a_j\\
+&\quad-\log\Gamma(N(b,\ell)+1).
+\end{aligned}
+\label{eq:segment-additive-cost}
 \end{equation}
 
 Define \(DP[b,d]\) as the minimum additive cost among all valid contiguous partitions of the first \(b\) observed-rank bins that have deleted exactly \(d\) internal boundaries. Such a partial partition contains exactly \(b-d\) completed blocks, so the next block receives clean-rank index
@@ -230,12 +234,11 @@ The finite-reference information ceiling can be made explicit for the two bettin
 
 Equation~\eqref{eq:empirical-rank-frequencies} defines the category count and empirical rank frequencies:
 \begin{equation}
-k=n+1,
-  \qquad
-  \widehat\pi_{j,t}
-  =
-  \frac{N_j(t)}{t},
-  \label{eq:empirical-rank-frequencies}
+\begin{aligned}
+k&=n+1,\\
+\widehat\pi_{j,t}&=\frac{N_j(t)}{t}.
+\end{aligned}
+\label{eq:empirical-rank-frequencies}
 \end{equation}
 and suppose the interior-frequency condition in Equation~\eqref{eq:interior-rank-frequencies} holds:
 \begin{equation}
@@ -306,11 +309,12 @@ For part (a), Equation~\eqref{eq:log-wealth-expansion} expands the fixed-categor
 \end{equation}
 Stirling's formula and \(\widehat\pi_{j,t}\to\pi_j>0\) imply the limit in Equation~\eqref{eq:stirling-entropy-limit}:
 \begin{equation}
-\frac{\log\Gamma(t+k)
-  -\sum_j\log\Gamma(N_j(t)+1)}{t}
-  \longrightarrow
-  -\sum_{j=0}^n\pi_j\log\pi_j.
-  \label{eq:stirling-entropy-limit}
+\begin{aligned}
+\frac{\log\Gamma(t+k)}{t}
+&-\frac1t\sum_j\log\Gamma(N_j(t)+1)\\
+&\longrightarrow -\sum_{j=0}^n\pi_j\log\pi_j.
+\end{aligned}
+\label{eq:stirling-entropy-limit}
 \end{equation}
 Adding \(\sum_j\pi_j\log a_j\) yields
 \(-\sum_j\pi_j\log\frac{\pi_j}{a_j} = -D_{\mathrm{KL}}(\pi\Vert a).\)
@@ -321,13 +325,13 @@ gives
 \(\frac{\Gamma(k+t)}{\Gamma(A+t)} \sim t^{k-A}\)
 and, for each \(j\), the count-dependent asymptotic in Equation~\eqref{eq:dirichlet-count-asymptotic}:
 \begin{equation}
+\begin{aligned}
 \frac{\Gamma(N_j(t)+\alpha_j)}
-       {\Gamma(N_j(t)+1)}
-  \sim
-  N_j(t)^{\alpha_j-1}
-  \sim
-  t^{\alpha_j-1}\pi_j^{\alpha_j-1}.
-  \label{eq:dirichlet-count-asymptotic}
+     {\Gamma(N_j(t)+1)}
+&\sim N_j(t)^{\alpha_j-1}\\
+&\sim t^{\alpha_j-1}\pi_j^{\alpha_j-1}.
+\end{aligned}
+\label{eq:dirichlet-count-asymptotic}
 \end{equation}
 Since
 \(\sum_{j=0}^n(\alpha_j-1)=A-k,\)
