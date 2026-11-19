@@ -23,7 +23,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           from tempfile import TemporaryDirectory
-          from urllib.request import urlopen
+          from urllib.request import Request, urlopen
           from zipfile import ZipFile
           from io import BytesIO
           from shutil import copy2
@@ -36,7 +36,15 @@ jobs:
               "redin.png": destination / "images/redin_logos/redin.png",
               "udea.png": destination / "images/redin_logos/udea.png",
           }
-          with urlopen(url, timeout=90) as response:
+          request = Request(
+              url,
+              headers={
+                  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36",
+                  "Referer": "https://revistas.udea.edu.co/index.php/ingenieria/about/submissions",
+                  "Accept": "application/zip,application/octet-stream,*/*",
+              },
+          )
+          with urlopen(request, timeout=90) as response:
               zip_bytes = response.read()
           with TemporaryDirectory() as directory:
               with ZipFile(BytesIO(zip_bytes)) as archive:
