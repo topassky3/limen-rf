@@ -47,6 +47,34 @@ cp "paper/redin-template/Latex Template/images/redin_logos/udea.png" \
    paper/redin/images/redin_logos/udea.png
 ```
 
+## Windows: one-command editorial verification and PDF build
+
+After installing TinyTeX, XeLaTeX, latexmk, and placing the official REDIN
+template support files in the paths above, open PowerShell in the repository:
+
+```powershell
+cd "$HOME\projects\limen-rf"
+git pull --ff-only origin main
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\build_redin_windows.ps1
+```
+
+The script runs the editorial preflight, builds identified and double-blind
+versions with XeLaTeX, rejects missing/truncated PDFs and common unresolved
+reference errors, and copies the results to Downloads as:
+
+- `REDIN_LIMEN_RF_Revision_IDENTIFIED.pdf`
+- `REDIN_LIMEN_RF_Revision_BLIND.pdf`
+
+The automated REDIN editorial checker also runs in the repository's GitHub
+Actions CI. It verifies the existing front-matter corrections, author citation
+style, prior mentions of numbered equations and figures/tables, unique equation
+labels, reference URLs, and the absence of standalone unnumbered display math.
+
+The journal's local class and logo assets are not committed, so remote CI
+cannot substitute for a **local XeLaTeX build and visual inspection**. Check
+the first and last pages, the equation numbers across Sections 2--4, and the
+total page count against the journal limit before submission.
+
 ## Compile
 
 Compile from inside `paper/redin/`:
