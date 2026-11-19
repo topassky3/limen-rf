@@ -25,7 +25,7 @@ The geometry stress test rules out a simple explanation of the original power ga
 
 This does not establish uniform dominance over all geometries. It does show that the main empirical finding survives a pre-specified set of materially different static/exogenous contamination arrangements without changing the detector.
 
-\subsection{Why the band comparison is conservative}
+\subsection{Conservatism of band comparisons}
 
 The confidence-band baselines represent the contaminated reference through a simultaneous CDF uncertainty set. This remains valid without identifying contaminated positions, but the resulting uncertainty set can be substantially larger than the set compatible with one persistent contamination pattern. The final development audit intentionally favors the band family by sweeping a frozen parameter grid and reporting the best configuration ex post for each condition.
 
@@ -41,7 +41,7 @@ The radar motivation is direct but limited. Classical CFAR uses neighboring refe
 
 The semi-synthetic RTL-SDR experiments provide an engineering bridge rather than a theorem check. Real receiver/background IQ preserves quantization and environmental structure, while controlled post-ADC injection preserves known ground truth. V2 exposes a non-saturated transition: at \(-18\) dB static crosses on 14/30 captures versus 0/30 for the fixed band comparator, and at \(-15\) dB the corresponding counts are 22/30 versus 12/30. These observations are qualitatively consistent with the simulation advantage, but serial dependence prevents interpretation as hardware type-I validation.
 
-\subsection{Structural versus distributional robustness}
+\subsection{Structural and distributional robustness}
 
 The model illustrates a broader distinction. Distributional robustness enlarges the set of possible laws. Structural robustness can exploit restrictions on how nuisance variables persist. Here the nuisance parameter is not a new arbitrary corruption at every time; it is the fixed set \(C^\star\) shared by all future comparisons. The theorem itself is simple once that structure is stated, but recognizing and preserving this constraint is what makes the construction useful.
 
