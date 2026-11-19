@@ -161,8 +161,21 @@ def check_named_citations() -> None:
 
 
 def check_float_and_equation_mentions() -> None:
+    seen_labels: set[str] = set()
     for path in sorted(SECTIONS.glob("*.tex")):
         text = read(path)
+
+        # Journal rule: do not leave independent unnumbered displays.
+        if r"\[" in text or r"\]" in text:
+            fail(f"{path.name}: unnumbered \[...\] display found")
+        if "$" in text:
+            fail(f"{path.name}: unnumbered $...$ display found")
+        if re.search(
+            r"\\begin\{(?:equation\*|align\*|gather\*?|multline\*?|displaymath)\}",
+            text,
+        ):
+            fail(f"{path.name}: unnumbered display environment found")
+
         for env in ("equation", "align"):
             pattern = re.compile(
                 rf"\\begin\{{{env}\}}"
@@ -173,7 +186,15 @@ def check_float_and_equation_mentions() -> None:
             for match in pattern.finditer(text):
                 body = match.group("body")
                 labels = re.findall(r"\\label\{([^}]+)\}", body)
+                if len(labels) != 1:
+                    fail(
+                        f"{path.name}: each numbered {env} must have "
+                        "exactly one label"
+                    )
                 for label in labels:
+                    if label in seen_labels:
+                        fail(f"{path.name}: duplicate label {label}")
+                    seen_labels.add(label)
                     before = text[
                         max(0, match.start() - 700) : match.start()
                     ]
