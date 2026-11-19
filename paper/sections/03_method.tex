@@ -3,15 +3,11 @@
 \subsection{Candidate-wise evidence}
 
 For each \(C\in\mathcal C_m\), apply the same pre-specified clean predictive-rank betting functional to the reconstructed sequence
-\[
-  R_1^{(C)},R_2^{(C)},\ldots,
-\]
+\(R_1^{(C)},R_2^{(C)},\ldots,\)
 producing candidate wealth \(E_t^{(C)}\).
 
 For \(C\neq C^\star\), the reconstructed sequence need not obey the clean predictive law, so \(E_t^{(C)}\) is not claimed to be a martingale. For the true candidate, Lemma~1 and \eqref{eq:canonical-clean-rank} give
-\[
-  R_t^{(C^\star)}=R_t^\star.
-\]
+\(R_t^{(C^\star)}=R_t^\star.\)
 Because the betting rule is a deterministic predictable functional of the candidate rank history, the true-candidate bet \(q_t^{(C^\star)}\) is \(\mathcal G_{t-1}^\star\)-measurable. Therefore \(E_t^{(C^\star)}\) is exactly the clean PRM with respect to the canonical clean-rank filtration \((\mathcal G_t^\star)\).
 
 The robust evidence lower envelope is defined by Equation~\eqref{eq:lower-envelope}:
@@ -32,12 +28,13 @@ Since \(C^\star\in\mathcal C_m\), the pathwise domination relation is given by E
 pathwise.
 
 \begin{lemma}[Random sorted positions do not create post-selection]
-Let \(\Phi_t\) denote the deterministic wealth functional induced by the pre-specified betting strategy on a clean rank history of length \(t\). Then
-\[
-  E_t^{(C^\star)}
+Let \(\Phi_t\) denote the deterministic wealth functional induced by the pre-specified betting strategy on a clean rank history of length \(t\). Equation~\eqref{eq:true-candidate-functional} expresses the true-candidate wealth as the same functional of the canonical clean ranks:
+\begin{equation}
+E_t^{(C^\star)}
   =
   \Phi_t(R_1^\star,\ldots,R_t^\star)
-\]
+  \label{eq:true-candidate-functional}
+\end{equation}
 pathwise, even though the sorted position set \(C^\star\) is random.
 \end{lemma}
 
@@ -58,15 +55,14 @@ Assume the model of Section~2 with exactly \(m\) static/exogenous contaminated r
 
 \begin{proof}
 The preceding lemma identifies \(E_t^{(C^\star)}\) with the canonical clean PRM
-\[
-  \Phi_t(R_1^\star,\ldots,R_t^\star).
-\]
-Hence \(E_t^{(C^\star)}\) is a nonnegative martingale with respect to \((\mathcal G_t^\star)\). By \eqref{eq:pathwise-domination},
-\[
-  \left\{\sup_t\underline E_t\ge1/\alpha\right\}
+\(\Phi_t(R_1^\star,\ldots,R_t^\star).\)
+Hence \(E_t^{(C^\star)}\) is a nonnegative martingale with respect to \((\mathcal G_t^\star)\). By Equation~\eqref{eq:pathwise-domination}, the crossing-event inclusion in Equation~\eqref{eq:crossing-event-inclusion} follows:
+\begin{equation}
+\left\{\sup_t\underline E_t\ge1/\alpha\right\}
   \subseteq
   \left\{\sup_tE_t^{(C^\star)}\ge1/\alpha\right\}.
-\]
+  \label{eq:crossing-event-inclusion}
+\end{equation}
 Ville's inequality for the canonical true-candidate martingale yields \eqref{eq:main-theorem}.
 \end{proof}
 
@@ -77,23 +73,23 @@ The theorem establishes anytime-valid \emph{threshold-crossing control} for \(\u
 The exact value of the contamination count is not needed for validity if a deterministic upper bound is available.
 
 For each
-\[
-  r\in\{0,\ldots,M\},
-\]
-let
-\[
-  \mathcal C_r
+\(r\in\{0,\ldots,M\},\)
+Equation~\eqref{eq:bounded-contamination-candidates} defines the candidate sets and number of clean references:
+\begin{equation}
+\mathcal C_r
   =
   \{C\subseteq\{1,\ldots,K\}:|C|=r\},
   \qquad
   n_r=K-r.
-\]
-For \(C\in\mathcal C_r\), reconstruct ranks by
-\[
-  R_t^{(r,C)}
+  \label{eq:bounded-contamination-candidates}
+\end{equation}
+For \(C\in\mathcal C_r\), the rank reconstruction is given by Equation~\eqref{eq:bounded-contamination-rank}:
+\begin{equation}
+R_t^{(r,C)}
   =
   Q_t-\#\{c\in C:c\le Q_t\},
-\]
+  \label{eq:bounded-contamination-rank}
+\end{equation}
 and compute a valid clean-reference predictive-rank wealth \(E_t^{(r,C)}\) using the null law corresponding to \(n_r\) clean references.
 
 The upper-bound envelope is defined by Equation~\eqref{eq:upper-bound-envelope}:
@@ -121,11 +117,7 @@ Suppose the true number of static/exogenous contaminated references is \(m^\star
 
 \begin{proof}
 The candidate family in \eqref{eq:upper-bound-envelope} contains the true pair \((m^\star,C^\star)\). For that pair, \(n_{m^\star}=K-m^\star\), the reconstructed ranks equal the canonical clean ranks, and \(E_t^{(m^\star,C^\star)}\) is a valid clean PRM. Therefore
-\[
-  \underline E_t^{(\le M)}
-  \le
-  E_t^{(m^\star,C^\star)}
-\]
+\(\underline E_t^{(\le M)} \le E_t^{(m^\star,C^\star)}\)
 pathwise for all \(t\). Ville's inequality gives \eqref{eq:upper-bound-validity}.
 \end{proof}
 
@@ -137,14 +129,9 @@ The observable rank \(Q_t\) takes values in \(\{0,\ldots,K\}\), defining \(K+1\)
 
 \begin{proposition}[Bijection between candidates and contiguous partitions]
 For fixed \(m\), candidate sets
-\[
-  C\subseteq\{1,\ldots,K\},
-  \qquad |C|=m,
-\]
+\(C\subseteq\{1,\ldots,K\}, \qquad |C|=m,\)
 are in one-to-one correspondence with contiguous partitions of the \(K+1\) ordered observed-rank bins into
-\[
-  K-m+1=n+1
-\]
+\(K-m+1=n+1\)
 nonempty blocks.
 \end{proposition}
 
@@ -159,17 +146,14 @@ The same partition is reused for all \(t\), which is the combinatorial expressio
 \subsection{Fixed-categorical closed form}
 
 Consider a fixed categorical betting distribution
-\[
-  a=(a_0,\ldots,a_n),
-  \qquad
-  a_j>0,\qquad \sum_{j=0}^n a_j=1.
-\]
-Let
-\[
-  H_q(t)=\sum_{s=1}^t\mathbf 1\{Q_s=q\},
+\(a=(a_0,\ldots,a_n), \qquad a_j>0,\qquad \sum_{j=0}^n a_j=1.\)
+The full-reference rank histogram is defined by Equation~\eqref{eq:observed-rank-histogram}:
+\begin{equation}
+H_q(t)=\sum_{s=1}^t\mathbf 1\{Q_s=q\},
   \qquad q=0,\ldots,K,
-\]
-be the observed full-reference rank histogram and let \(N_j^{(C)}(t)\) be the histogram after the candidate merges. Equation~\eqref{eq:fixed-categorical-closed} gives the candidate log wealth:
+  \label{eq:observed-rank-histogram}
+\end{equation}
+Let \(N_j^{(C)}(t)\) be the histogram after the candidate merges. Equation~\eqref{eq:fixed-categorical-closed} gives the candidate log wealth:
 \begin{align}
   \log E_t^{(C)}
   &=
@@ -190,36 +174,32 @@ Thus the candidate objective depends on the online history through the observed-
 
 \begin{theorem}[Exact dynamic program for a fixed categorical bettor]
 After \(O(K)\) prefix-sum preprocessing of the observed-rank histogram, the minimum of \eqref{eq:fixed-categorical-closed} over all \(C\in\mathcal C_m\) can be computed in
-\[
-  O(Km^2)
-\]
+\(O(Km^2)\)
 time and
-\[
-  O(Km)
-\]
+\(O(Km)\)
 memory.
 \end{theorem}
 
 \begin{proof}
-Let the ordered observed-rank bins be indexed \(0,\ldots,K\), and define prefix sums so that the total histogram count in any segment \([b,b+\ell-1]\) is available in \(O(1)\) time:
-\[
-  N(b,\ell)
+Let the ordered observed-rank bins be indexed \(0,\ldots,K\). Equation~\eqref{eq:segment-histogram-count} defines the total histogram count in a segment \([b,b+\ell-1]\), evaluable in \(O(1)\) time after prefix-sum preprocessing:
+\begin{equation}
+N(b,\ell)
   =
   \sum_{q=b}^{b+\ell-1}H_q(t).
-\]
-If this segment is the next contiguous block and is assigned to clean-rank index \(j\), its additive contribution to \eqref{eq:fixed-categorical-closed}, excluding constants independent of the partition, is
-\[
-  c(j,b,\ell)
+  \label{eq:segment-histogram-count}
+\end{equation}
+If this segment is the next contiguous block and is assigned to clean-rank index \(j\), its additive contribution to Equation~\eqref{eq:fixed-categorical-closed}, excluding constants independent of the partition, is given by Equation~\eqref{eq:segment-additive-cost}:
+\begin{equation}
+c(j,b,\ell)
   =
   N(b,\ell)\log a_j
   -
   \log\Gamma(N(b,\ell)+1).
-\]
+  \label{eq:segment-additive-cost}
+\end{equation}
 
 Define \(DP[b,d]\) as the minimum additive cost among all valid contiguous partitions of the first \(b\) observed-rank bins that have deleted exactly \(d\) internal boundaries. Such a partial partition contains exactly \(b-d\) completed blocks, so the next block receives clean-rank index
-\[
-  j=b-d.
-\]
+\(j=b-d.\)
 Choosing its length \(\ell\ge1\) deletes exactly \(\ell-1\) additional boundaries, and therefore gives the recurrence in Equation~\eqref{eq:dp-recurrence}:
 \begin{equation}
 \begin{aligned}
@@ -234,9 +214,7 @@ Choosing its length \(\ell\ge1\) deletes exactly \(\ell-1\) additional boundarie
 \label{eq:dp-recurrence}
 \end{equation}
 Only transitions satisfying
-\[
-  d+\ell-1\le m
-\]
+\(d+\ell-1\le m\)
 and \(b+\ell\le K+1\) are allowed.
 
 By the preceding bijection, every candidate set corresponds to exactly one sequence of contiguous blocks and hence to exactly one path from \(DP[0,0]\) to \(DP[K+1,m]\). Conversely, every feasible path in the recurrence specifies a unique contiguous partition and therefore a unique candidate. Induction on \(b\) shows that each state stores the minimum cost over all and only feasible partial partitions represented by that state. Thus \(DP[K+1,m]\) is the exact candidate minimum.
@@ -250,14 +228,15 @@ The frozen empirical method uses a convex portfolio of wealth processes. The log
 
 The finite-reference information ceiling can be made explicit for the two betting families used in the frozen portfolio. The following proposition is an asymptotic characterization of these components, not a claim of a new general Bayes-factor principle.
 
-Let
-\[
-  k=n+1,
+Equation~\eqref{eq:empirical-rank-frequencies} defines the category count and empirical rank frequencies:
+\begin{equation}
+k=n+1,
   \qquad
   \widehat\pi_{j,t}
   =
   \frac{N_j(t)}{t},
-\]
+  \label{eq:empirical-rank-frequencies}
+\end{equation}
 and suppose the interior-frequency condition in Equation~\eqref{eq:interior-rank-frequencies} holds:
 \begin{equation}
   \widehat\pi_{j,t}\longrightarrow\pi_j>0,
@@ -278,19 +257,14 @@ Under \eqref{eq:interior-rank-frequencies}:
 \end{equation}
 
 \item For a Dirichlet predictive bettor with parameters
-\[
-  \boldsymbol\alpha=(\alpha_0,\ldots,\alpha_n),
-  \qquad
-  \alpha_j>0,
-  \qquad
-  A=\sum_{j=0}^n\alpha_j,
-\]
-whose predictive probabilities are
-\[
-  q_{t,j}^{(\boldsymbol\alpha)}
+\(\boldsymbol\alpha=(\alpha_0,\ldots,\alpha_n), \qquad \alpha_j>0, \qquad A=\sum_{j=0}^n\alpha_j,\)
+whose predictive probabilities are given by Equation~\eqref{eq:dirichlet-betting-probabilities}:
+\begin{equation}
+q_{t,j}^{(\boldsymbol\alpha)}
   =
   \frac{N_{j,t-1}+\alpha_j}{t-1+A},
-\]
+  \label{eq:dirichlet-betting-probabilities}
+\end{equation}
 the wealth has the exact form in Equation~\eqref{eq:dirichlet-wealth-exact}:
 \begin{equation}
   E_t^{(\boldsymbol\alpha)}
@@ -316,8 +290,8 @@ and converges to the finite positive limit in Equation~\eqref{eq:dirichlet-wealt
 \end{proposition}
 
 \begin{proof}
-For part (a), the fixed-categorical closed form gives
-\[
+For part (a), Equation~\eqref{eq:log-wealth-expansion} expands the fixed-categorical log wealth:
+\begin{equation}
 \begin{aligned}
   \frac1t\log E_t^{(a)}
   &=
@@ -328,51 +302,40 @@ For part (a), the fixed-categorical closed form gives
   \sum_{j=0}^n\widehat\pi_{j,t}\log a_j
   +o(1).
 \end{aligned}
-\]
-Stirling's formula and \(\widehat\pi_{j,t}\to\pi_j>0\) imply
-\[
-  \frac{\log\Gamma(t+k)
+  \label{eq:log-wealth-expansion}
+\end{equation}
+Stirling's formula and \(\widehat\pi_{j,t}\to\pi_j>0\) imply the limit in Equation~\eqref{eq:stirling-entropy-limit}:
+\begin{equation}
+\frac{\log\Gamma(t+k)
   -\sum_j\log\Gamma(N_j(t)+1)}{t}
   \longrightarrow
   -\sum_{j=0}^n\pi_j\log\pi_j.
-\]
+  \label{eq:stirling-entropy-limit}
+\end{equation}
 Adding \(\sum_j\pi_j\log a_j\) yields
-\[
-  -\sum_j\pi_j\log\frac{\pi_j}{a_j}
-  =
-  -D_{\mathrm{KL}}(\pi\Vert a).
-\]
+\(-\sum_j\pi_j\log\frac{\pi_j}{a_j} = -D_{\mathrm{KL}}(\pi\Vert a).\)
 
 For part (b), multiplying the Dirichlet predictive factors telescopes into the ratio of two Dirichlet--multinomial sequence probabilities, yielding \eqref{eq:dirichlet-wealth-exact}. The gamma-ratio asymptotic
-\[
-  \frac{\Gamma(x+\alpha)}{\Gamma(x+\beta)}
-  \sim x^{\alpha-\beta}
-\]
+\(\frac{\Gamma(x+\alpha)}{\Gamma(x+\beta)} \sim x^{\alpha-\beta}\)
 gives
-\[
-  \frac{\Gamma(k+t)}{\Gamma(A+t)}
-  \sim t^{k-A}
-\]
-and, for each \(j\),
-\[
-  \frac{\Gamma(N_j(t)+\alpha_j)}
+\(\frac{\Gamma(k+t)}{\Gamma(A+t)} \sim t^{k-A}\)
+and, for each \(j\), the count-dependent asymptotic in Equation~\eqref{eq:dirichlet-count-asymptotic}:
+\begin{equation}
+\frac{\Gamma(N_j(t)+\alpha_j)}
        {\Gamma(N_j(t)+1)}
   \sim
   N_j(t)^{\alpha_j-1}
   \sim
   t^{\alpha_j-1}\pi_j^{\alpha_j-1}.
-\]
+  \label{eq:dirichlet-count-asymptotic}
+\end{equation}
 Since
-\[
-  \sum_{j=0}^n(\alpha_j-1)=A-k,
-\]
+\(\sum_{j=0}^n(\alpha_j-1)=A-k,\)
 the powers of \(t\) cancel, leaving \eqref{eq:dirichlet-wealth-limit}.
 \end{proof}
 
 A direct consequence is that if the limiting interior rank-frequency vector \(\pi\) differs from every fixed categorical vector in a finite betting portfolio, then every fixed categorical component decays exponentially by \eqref{eq:fixed-cat-asymptotic}, while every Dirichlet predictive component converges to a finite constant by \eqref{eq:dirichlet-wealth-limit}. Adding a constant-one hedge therefore yields a finite limiting true-candidate portfolio wealth. Since
-\[
-  \underline E_t\le E_t^{(C^\star)},
-\]
+\(\underline E_t\le E_t^{(C^\star)},\)
 the robust lower envelope cannot diverge to \(+\infty\) in such a case.
 
 This provides a formal explanation for the finite-reference information ceiling: with \(n\) fixed, the frozen portfolio is not expected to deliver universal asymptotic wealth divergence across all persistent rank-frequency alternatives. The paper therefore focuses on finite-horizon anytime validity and finite-reference power.
