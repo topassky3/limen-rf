@@ -28,14 +28,15 @@ Table~\ref{tab:crossing} summarizes the post-freeze publication-scale validation
 \end{tabular}
 \end{table}
 
-At the pre-specified primary point \(K=32,\gamma=4,T=200\),
-\[
+At the pre-specified primary point \(K=32,\gamma=4,T=200\), Equation~\eqref{eq:primary-crossing-estimates} reports the three crossing estimates:
+\begin{equation}
 \begin{aligned}
   \widehat P_{\mathrm{static}}&=0.9144,\\
   \widehat P_{\mathrm{best\ grid}}&=0.1152,\\
   \widehat P_{\mathrm{oracle}}&=0.9810.
 \end{aligned}
-\]
+  \label{eq:primary-crossing-estimates}
+\end{equation}
 The static 95\% Wilson interval is \([0.9063,0.9218]\). At this point the strongest frozen-grid member is \texttt{band\_mix} with \(\delta=0.045\). Conditional on that selected configuration, the paired static-minus-baseline gap is \(0.7992\) with a bootstrap Monte Carlo interval \([0.7882,0.8102]\). The paired oracle-minus-static gap is \(0.0666\) with 95\% bootstrap interval \([0.0598,0.0734]\). We do not interpret an ordinary interval conditional on ex-post grid selection as selection-adjusted inference for the full best-grid envelope.
 
 For the strong \(\gamma=8\) alternative at \(K=32\), static coupling reaches \(0.9998\), the oracle reaches \(1.0000\), and the strongest frozen-grid baseline reaches \(0.8362\). For the weak \(\gamma=2\) alternative, static crossing probability is \(0.1824\) at \(K=24\) and \(0.2036\) at \(K=32\), while the oracle reaches \(0.4258\) and \(0.4396\).
