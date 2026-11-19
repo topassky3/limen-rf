@@ -167,9 +167,9 @@ def check_float_and_equation_mentions() -> None:
 
         # Journal rule: do not leave independent unnumbered displays.
         if r"\[" in text or r"\]" in text:
-            fail(f"{path.name}: unnumbered \[...\] display found")
-        if "$" in text:
-            fail(f"{path.name}: unnumbered $...$ display found")
+            fail(f"{path.name}: unnumbered bracketed display found")
+        if chr(36) * 2 in text:
+            fail(f"{path.name}: unnumbered double-dollar display found")
         if re.search(
             r"\\begin\{(?:equation\*|align\*|gather\*?|multline\*?|displaymath)\}",
             text,
