@@ -3,34 +3,19 @@
 We studied anytime-valid sequential detection when a finite fixed reference bank is already contaminated before monitoring begins. The defining feature is persistence: the same unknown contamination identities are reused at every future comparison.
 
 Building on the clean fixed-reference predictive-rank martingale construction \cite{KuangXia2026}, each candidate contamination set induces a reconstructed rank sequence. For the true candidate,
-\[
-  R_t^{(C^\star)}=R_t^{\mathrm{clean}},
-\]
+\(R_t^{(C^\star)}=R_t^{\mathrm{clean}},\)
 so its candidate wealth is a valid clean PRM. The lower envelope
-\[
-  \underline E_t=\min_C E_t^{(C)}
-\]
+\(\underline E_t=\min_C E_t^{(C)}\)
 satisfies the pathwise inequality
-\[
-  \underline E_t\le E_t^{(C^\star)},
-\]
+\(\underline E_t\le E_t^{(C^\star)},\)
 which yields
-\[
-  \Pr_{H_0}\!\left(
-    \sup_t\underline E_t\ge\frac1\alpha
-  \right)\le\alpha.
-\]
+the result in Equation~\eqref{eq:main-theorem}
 The lower envelope itself need not be an e-process; its guarantee follows from domination by the true-candidate process.
 
 Static contamination also induces a contiguous-partition representation of observed-rank bins. For a fixed categorical bettor, this structure leads to an exact \(O(Km^2)\)-time, \(O(Km)\)-memory dynamic program. A corollary extends validity to an unknown contamination count bounded by \(M\), and the finite-reference asymptotic analysis explains why the frozen finite portfolio need not accumulate unbounded evidence for every persistent alternative when the reference size is fixed.
 
 In the frozen publication-scale simulation at
-\[
-\begin{aligned}
-  K&=32,\qquad m=2,\qquad T=200,\\
-  X_t&\sim\mathrm{Beta}(4,1).
-\end{aligned}
-\]
+\(\begin{aligned} K&=32,\qquad m=2,\qquad T=200,\\ X_t&\sim\mathrm{Beta}(4,1). \end{aligned}\)
 static coupling crosses with probability \(0.9144\), the fixed \texttt{band\_mix}, \(\delta=0.045\), comparator with \(0.1152\), and the oracle with \(0.9810\). The paired static-minus-fixed-baseline gap is \(0.7992\) with 95\% bootstrap interval \([0.7882,0.8102]\).
 
 A separate 5,000-replication geometry stress test, pre-specified and repository-frozen before its outcomes were viewed, preserves the same detector and underlying paths while moving the two contaminants to upper in-support, mixed low/high, and independently random in-support configurations. Static crossing probabilities remain between \(0.8894\) and \(0.9468\), while the fixed baseline improves to \(0.2162\)--\(0.3948\). All non-control static-minus-baseline gaps remain above the pre-specified 0.15 margin.
