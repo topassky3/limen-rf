@@ -55,9 +55,10 @@ candidate processes. This is practical for the frozen experiments with \(m=2\), 
 
 For fixed \(n\), Equation~\eqref{eq:finite-reference-spacing-mixture} describes the random reference-spacing mixture:
 \begin{equation}
-P\sim\mathrm{Dirichlet}(1,\ldots,1),
-  \qquad
-  R_t\mid P\overset{\mathrm{iid}}{\sim}\mathrm{Categorical}(P).
-  \label{eq:finite-reference-spacing-mixture}
+\begin{aligned}
+P&\sim\mathrm{Dirichlet}(1,\ldots,1),\\
+R_t\mid P&\overset{\mathrm{iid}}{\sim}\mathrm{Categorical}(P).
+\end{aligned}
+\label{eq:finite-reference-spacing-mixture}
 \end{equation}
 As the online horizon grows, the stream increasingly reveals the realized spacing vector \(P\), but does not eliminate randomness from the finite reference itself. Some persistent rank patterns under alternatives can therefore remain compatible with rare null spacing realizations. This finite-reference ceiling is consistent with the limitation identified previously for clean PRMs \cite{KuangXia2026} and motivates our focus on finite-reference power rather than universal fixed-\(n\) consistency.
