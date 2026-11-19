@@ -3,47 +3,38 @@
 \subsection{Goals and primary data-generating model}
 
 The experiments evaluate finite-reference power rather than establish validity, which follows from Theorem~1. The primary frozen simulation uses
-\[
-  K\in\{24,32\},\qquad m=2,\qquad n=K-2,
-\]
+\(K\in\{24,32\},\qquad m=2,\qquad n=K-2,\)
 with clean reference values \(Y_i\sim\mathrm{Uniform}(0,1)\). The original two contaminated references are fixed at value \(2\). Under the null,
-\[
-  X_t\sim\mathrm{Uniform}(0,1),
-\]
+\(X_t\sim\mathrm{Uniform}(0,1),\)
 and under alternatives
-\[
-  X_t\sim\mathrm{Beta}(\gamma,1),
-  \qquad \gamma\in\{2,4,8\}.
-\]
+\(X_t\sim\mathrm{Beta}(\gamma,1), \qquad \gamma\in\{2,4,8\}.\)
 The maximum horizon is \(T=200\), with intermediate reporting at \(T\in\{40,100,200\}\), and the nominal anytime level is \(\alpha=0.05\). All methods use identical simulated paths within each replication.
 
 \subsection{Static-coupling method and oracle}
 
 For each path, every candidate set \(C\subseteq\{1,\ldots,K\}\) with \(|C|=2\) is evaluated. Candidate ranks are given by \eqref{eq:candidate-rank}, the frozen predictive-rank portfolio is applied, and the robust statistic is \(\underline E_t\). A detection occurs when
-\[
-  \underline E_t\ge20.
-\]
+\(\underline E_t\ge20.\)
 
 The oracle knows \(C^\star\) and applies the same betting portfolio directly to the true clean rank sequence. Its threshold is also 20. It quantifies the cost of unknown contamination identities.
 
 \subsection{Confidence-band baselines}
 
 The comparison baselines discard contamination identities and represent reference uncertainty through simultaneous CDF bounds. Let
-\[
-  q(x)=\#\{\text{all }K\text{ observed references}\le x\}.
-\]
-Because exactly \(m\) observations are arbitrary replacements,
-\[
-  \max\{0,q(x)-m\}
+\(q(x)=\#\{\text{all }K\text{ observed references}\le x\}.\)
+Because exactly \(m\) observations are arbitrary replacements, Equation~\eqref{eq:contaminated-count-bounds} bounds the clean-reference count:
+\begin{equation}
+\max\{0,q(x)-m\}
   \le q_{\mathrm{clean}}(x)
   \le \min\{n,q(x)\}.
-\]
-For DKW radius
-\[
-  \epsilon_n(\delta)
+  \label{eq:contaminated-count-bounds}
+\end{equation}
+Equation~\eqref{eq:dkw-radius} defines the DKW radius
+\begin{equation}
+\epsilon_n(\delta)
   =
   \sqrt{\frac{\log(2/\delta)}{2n}},
-\]
+  \label{eq:dkw-radius}
+\end{equation}
 the exact-count lower bound is given by Equation~\eqref{eq:exact-count-band}:
 \begin{equation}
   L_\delta(x)
@@ -57,14 +48,15 @@ the exact-count lower bound is given by Equation~\eqref{eq:exact-count-band}:
   \label{eq:exact-count-band}
 \end{equation}
 
-A symmetric contaminated-reference radius follows from
-\[
-  \widetilde F_K
+The decomposition in Equation~\eqref{eq:contaminated-cdf-decomposition} gives a symmetric contaminated-reference radius:
+\begin{equation}
+\widetilde F_K
   =
   \frac nK\widehat F_{\mathrm{clean}}
   +
   \frac mK\widehat F_{\mathrm{bad}},
-\]
+  \label{eq:contaminated-cdf-decomposition}
+\end{equation}
 giving the symmetric radius in Equation~\eqref{eq:sym-band}:
 \begin{equation}
   \epsilon_{\mathrm{sym}}(\delta)
@@ -78,24 +70,24 @@ This radius is inserted into a one-sided CCTM-style betting geometry. These cont
 
 \subsection{Frozen baseline-strength audit}
 
-The final audit sweeps
-\[
+The final audit sweeps the confidence-band parameters specified in Equation~\eqref{eq:baseline-delta-grid}:
+\begin{equation}
 \begin{aligned}
 \delta\in\{&
 0.005,0.010,0.015,0.020,0.025,\\
 &0.030,0.035,0.040,0.045\}.
 \end{aligned}
-\]
-For target marginal level \(\alpha=0.05\), each confidence-band configuration uses
-\[
-  a(\delta)
+  \label{eq:baseline-delta-grid}
+\end{equation}
+For target marginal level \(\alpha=0.05\), each confidence-band configuration uses the allocation in Equation~\eqref{eq:baseline-error-allocation}:
+\begin{equation}
+a(\delta)
   =
   \frac{\alpha-\delta}{1-\delta}
-\]
+  \label{eq:baseline-error-allocation}
+\end{equation}
 and threshold \(1/a(\delta)\), corresponding to the conservative marginal budget
-\[
-  a(1-\delta)+\delta\le\alpha.
-\]
+\(a(1-\delta)+\delta\le\alpha.\)
 
 Three baseline families are evaluated:
 \begin{enumerate}[leftmargin=*]
@@ -109,16 +101,15 @@ For the original publication-scale table we report the strongest configuration s
 \subsection{Development freeze and publication-scale validation}
 
 The development audit used 200 Monte Carlo paths per condition with seed \(20260918\). Before inspecting the final development results, the primary stress point was fixed at
-\[
-  K=32,\qquad \gamma=4,\qquad T=200,
-\]
-and a strong empirical pass required
-\[
-  \widehat P_{\mathrm{static}}
+\(K=32,\qquad \gamma=4,\qquad T=200,\)
+and a strong empirical pass required the margin in Equation~\eqref{eq:prespecified-power-margin}:
+\begin{equation}
+\widehat P_{\mathrm{static}}
   -
   \widehat P_{\mathrm{strongest\ frozen-grid\ baseline}}
   \ge0.15.
-\]
+  \label{eq:prespecified-power-margin}
+\end{equation}
 No bettor, threshold, baseline grid, or detector parameter was changed after this criterion was evaluated.
 
 The publication-scale validation increased only Monte Carlo precision. It used 5,000 independent replications per condition, deterministic publication seed \(20260922\), and the identical frozen method and baseline grids. Crossing probabilities are reported with Wilson 95\% intervals. Median stopping times among detected paths are reported with percentile-bootstrap 95\% intervals based on 2,000 bootstrap replications. Null Monte Carlo is used only as an implementation sanity check.
@@ -135,15 +126,16 @@ The four frozen contamination geometries are:
   \item \texttt{random\_static\_inside}: two iid \(\mathrm{Beta}(1/2,1/2)\) values sampled independently of the clean reference and future stream once per replication.
 \end{enumerate}
 
-Because the in-support contaminants occupy random sorted positions, the oracle true-candidate index is recomputed for every replication. The V1b comparator is fixed before V1b geometry outcomes as the band mixture with \(\delta=0.045\); the full frozen grid remains a secondary descriptive envelope. This configuration had been identified in the earlier Publication V1 analysis, and V1b reuses the Publication V1 control paths; accordingly, V1b bootstrap intervals are interpreted as Monte Carlo uncertainty conditional on this designated comparator, not as selection-adjusted confirmatory inference. In addition to crossing probabilities, V1b reports the empirical detection CDF and the horizon-truncated stopping metric
-\[
-  \tau_T^\dagger
+Because the in-support contaminants occupy random sorted positions, the oracle true-candidate index is recomputed for every replication. The V1b comparator is fixed before V1b geometry outcomes as the band mixture with \(\delta=0.045\); the full frozen grid remains a secondary descriptive envelope. This configuration had been identified in the earlier Publication V1 analysis, and V1b reuses the Publication V1 control paths; accordingly, V1b bootstrap intervals are interpreted as Monte Carlo uncertainty conditional on this designated comparator, not as selection-adjusted confirmatory inference. In addition to crossing probabilities, V1b reports the empirical detection CDF and the horizon-truncated stopping metric in Equation~\eqref{eq:truncated-stopping-time}:
+\begin{equation}
+\tau_T^\dagger
   =
   \begin{cases}
   \tau,&\tau\le T,\\
   T+1,&\text{otherwise},
   \end{cases}
-\]
+  \label{eq:truncated-stopping-time}
+\end{equation}
 so non-detections are included in the delay-like summary.
 
 \subsection{Semi-synthetic RTL-SDR validation}
