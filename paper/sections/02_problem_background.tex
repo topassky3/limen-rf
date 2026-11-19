@@ -3,17 +3,11 @@
 \subsection{Fixed reference with static contamination}
 
 Let the observed reference bank contain \(K\) scalar observations. Exactly \(m\) are contaminated and
-\[
-  n=K-m
-\]
+\(n=K-m\)
 are clean. Let \(G\subseteq\{1,\ldots,K\}\), \(|G|=n\), denote the unknown set of clean physical reference-cell identities and \(B=G^c\), \(|B|=m\), the contaminated physical cells. For every \(i\in G\),
-\[
-  Y_i\overset{\mathrm{iid}}{\sim}F,
-\]
+\(Y_i\overset{\mathrm{iid}}{\sim}F,\)
 where \(F\) is an unknown continuous distribution. The online null stream satisfies
-\[
-  X_1,X_2,\ldots\overset{\mathrm{iid}}{\sim}F
-\]
+\(X_1,X_2,\ldots\overset{\mathrm{iid}}{\sim}F\)
 independently of the clean reference observations.
 
 The contaminated values \(\{Y_i:i\in B\}\) may be arbitrary, but the contamination is \emph{static and exogenous}: the contaminated physical cells are fixed before monitoring begins, and the surviving clean sample is not selected adaptively after inspecting the realized clean values. The theory therefore does not cover the stronger model in which an adversary first observes \(K\) clean draws and then chooses which realized values to replace. Such selection can bias the surviving clean subset.
@@ -23,32 +17,29 @@ Continuity of \(F\) implies that clean-reference and future-null ties occur with
 \subsection{Sorted reference representation}
 
 Let
-\[
-  Z_{(1)}\le\cdots\le Z_{(K)}
-\]
+\(Z_{(1)}\le\cdots\le Z_{(K)}\)
 be the sorted observed reference values. The contaminated physical cells occupy an unknown realized set of sorted positions
-\[
-  C^\star\subseteq\{1,\ldots,K\},
-  \qquad |C^\star|=m.
-\]
+\(C^\star\subseteq\{1,\ldots,K\}, \qquad |C^\star|=m.\)
 The set \(C^\star\) can be random because sorting depends on the realized clean and contaminated values. Deleting those realized positions nevertheless recovers the original iid clean sample.
 
-For an online observation \(X_t\), define the observable full-reference rank
-\[
-  Q_t
+For an online observation \(X_t\), Equation~\eqref{eq:observed-full-rank} defines the observable full-reference rank:
+\begin{equation}
+Q_t
   =
   \#\{i:Z_{(i)}\le X_t\}
   \in\{0,\ldots,K\}.
-\]
+  \label{eq:observed-full-rank}
+\end{equation}
 
 \subsection{Candidate contamination sets}
 
-Let
-\[
-  \mathcal C_m
+Equation~\eqref{eq:candidate-set-class} defines the collection of admissible candidate sets:
+\begin{equation}
+\mathcal C_m
   =
   \{C\subseteq\{1,\ldots,K\}:|C|=m\}.
-\]
+  \label{eq:candidate-set-class}
+\end{equation}
 For \(C\in\mathcal C_m\), the reconstructed candidate rank is defined by Equation~\eqref{eq:candidate-rank}:
 \begin{equation}
   R_t^{(C)}
@@ -75,12 +66,13 @@ The full rank \(Q_t\) counts every observed reference not exceeding \(X_t\), inc
 
 \subsection{Clean fixed-reference predictive ranks}
 
-We recall the clean predictive-rank result for a repeatedly reused fixed reference sample \cite{KuangXia2026}. Let \(Y_1,\ldots,Y_n,X_1,X_2,\ldots\) be iid from continuous \(F\), and define
-\[
-  R_t=\#\{i:Y_i\le X_t\},
+We recall the clean predictive-rank result for a repeatedly reused fixed reference sample \cite{KuangXia2026}. Let \(Y_1,\ldots,Y_n,X_1,X_2,\ldots\) be iid from continuous \(F\). Equation~\eqref{eq:clean-rank-counts} defines the clean rank and its earlier frequency counts:
+\begin{equation}
+R_t=\#\{i:Y_i\le X_t\},
   \qquad
   N_{j,t-1}=\sum_{s<t}\mathbf 1\{R_s=j\}.
-\]
+  \label{eq:clean-rank-counts}
+\end{equation}
 With \(\mathcal G_t=\sigma(R_1,\ldots,R_t)\), the exact predictive null law is given by Equation~\eqref{eq:predictive-null}:
 \begin{equation}
   \Pr(R_t=j\mid\mathcal G_{t-1})
@@ -97,17 +89,16 @@ The guarantee is marginal over the random fixed reference sample. Conditional on
 
 \subsection{Clean predictive-rank martingales and predictable betting rules}
 
-At time \(t\), let \(q_t=(q_{t,0},\ldots,q_{t,n})\) be a \(\mathcal G_{t-1}\)-measurable probability vector. Equivalently, we may regard the betting strategy as a deterministic measurable map
-\[
-  \mathsf q_t:
+At time \(t\), let \(q_t=(q_{t,0},\ldots,q_{t,n})\) be a \(\mathcal G_{t-1}\)-measurable probability vector. Equivalently, Equation~\eqref{eq:betting-rule-map} represents the betting strategy as a deterministic measurable map:
+\begin{equation}
+\mathsf q_t:
   \{0,\ldots,n\}^{t-1}
   \longrightarrow
   \Delta_n,
-\]
+  \label{eq:betting-rule-map}
+\end{equation}
 where \(\Delta_n\) is the probability simplex on \(\{0,\ldots,n\}\), and set
-\[
-  q_t=\mathsf q_t(R_1,\ldots,R_{t-1}).
-\]
+\(q_t=\mathsf q_t(R_1,\ldots,R_{t-1}).\)
 This functional view will be useful under contamination: the same pre-specified map is applied to every candidate reconstructed rank history, and for the true candidate it is automatically predictable with respect to the canonical clean-rank filtration. Equation~\eqref{eq:clean-prm} defines the one-step factor and cumulative wealth:
 \begin{equation}
   e_t=\frac{q_{t,R_t}}{p_{t,R_t}},
@@ -117,13 +108,14 @@ This functional view will be useful under contamination: the same pre-specified 
   E_t=\prod_{s=1}^t e_s.
   \label{eq:clean-prm}
 \end{equation}
-Previous work shows that \((E_t)\) is a nonnegative martingale \cite{KuangXia2026} because
-\[
-  \mathbb E[e_t\mid\mathcal G_{t-1}]
+The normalization identity in Equation~\eqref{eq:martingale-normalization} shows why \((E_t)\) is a nonnegative martingale \cite{KuangXia2026}:
+\begin{equation}
+\mathbb E[e_t\mid\mathcal G_{t-1}]
   =
   \sum_{j=0}^n p_{t,j}\frac{q_{t,j}}{p_{t,j}}
   =1.
-\]
+  \label{eq:martingale-normalization}
+\end{equation}
 Consequently, Ville's inequality gives the crossing bound in Equation~\eqref{eq:ville-clean}:
 \begin{equation}
   \Pr_{H_0}\!\left(
@@ -149,24 +141,19 @@ Under the contaminated-reference model, Equation~\eqref{eq:canonical-clean-rank}
   \label{eq:canonical-clean-rank}
 \end{equation}
 By Lemma~1,
-\[
-  R_t^{(C^\star)}=R_t^\star
-\]
+\(R_t^{(C^\star)}=R_t^\star\)
 pathwise for every \(t\).
 
-For a candidate \(C\in\mathcal C_m\), we apply the same deterministic betting maps to its reconstructed history:
-\[
-  q_t^{(C)}
+For a candidate \(C\in\mathcal C_m\), Equation~\eqref{eq:candidate-betting-map} applies the same deterministic betting maps to its reconstructed history:
+\begin{equation}
+q_t^{(C)}
   =
   \mathsf q_t
   \!\left(
     R_1^{(C)},\ldots,R_{t-1}^{(C)}
   \right).
-\]
+  \label{eq:candidate-betting-map}
+\end{equation}
 Consequently,
-\[
-  q_t^{(C^\star)}
-  =
-  \mathsf q_t(R_1^\star,\ldots,R_{t-1}^\star)
-\]
+\(q_t^{(C^\star)} = \mathsf q_t(R_1^\star,\ldots,R_{t-1}^\star)\)
 is \(\mathcal G_{t-1}^\star\)-measurable. Thus the true-candidate wealth is a martingale with respect to the canonical clean-rank filtration \((\mathcal G_t^\star)\); no filtration containing the numerical reference vector is required.
