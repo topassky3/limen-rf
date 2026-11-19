@@ -70,7 +70,7 @@ Ville's inequality for the canonical true-candidate martingale yields \eqref{eq:
 
 The theorem establishes anytime-valid \emph{threshold-crossing control} for \(\underline E_t\). It does not claim that \((\underline E_t)\) itself is a martingale, supermartingale, or e-process.
 
-\subsection{Unknown contamination count bounded by M}
+\subsection{Unknown count bounded by M}
 
 The exact value of the contamination count is not needed for validity if a deterministic upper bound is available.
 
@@ -204,16 +204,12 @@ c(j,b,\ell)
 
 Define \(DP[b,d]\) as the minimum additive cost among all valid contiguous partitions of the first \(b\) observed-rank bins that have deleted exactly \(d\) internal boundaries. Such a partial partition contains exactly \(b-d\) completed blocks, so the next block receives clean-rank index
 \(j=b-d.\)
-Choosing its length \(\ell\ge1\) deletes exactly \(\ell-1\) additional boundaries, and therefore gives the recurrence in Equation~\eqref{eq:dp-recurrence}:
+Choosing its length \(\ell\ge1\) deletes exactly \(\ell-1\) additional boundaries. Set \(b'=b+\ell\) and \(d'=d+\ell-1\); the dynamic-programming update in Equation~\eqref{eq:dp-recurrence} is algebraically the same recurrence:
 \begin{equation}
 \begin{aligned}
-  DP[b+\ell,d+\ell-1]
-  &=
-  \min\!\bigl\{
-    DP[b+\ell,d+\ell-1],\\
-  &\qquad\quad
-    DP[b,d]+c(b-d,b,\ell)
-  \bigr\}.
+\mathrm{DP}[b',d'] &\gets
+  \min\!\bigl\{\mathrm{DP}[b',d'],\\
+&\qquad \mathrm{DP}[b,d]+c(b-d,b,\ell)\bigr\}.
 \end{aligned}
 \label{eq:dp-recurrence}
 \end{equation}
@@ -228,7 +224,7 @@ There are \(O(Km)\) states. From each state, at most \(m+1\) segment lengths can
 
 The frozen empirical method uses a convex portfolio of wealth processes. The logarithm of that mixture contains a log-sum-exp across components, so the additive structure above does not directly establish the same polynomial-time result for the complete frozen portfolio. We therefore restrict the computational theorem to the fixed-categorical case.
 
-\subsection{Finite-reference asymptotics of the frozen betting families}
+\subsection{Finite-reference betting asymptotics}
 
 The finite-reference information ceiling can be made explicit for the two betting families used in the frozen portfolio. The following proposition is an asymptotic characterization of these components, not a claim of a new general Bayes-factor principle.
 
@@ -270,14 +266,15 @@ q_{t,j}^{(\boldsymbol\alpha)}
 \end{equation}
 The wealth has the exact form in Equation~\eqref{eq:dirichlet-wealth-exact}:
 \begin{equation}
-  E_t^{(\boldsymbol\alpha)}
-  =
-  \frac{\Gamma(A)\Gamma(k+t)}
-       {\Gamma(A+t)\Gamma(k)}
-  \prod_{j=0}^n
+\begin{aligned}
+E_t^{(\boldsymbol\alpha)}
+&=\frac{\Gamma(A)\Gamma(k+t)}
+        {\Gamma(A+t)\Gamma(k)}\\
+&\quad\times\prod_{j=0}^n
   \frac{\Gamma(N_j(t)+\alpha_j)}
-       {\Gamma(\alpha_j)\Gamma(N_j(t)+1)},
-  \label{eq:dirichlet-wealth-exact}
+       {\Gamma(\alpha_j)\Gamma(N_j(t)+1)}.
+\end{aligned}
+\label{eq:dirichlet-wealth-exact}
 \end{equation}
 It converges to the finite positive limit in Equation~\eqref{eq:dirichlet-wealth-limit}:
 \begin{equation}
@@ -310,8 +307,8 @@ For part (a), Equation~\eqref{eq:log-wealth-expansion} expands the fixed-categor
 Stirling's formula and \(\widehat\pi_{j,t}\to\pi_j>0\) imply the limit in Equation~\eqref{eq:stirling-entropy-limit}:
 \begin{equation}
 \begin{aligned}
-\frac{\log\Gamma(t+k)}{t}
-&-\frac1t\sum_j\log\Gamma(N_j(t)+1)\\
+&\frac{\log\Gamma(t+k)}{t}\\
+&\quad-\frac1t\sum_{j=0}^n\log\Gamma(N_j(t)+1)\\
 &\longrightarrow -\sum_{j=0}^n\pi_j\log\pi_j.
 \end{aligned}
 \label{eq:stirling-entropy-limit}
