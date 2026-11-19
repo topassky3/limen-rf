@@ -1,6 +1,6 @@
 \section{Experimental Design}
 
-\subsection{Goals and primary data-generating model}
+\subsection{Simulation model and goals}
 
 The experiments evaluate finite-reference power rather than establish validity, which follows from Theorem~1. The primary frozen simulation uses
 \(K\in\{24,32\},\qquad m=2,\qquad n=K-2,\)
@@ -97,7 +97,7 @@ Three baseline families are evaluated:
 
 For the original publication-scale table we report the strongest configuration selected \emph{ex post} from this frozen grid. This envelope is a descriptive adversarial benchmark rather than one precommitted level-\(\alpha\) test. At the primary \(K=32,\gamma=4,T=200\) point, the selected member is the fixed band mixture with \(\delta=0.045\).
 
-\subsection{Development freeze and publication-scale validation}
+\subsection{Protocol freeze and validation}
 
 The development audit used 200 Monte Carlo paths per condition with seed \(20260918\). Before inspecting the final development results, the primary stress point was fixed at
 \(K=32,\qquad \gamma=4,\qquad T=200,\)
@@ -113,7 +113,7 @@ No bettor, threshold, baseline grid, or detector parameter was changed after thi
 
 The publication-scale validation increased only Monte Carlo precision. It used 5,000 independent replications per condition, deterministic publication seed \(20260922\), and the identical frozen method and baseline grids. Crossing probabilities are reported with Wilson 95\% intervals. Median stopping times among detected paths are reported with percentile-bootstrap 95\% intervals based on 2,000 bootstrap replications. Null Monte Carlo is used only as an implementation sanity check.
 
-\subsection{Pre-specified contamination-geometry stress test}
+\subsection{Contamination-geometry stress test}
 
 After the method freeze and the publication-scale run, a separate V1b protocol was specified and committed to the project history before any V1b outcome was viewed. It keeps \(K=32\), \(m=2\), \(\alpha=0.05\), the same horizons, alternatives, bettor portfolio, thresholds, and baseline grid. Each V1b condition uses 5,000 replications and reuses the Publication V1 clean-reference/future-stream path seeds so that geometry comparisons are paired.
 
