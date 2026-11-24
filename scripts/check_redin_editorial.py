@@ -132,12 +132,30 @@ def check_front_matter(path: Path, *, identified: bool) -> None:
     if "private GitHub repository" in text:
         fail(f"{path.name}: stale private-repository wording remains")
 
-    expected_name = "J. F. Orozco Cort\\'es:"
-    if identified and expected_name not in text:
-        fail(
-            f"{path.name}: Author contributions name format "
-            "is not initials + surname"
-        )
+    contributions = between(
+        text,
+        "\\section{Author contributions}\n",
+        "\\section{Data availability statement}",
+        f"{path.name} author contributions",
+    )
+    if identified:
+        expected_name = "J. F. Orozco-Cort\\'es:"
+        if contributions.count(expected_name) != 1:
+            fail(
+                f"{path.name}: Author contributions must use "
+                "initials and hyphenated surnames"
+            )
+        if "J. F. Orozco Cort\\'es:" in contributions:
+            fail(f"{path.name}: unhyphenated surnames in contributions")
+        if re.search(
+            r"\b(?:review\w*|edit\w*)\b", contributions, re.IGNORECASE
+        ):
+            fail(
+                f"{path.name}: review/editing are not formal "
+                "author contributions under REDIN instructions"
+            )
+    elif "Orozco" in contributions:
+        fail(f"{path.name}: author identity in blind contributions")
 
 
 def check_named_citations() -> None:
